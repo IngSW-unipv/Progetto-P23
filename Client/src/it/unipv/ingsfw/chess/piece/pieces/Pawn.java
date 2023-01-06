@@ -4,20 +4,32 @@ import it.unipv.ingsfw.chess.Square;
 import it.unipv.ingsfw.chess.color.ChessColor;
 import it.unipv.ingsfw.chess.piece.Piece;
 
-public class King extends Piece{
+public class Pawn extends Piece{
+	
+	private boolean firstMove;
 
-	public King(ChessColor c) {
+	public Pawn(ChessColor c) {
 		super(c);
-		// TODO Auto-generated constructor stub
+		this.firstMove = true;
 	}
 	
+	
+	@Override
 	public void addMoves() {
 		this.allMoves.add(new Square(0,1));
+		this.allMoves.add(new Square(0,2));
 		this.allMoves.add(new Square(-1,1));
 		this.allMoves.add(new Square(1,1));
-		this.allMoves.add(new Square(0,-1));
-		this.allMoves.add(new Square(1,-1));
-		this.allMoves.add(new Square(-1,-1));
+	}
+
+
+	public boolean isFirstMove() {
+		return firstMove;
+	}
+
+
+	public void setFirstMove(boolean firstMove) {
+		this.firstMove = firstMove;
 	}
 
 }
