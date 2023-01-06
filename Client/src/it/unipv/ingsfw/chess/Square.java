@@ -2,7 +2,7 @@ package it.unipv.ingsfw.chess;
 
 import it.unipv.ingsfw.chess.piece.Piece;
 
-public class Square {
+public class Square implements Comparable<Square>{
 	private int x, y;
 	private Piece piece;
 	
@@ -52,6 +52,18 @@ public class Square {
 
 	public Piece getPiece() {
 		return piece;
+	}
+
+
+
+	@Override
+	public int compareTo(Square o) {
+		if(this.x != o.x) {
+			return this.x - o.x;
+		}else if(this.y != o.y) {
+			return this.y - o.y;
+		}
+		return 0;
 	}
 
 

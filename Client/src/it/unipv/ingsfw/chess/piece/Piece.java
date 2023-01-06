@@ -10,25 +10,28 @@ import it.unipv.ingsfw.chess.color.ChessColor;
 public abstract class Piece {
 	
 	protected ChessColor color;
-	protected List<Square> allMoves;
+	protected ArrayList<Square> possibleMoves;
 	
 	
 	public Piece(ChessColor c) {
 		super();
 		this.color = c;
-		this.allMoves = new ArrayList<Square>();
-		addMoves();
+		this.possibleMoves = new ArrayList<Square>();
 	}
 
-	public abstract void addMoves();
+	public abstract ArrayList<Square> rules();
 
 	public ChessColor getColor() {
 		return color;
 	}
 
 
-	public List<Square> getAllMoves() {
-		return allMoves;
+	public List<Square> getPossibleMoves() {
+		return possibleMoves;
+	}
+
+	public void setPossibleMoves(ArrayList<Square> possibleMoves) {
+		this.possibleMoves = possibleMoves;
 	}
 
 	
