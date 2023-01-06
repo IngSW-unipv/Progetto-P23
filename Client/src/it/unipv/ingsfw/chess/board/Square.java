@@ -1,4 +1,6 @@
-package it.unipv.ingsfw.chess;
+package it.unipv.ingsfw.chess.board;
+
+import java.util.ArrayList;
 
 import it.unipv.ingsfw.chess.piece.Piece;
 
@@ -25,11 +27,9 @@ public class Square implements Comparable<Square>{
 	}
 
 
-
 	public int getX() {
 		return x;
 	}
-
 
 
 	public void setX(int x) {

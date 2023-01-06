@@ -3,7 +3,7 @@ package it.unipv.ingsfw.chess.piece;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unipv.ingsfw.chess.Square;
+import it.unipv.ingsfw.chess.board.Square;
 import it.unipv.ingsfw.chess.color.ChessColor;
 
 
@@ -34,6 +34,10 @@ public abstract class Piece {
 		this.possibleMoves = possibleMoves;
 	}
 
+	@Override 
+	public String toString () {
+		return getClass().getName();
+	}
 	
 
 }

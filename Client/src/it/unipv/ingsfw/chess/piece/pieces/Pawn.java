@@ -2,7 +2,7 @@ package it.unipv.ingsfw.chess.piece.pieces;
 
 import java.util.ArrayList;
 
-import it.unipv.ingsfw.chess.Square;
+import it.unipv.ingsfw.chess.board.Square;
 import it.unipv.ingsfw.chess.color.ChessColor;
 import it.unipv.ingsfw.chess.piece.Piece;
 
@@ -34,5 +34,7 @@ public class Pawn extends Piece{
 	public void setFirstMove(boolean firstMove) {
 		this.firstMove = firstMove;
 	}
+	
+	
 
 }
