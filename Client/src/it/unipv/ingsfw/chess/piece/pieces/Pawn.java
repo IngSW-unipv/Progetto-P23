@@ -6,27 +6,35 @@ import it.unipv.ingsfw.chess.board.Square;
 import it.unipv.ingsfw.chess.color.ChessColor;
 import it.unipv.ingsfw.chess.piece.Piece;
 
-public class King extends Piece{
+public class Pawn extends Piece{
+	
+	private boolean firstMove;
 
-	public King(ChessColor c) {
+	public Pawn(ChessColor c) {
 		super(c);
-		// TODO Auto-generated constructor stub
+		this.firstMove = true;
 	}
 	
-	public void addMoves() {
-
-	}
 	
 	@Override
 	public ArrayList<Square> rules() {
 		ArrayList<Square> rules = new ArrayList<Square>();
 		rules.add(new Square(0,1));
-		rules.add(new Square(-1,1));
 		rules.add(new Square(1,1));
-		rules.add(new Square(0,-1));
-		rules.add(new Square(1,-1));
-		rules.add(new Square(-1,-1));
+		rules.add(new Square(-1,1));
 		return rules;
 	}
+
+
+	public boolean isFirstMove() {
+		return firstMove;
+	}
+
+
+	public void setFirstMove(boolean firstMove) {
+		this.firstMove = firstMove;
+	}
+	
+	
 
 }
