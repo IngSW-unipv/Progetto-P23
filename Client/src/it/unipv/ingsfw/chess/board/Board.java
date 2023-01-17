@@ -1,5 +1,6 @@
 package it.unipv.ingsfw.chess.board;
 
+
 import java.util.ArrayList;
 
 import it.unipv.ingsfw.chess.ChessColor;
@@ -15,6 +16,7 @@ import it.unipv.ingsfw.chess.pieces.Move;
 
 public class Board {
 
+
 	private static final int MAXDIM = 8;
 	private boolean lastmove = false; // cambiare se possibile con eccezione 
 	private Square[][] squares;
@@ -29,12 +31,12 @@ public class Board {
 			for(int y = 0; y < MAXDIM;  y++) {
 
 				//defendKing();
-				
+
 				if (squares[x][y].getColor() == color) {
 
 					Piece p = squares[x][y].getPiece();
 					ArrayList <Square> validMoves = p.getValidMoves(); // ricordarsi di pulire
-					
+
 					for (Move regola : p.getRules()) {
 						Direction d = regola.getDirection();
 						switch (d) {
@@ -150,47 +152,47 @@ public class Board {
 
 							}
 							break;
-							
+
 						case L : 
-							 
-								Square s = getSquare(squares[x][y].getX()+1,squares[x][y].getY()-2);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()-1,squares[x][y].getY()+2);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()+2,squares[x][y].getY()-1);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()+2,squares[x][y].getY()+1);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()+1,squares[x][y].getY()+2);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()-2,squares[x][y].getY()+1);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()-1,squares[x][y].getY()-2);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								s = getSquare(squares[x][y].getX()-2,squares[x][y].getY()-1);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
+
+							Square s = getSquare(squares[x][y].getX()+1,squares[x][y].getY()-2);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()-1,squares[x][y].getY()+2);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()+2,squares[x][y].getY()-1);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()+2,squares[x][y].getY()+1);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()+1,squares[x][y].getY()+2);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()-2,squares[x][y].getY()+1);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()-1,squares[x][y].getY()-2);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
+							s = getSquare(squares[x][y].getX()-2,squares[x][y].getY()-1);
+							if(isValid(s,squares[x][y])) {
+								validMoves.add(s);
+							}
 							break;
-							
+
 						}
 					}
-					
-					
+
+
 				}
 
 			} // parentesi for grande
@@ -216,34 +218,30 @@ public class Board {
 					}
 
 
+
 				}
-
-
 
 			}
-
-
-
-			else {
-				if (p.isPawn() && (partenza.getX() == s.getX() )) {
-					return true;
-				}
-				else if (!(p.isPawn())) {
-					return true;
-				}
-			}
-
 		}
 		return false;
+
+	}
+	
+	
+	public Square getSquare(int x , int y) {
+		return squares [x][y];
 	}
 
-	public Square getSquare (int x, int y) {
-		return squares[x][y];
-	}
-	
+
+
+
+
+
+
+
 	//public void defendKing ()
-	
-	
+
+
 
 	public Board () {
 
@@ -271,24 +269,28 @@ public class Board {
 			for ( int i = 0 ; i< MAXDIM; i++) {
 				squares [i][j] = new Square (i,j);
 			}
+
+
+			for (int i = 0 ; i < MAXDIM ; i++) {
+				squares[i][6] = new Square (i,6,new Pawn(ChessColor.BLACK));
+
+			}
+
+			squares[0][7] = new Square (0,7,new Rook(ChessColor.BLACK));
+			squares[1][7] = new Square (1,7,new Bishop(ChessColor.BLACK));
+			squares[2][7] = new Square (2,7,new Knight(ChessColor.BLACK));
+			squares[3][7] = new Square (3,7,new Queen(ChessColor.BLACK));
+			squares[4][7] = new Square (4,7,new King(ChessColor.BLACK));
+			squares[5][7] = new Square (5,7,new Knight(ChessColor.BLACK));
+			squares[6][7] = new Square (6,7,new Bishop(ChessColor.BLACK));
+			squares[7][7] = new Square (7,7,new Rook(ChessColor.BLACK));
+
+
 		}
-
-		for (int i = 0 ; i < MAXDIM ; i++) {
-			squares[i][6] = new Square (i,6,new Pawn(ChessColor.BLACK));
-
-		}
-
-		squares[0][7] = new Square (0,7,new Rook(ChessColor.BLACK));
-		squares[1][7] = new Square (1,7,new Bishop(ChessColor.BLACK));
-		squares[2][7] = new Square (2,7,new Knight(ChessColor.BLACK));
-		squares[3][7] = new Square (3,7,new Queen(ChessColor.BLACK));
-		squares[4][7] = new Square (4,7,new King(ChessColor.BLACK));
-		squares[5][7] = new Square (5,7,new Knight(ChessColor.BLACK));
-		squares[6][7] = new Square (6,7,new Bishop(ChessColor.BLACK));
-		squares[7][7] = new Square (7,7,new Rook(ChessColor.BLACK));
 
 
 	}
+
 }
 
 

@@ -1,12 +1,16 @@
 package it.unipv.ingsfw.chess.board;
 
+
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.pieces.Piece;
 
-public class Square {
 
-	private int x , y;
+
+public class Square {
+	
+
 	private Piece piece;
+	private int x, y;
 
 	public Square (int x, int y,Piece piece) {
 		this.x = x;
@@ -17,6 +21,7 @@ public class Square {
 		this.x = x;
 		this.y = y;
 		this.piece = null;
+
 	}
 
 	public ChessColor getColor () {
@@ -26,6 +31,7 @@ public class Square {
 		return piece.getColor();
 	}
 
+
 	public int getX() {
 		return x;
 	}
@@ -34,7 +40,8 @@ public class Square {
 		return y;
 	}
 
-	public Piece getPiece () {
+
+	public Piece getPiece() {
 		return piece;
 	}
 
@@ -42,7 +49,7 @@ public class Square {
 		if (x > 7 || x < 0 || y > 7 || y < 0) {
 			return false;
 		}
-		return true ;
+		return true;
 	}
 
 	public boolean isOccupied () {
@@ -51,6 +58,11 @@ public class Square {
 		}
 		return true;
 	}
+	
+	}
+
+	
+	
+	
 
 
-}
