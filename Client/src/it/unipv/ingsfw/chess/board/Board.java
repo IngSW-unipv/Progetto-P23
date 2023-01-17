@@ -220,8 +220,21 @@ public class Board {
 
 
 				}
+				
 
+				
 			}
+			
+			else {
+				if (p.isPawn() && (partenza.getX() == s.getX() )) {
+					return true;
+				}
+				else if (!(p.isPawn())) {
+					return true;
+				}
+				
+			}
+			
 		}
 		return false;
 
