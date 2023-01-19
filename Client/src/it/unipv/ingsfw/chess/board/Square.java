@@ -59,6 +59,10 @@ public class Square {
 		return true;
 	}
 	
+	public boolean isKing () {
+		return piece.isKing();
+	}
+	
 	}
 
 	

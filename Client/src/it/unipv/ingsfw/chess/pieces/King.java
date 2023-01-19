@@ -39,4 +39,10 @@ public class King extends Piece{
 	public boolean isPawn() {
 		return false;
 	}
+
+	@Override
+	public boolean isKing() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

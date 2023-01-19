@@ -14,18 +14,20 @@ import it.unipv.ingsfw.chess.pieces.Queen;
 import it.unipv.ingsfw.chess.pieces.Rook;
 import it.unipv.ingsfw.chess.pieces.Move;
 
+
 public class Board {
 
 
 	private static final int MAXDIM = 8;
-	private boolean lastmove = false; // cambiare se possibile con eccezione 
+	private boolean opponentFound = false; // cambiare se possibile con eccezione 
 	private Square[][] squares;
 	private ArrayList <Square> opponentMoves;
 	private ArrayList <Square> attackers;
+	private ArrayList <Square> defenders;
 
 
 
-	public void calcMoves (ChessColor color ) { // remember neri
+	public void calcMoves (ChessColor color) { // remember neri
 
 		for (int x = 0; x < MAXDIM ; x++) {
 			for(int y = 0; y < MAXDIM;  y++) {
@@ -37,23 +39,55 @@ public class Board {
 					Piece p = squares[x][y].getPiece();
 					ArrayList <Square> validMoves = p.getValidMoves(); // ricordarsi di pulire
 
-					for (Move regola : p.getRules()) {
+					for (Move regola : p.getValidDirections()) {
 						Direction d = regola.getDirection();
 						switch (d) {
 
 						case N : 
 							for (int i = 0;i < regola.getMax(); i++  ) {
 								Square s = getSquare(squares[x][y].getX(),squares[x][y].getY()+i);
-								if(isValid(s,squares[x][y])) {
-									validMoves.add(s);
-								}
-								else {
-									lastmove = false;
-									break;
-								}
 
+								
+
+
+									if(   isValid(s,squares[x][y])) {
+										validMoves.add(s);
+									}
+
+									else {	
+										if(opponentFound) {
+											for (int j = i; j < regola.getMax(); j++  ) {
+											Square s1 = getSquare(squares[x][y].getX(),squares[x][y].getY()+j);
+											if (s1.getPiece() == null ) {
+												continue;
+											}
+											else if (opponentKingHere(s1, color)) {
+												i -= 1;    //osservare questo metodo
+												defenders.add(getSquare(squares[x][y].getX(),squares[x][y].getY()+i));
+												attackers.add(squares[x][y]);
+											}
+											else {
+												break;
+											}
+										
+											}
+										}
+										opponentFound = false;
+										break;
+									}
+
+								
+
+								
+									
+
+								
 							}
+
 							break;
+
+
+
 
 						case S : 
 							for (int i = 0;i < regola.getMax(); i++  ) {
@@ -62,7 +96,10 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									if (opponentFound) {
+										
+									}
+									opponentFound = false;
 									break;
 								}
 
@@ -76,7 +113,7 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									opponentFound = false;
 									break;
 								}
 
@@ -90,7 +127,7 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									opponentFound = false;
 									break;
 								}
 
@@ -104,7 +141,7 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									opponentFound = false;
 									break;
 								}
 
@@ -118,7 +155,7 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									opponentFound = false;
 									break;
 								}
 
@@ -132,7 +169,7 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									opponentFound = false;
 									break;
 								}
 
@@ -146,7 +183,8 @@ public class Board {
 									validMoves.add(s);
 								}
 								else {
-									lastmove = false;
+									opponentFound = false;
+
 									break;
 								}
 
@@ -201,10 +239,15 @@ public class Board {
 
 
 	} // parentesi metodo
+	
+	
+	public void setPiecesDirection ( ArrayList <Square> attackers,ChessColor color ) {
+		
+	}
 
 
-	private boolean isValid (Square s,Square partenza) {	
-		if (lastmove) return false;
+	public boolean isValid  (Square s,Square partenza)   {	
+		if (opponentFound) return false;
 		Piece p = partenza.getPiece();
 		if (s.isInBoard()) {
 			if (s.isOccupied()) {
@@ -213,18 +256,19 @@ public class Board {
 						return true;
 					}
 					else if (!(p.isPawn())) {
-						lastmove = true;
-						return true;
+						
+							opponentFound = true;
+							return true;
 					}
 
 
 
 				}
-				
 
-				
+
+
 			}
-			
+
 			else {
 				if (p.isPawn() && (partenza.getX() == s.getX() )) {
 					return true;
@@ -232,15 +276,22 @@ public class Board {
 				else if (!(p.isPawn())) {
 					return true;
 				}
-				
+
 			}
-			
+
 		}
 		return false;
 
 	}
-	
-	
+
+	public boolean opponentKingHere (Square s,ChessColor color) {
+		if (s.isKing() && (color != s.getColor())) {
+			return true ;
+		}
+		return false;
+	}
+
+
 	public Square getSquare(int x , int y) {
 		return squares [x][y];
 	}
