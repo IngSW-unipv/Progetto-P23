@@ -9,8 +9,8 @@ import it.unipv.ingsfw.chess.board.Square;
 public abstract class Piece {
 
 	 protected ArrayList <Move> moves;
-	 private ArrayList <Square> validMoves;
-	 private ArrayList <Move> validDirections;
+	 protected ArrayList <Square> validMoves;
+	 protected ArrayList <Move> validDirections;
 	 protected ChessColor color;
 	
 	 

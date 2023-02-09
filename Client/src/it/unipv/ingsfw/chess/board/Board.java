@@ -2,6 +2,7 @@ package it.unipv.ingsfw.chess.board;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.Direction;
@@ -28,11 +29,13 @@ public class Board {
 
 
 	public void calcMoves (ChessColor color) { // remember neri
-
+		
+		// setPiecesDirection()
+		
 		for (int x = 0; x < MAXDIM ; x++) {
 			for(int y = 0; y < MAXDIM;  y++) {
 
-				//defendKing();
+				
 
 				if (squares[x][y].getColor() == color) {
 
@@ -41,6 +44,7 @@ public class Board {
 
 					for (Move regola : p.getValidDirections()) {
 						Direction d = regola.getDirection();
+						// cambiare i metodi di piece eccetera e mettere solo le direzioni.
 						switch (d) {
 
 						case N : 
@@ -63,8 +67,9 @@ public class Board {
 											}
 											else if (opponentKingHere(s1, color)) {
 												i -= 1;    //osservare questo metodo
-												defenders.add(getSquare(squares[x][y].getX(),squares[x][y].getY()+i));
 												attackers.add(squares[x][y]);
+												defenders.add(getSquare(squares[x][y].getX(),squares[x][y].getY()+i));
+												
 											}
 											else {
 												break;
@@ -241,10 +246,46 @@ public class Board {
 	} // parentesi metodo
 	
 	
-	public void setPiecesDirection ( ArrayList <Square> attackers,ChessColor color ) {
+	public void setPiecesDirection (ArrayList <Square> attackers,ArrayList <Square> defenders) {
+	
+		Iterator <Square> it = attackers.iterator();
+		
+		while (it.hasNext()) {
+			int i = 0;
+			Direction d ;
+			d = findDirection (it.next(),defenders.get(i));
+			defenders.get(i).getPiece().setValidDirections(d);
+			i++;
+		} 
 		
 	}
 
+	public Direction findDirection (Square a ,Square b) { 
+		int ax,ay,bx,by;
+		ax = a.getX();
+		ay = a.getY();
+		bx = b.getX();
+		by = b.getY();
+		
+		if (ax  == bx ) {
+			return Direction.W;
+		}
+		else if (ay == by) {
+			return Direction.N;
+		}
+		
+		else if ( ( (ax -bx) + (ay-by)) == ((ay-by) + (ax -bx)) ){
+		return Direction.NW;
+		}
+		
+		return 	Direction.NE;
+	}
+	
+	
+
+	
+	
+	
 
 	public boolean isValid  (Square s,Square partenza)   {	
 		if (opponentFound) return false;
