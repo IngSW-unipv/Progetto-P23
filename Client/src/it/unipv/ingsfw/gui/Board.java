@@ -17,13 +17,22 @@ public class Board extends JPanel {
 		tasti = new GameButton [8][8];
 		
 		setLayout(new GridLayout(8,8,0,0));
+		
+		
+		
 	/*	ImageIcon rookB = new ImageIcon("");
 		ImageIcon rookW = new ImageIcon("/Users/alessandrorotta/desktop/rookW.png");
 		ImageIcon queenB = new ImageIcon("/Users/alessandrorotta/desktop/queenB.png");
 		ImageIcon queenW = new ImageIcon("/Users/alessandrorotta/desktop/queenW.png");
 		ImageIcon bishopB = new ImageIcon("/Users/alessandrorotta/desktop/bishopB.png");
 		ImageIcon bishopW = new ImageIcon("/Users/alessandrorotta/desktop/bishopW.png"); */
+		
+		
 		ImageIcon kingB = new ImageIcon("/Progetto-P23/Client/img/kingB.png");
+		
+		 
+		        
+		
 	/*	
 		ImageIcon kingW = new ImageIcon("/Users/alessandrorotta/desktop/kingW.png");
 		ImageIcon pawnB = new ImageIcon("/Users/alessandrorotta/desktop/pawnB.png");
@@ -47,13 +56,16 @@ public class Board extends JPanel {
 				
 			}
 		}
+		
 	/*	tasti[1][1].setIcon(rookB);
 		tasti[2][1].setIcon(rookW);
 		tasti[3][1].setIcon(queenB);
 		tasti[4][1].setIcon(queenW);
 		tasti[5][1].setIcon(bishopB);
 		tasti[6][1].setIcon(bishopW); */
+		
 		tasti[6][2].setIcon(kingB);
+	
 	/*	
 		tasti[6][3].setIcon(kingW);
 		tasti[6][4].setIcon(pawnB);

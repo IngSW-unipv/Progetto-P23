@@ -19,6 +19,8 @@ public class ToolBar extends JPanel {
 		
 		add(button);
 		add(label);
+	
+		
 		
 	}
 }
