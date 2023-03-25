@@ -10,15 +10,13 @@ import javax.swing.JToggleButton;
 
 public class Board extends JPanel {
 
-	private JToggleButton[][] tasti;
+	private GameButton [][] tasti;
 	
 	public Board () {
 		super();
 		tasti = new GameButton [8][8];
 		
 		setLayout(new GridLayout(8,8,0,0));
-		
-		
 		
 	    ImageIcon rookB = new ImageIcon(getClass().getResource("img/rookB.png"));
 		ImageIcon rookW = new ImageIcon(getClass().getResource("img/rookW.png"));
@@ -50,20 +48,63 @@ public class Board extends JPanel {
 			}
 		}
 		
-		tasti[1][1].setIcon(rookB);
-		tasti[2][1].setIcon(rookW);
+		
 	//	tasti[3][1].setIcon(queenB);
-		tasti[4][1].setIcon(queenW);
-		tasti[5][1].setIcon(bishopB);
-		tasti[6][1].setIcon(bishopW); 
-		tasti[6][2].setIcon(kingB);
-		tasti[6][3].setIcon(kingW);
-		tasti[6][4].setIcon(pawnB);
-		tasti[6][5].setIcon(pawnW);
-		tasti[1][2].setIcon(knightB);
-		tasti[1][3].setIcon(knightW); 
+	
+		for (int i = 0 ;i < 8 ; i++) {
+			tasti[6][i].setIcon(pawnW);
+		}
+		
+		for (int i = 0 ;i < 8 ; i++) {
+			tasti[1][i].setIcon(pawnB);
+		}
+		
+		tasti[0][0].setIcon(rookB);
+		tasti[0][7].setIcon(rookB);
+		
+		tasti[7][0].setIcon(rookW);
+		tasti[7][7].setIcon(rookW);
+		
+		tasti[0][1].setIcon(bishopB);
+		tasti[0][6].setIcon(bishopB);
+		
+		tasti[7][1].setIcon(bishopW);
+		tasti[7][6].setIcon(bishopW);
+		
+		tasti[0][2].setIcon(knightB);
+		tasti[0][5].setIcon(knightB);
+		
+		tasti[7][2].setIcon(knightW);
+		tasti[7][5].setIcon(knightW);
+		
+		tasti[0][4].setIcon(kingB);
+	//	tasti[0][3].setIcon(queenB);
+		
+		tasti[7][4].setIcon(kingW);
+		tasti[7][3].setIcon(queenW);
+		
+		
+		
+		
+		
+		
 		
 		
 			
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
