@@ -14,7 +14,7 @@ public class Board extends JPanel {
 	
 	public Board () {
 		super();
-		tasti = new JToggleButton [8][8];
+		tasti = new GameButton [8][8];
 		
 		setLayout(new GridLayout(8,8,0,0));
 	/*	ImageIcon rookB = new ImageIcon("");
@@ -37,17 +37,12 @@ public class Board extends JPanel {
 			white = !white;
 			for (int j = 0 ; j < 8 ;j++) {
 				white = !white;
-				tasti[i][j] = new JToggleButton () ;
-				tasti[i][j].setOpaque(true);
-				tasti[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				if (!white) {
-					tasti[i][j].setBackground(Color.RED.darker());
+					tasti[i][j] = new GameButton(Color.RED.darker());
 				}
 				else {
-					tasti[i][j].setBackground(Color.white.brighter());
+					tasti[i][j] = new GameButton(Color.white.brighter());
 				}
-				
-				
 				add(tasti [i][j]);
 				
 			}
