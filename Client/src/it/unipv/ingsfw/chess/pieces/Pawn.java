@@ -6,49 +6,20 @@ import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.Direction;
 
 public class Pawn extends Piece {
+	
 	private boolean firstMove;
 
 	public Pawn (ChessColor c) {
 		super(c);
 		this.firstMove = true;
-		moves = setRules();
-	}
-	
-	//ricontrollare questo metodo
-	
-	@Override
-	public ArrayList <Move> setRules () {
 		
-		ArrayList <Move> r = new ArrayList <Move> ();
-		if(this.color == ChessColor.WHITE) {
-			if(firstMove==true) {
-				r.add(new Move (Direction.N,2));
-			}else {
-				r.add(new Move (Direction.N,1));
-			}
-			r.add(new Move (Direction.NW,1));
-			r.add(new Move (Direction.NE,1));
-			return r;
-		}
-		if(firstMove==true) {
-			r.add(new Move (Direction.S,2));
-		}else {
-			r.add(new Move (Direction.S,1));
-		}
-		r.add(new Move (Direction.SW,1));
-		r.add(new Move (Direction.SE,1));
+	 // inizialiazzazione 
 		
-		return r;
-	}
-	
-	@Override
-	public  ArrayList <Move> getRules(){
-		return moves;
-	}
-
-	@Override
-	public boolean isPawn() {
-		return true;
+		rules.add(new Rules (Direction.V,1));
+        rules.add(new Rules (Direction.D1,1));
+		rules.add(new Rules (Direction.D2,1));
+		
+		validDirections.add(Direction.V);
 	}
 
 	@Override
@@ -56,24 +27,16 @@ public class Pawn extends Piece {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
-	public void setValidDirections (Direction d) {
-		 if (d == Direction.N || d == Direction.S ) {
-			 validDirections.add(new Move(Direction.N,1) );
-			 validDirections.add(new Move(Direction.S,1) );
-		 }
-		 
-		 if (d == Direction.W  || d == Direction.E ) {
-			 validDirections.add(new Move(Direction.W,1) );
-			 validDirections.add(new Move(Direction.E,1) );
-		 }
-		 if (d == Direction.NE || d == Direction.SW ) {
-			 validDirections.add(new Move(Direction.NE,1) );
-			 validDirections.add(new Move(Direction.SW,1) );
-		 }
-		 if (d == Direction.NW || d == Direction.SE ) {
-			 validDirections.add(new Move(Direction.NW,1) );
-			 validDirections.add(new Move(Direction.SE,1) );
-		 }
+	public boolean isPawn() {
+		// TODO Auto-generated method stub
+		return true;
 	}
+	
+	
+	
+	
+	
+
 }

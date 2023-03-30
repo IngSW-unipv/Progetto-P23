@@ -1,5 +1,7 @@
 package it.unipv.ingsfw.chess;
 
 public enum Direction {
-	N,S,E,W,SW,SE,NW,NE,L;
+	/*queste sono le direzioni: vertical,horizontal,diagonal 1 & 2 , l m(knight) */
+	
+	V,H,D1,D2,L;
 }

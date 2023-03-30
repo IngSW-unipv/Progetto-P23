@@ -5,9 +5,10 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 
 
-public class GameButton extends JButton {
+public class GameButton extends JToggleButton {
 
 	public GameButton (Color C) {
 

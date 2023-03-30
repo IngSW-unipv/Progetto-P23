@@ -9,25 +9,9 @@ public class Knight extends Piece{
 
 	public Knight (ChessColor c) {
 		super(c);
-		moves = setRules();
-	}
-	
-	@Override
-	public ArrayList <Move> setRules () {
+		rules.add(new Rules (Direction.L,0));
 		
-		ArrayList <Move> r = new ArrayList <Move> ();
-		r.add(new Move (Direction.L,0));
-		return r;
-	}
-	
-	@Override
-	public  ArrayList <Move> getRules(){
-		return moves;
-	}
-
-	@Override
-	public boolean isPawn() {
-		return false;
+		validDirections.add(Direction.L);
 	}
 
 	@Override
@@ -35,4 +19,12 @@ public class Knight extends Piece{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isPawn() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+
 }

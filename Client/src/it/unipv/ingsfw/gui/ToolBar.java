@@ -6,13 +6,13 @@ import javax.swing.*;
 
 public class ToolBar extends JPanel {
 
-	private JButton button;
+	private JToggleButton button;
 	private JLabel label;
 	
 	
 	public ToolBar () {
 		super ();
-		button = new JButton ("ciao");
+		button = new JToggleButton ("ciao");
 		label = new JLabel ("aa");
 		
 		setLayout(new FlowLayout (FlowLayout.LEFT));

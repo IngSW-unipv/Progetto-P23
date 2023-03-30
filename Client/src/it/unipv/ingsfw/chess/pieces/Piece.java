@@ -7,62 +7,73 @@ import it.unipv.ingsfw.chess.Direction;
 import it.unipv.ingsfw.chess.board.Square;
 
 public abstract class Piece {
+	
+	/* ogni pezzo ha un indicazione sulle direzioni e numero di passi dette RULES
+	 * ogni przzo ha un elenco di mosse possibili da calcolare VALIDMOVES
+	 * ogni pezzo ha un elenco di direzioni che può seguire VALIDDIRECTIONS
+	 * ogni pezzo ha un colore a cui appartiene;
+	 *  */
 
-	 protected ArrayList <Move> moves;
+	 protected ArrayList <Rules> rules;
 	 protected ArrayList <Square> validMoves;
-	 protected ArrayList <Move> validDirections;
+	 protected ArrayList <Direction> validDirections;
 	 protected ChessColor color;
+	 protected boolean attacker = false;
 	
 	 
 	 
+	 
 	 public Piece (ChessColor color) {
-		 this.color = color;
-		 moves = this.setRules();
-		 validDirections = new ArrayList <Move> ();
-		 validDirections = moves;
-		 validMoves = new ArrayList <Square> ();
-		 
+		 this.color = color; 
+		 rules = new  ArrayList <Rules> ();
+		 validMoves = new ArrayList <Square>();
+		 validDirections = new ArrayList <Direction> ();
 	 }
+	 
 	 
 	 public ChessColor getColor () {
 		 return color;
 	 }
 	 
-	 public ArrayList <Square> getValidMoves (){
-		 
+	 public ArrayList <Square> getValidMoves (){	 
 		 return validMoves;
 	 }
 	 
-	 public ArrayList <Move>  getValidDirections () {
+	 public ArrayList <Direction>  getValidDirections () {
 		 return validDirections;
 	 }
 	 
+	 public ArrayList <Rules>  getRules () {
+		 return rules;
+	 }
 	 
-	 public void setValidDirections (Direction d) {
-		 if (d == Direction.N || d == Direction.S ) {
-			 validDirections.add(new Move(Direction.N,8) );
-			 validDirections.add(new Move(Direction.S,8) );
-		 }
-		 
-		 if (d == Direction.W  || d == Direction.E ) {
-			 validDirections.add(new Move(Direction.W,8) );
-			 validDirections.add(new Move(Direction.E,8) );
-		 }
-		 if (d == Direction.NE || d == Direction.SW ) {
-			 validDirections.add(new Move(Direction.NE,8) );
-			 validDirections.add(new Move(Direction.SW,8) );
-		 }
-		 if (d == Direction.NW || d == Direction.SE ) {
-			 validDirections.add(new Move(Direction.NW,8) );
-			 validDirections.add(new Move(Direction.SE,8) );
-		 }
+	 public void addValidMoves (ArrayList <Square> s) {
+		 validMoves.addAll(s);
+		  
+	 }
+	 
+	 public void addValidMove (Square s) {
+		 validMoves.add(s);
 		 
 	 }
 	 
+	 public void clear () {
+		 validMoves.clear();
+	 }
 	 
+	 public void setAttacker (boolean x) {
+		 attacker = x;
+		 
+	 }
 	 
-	 public abstract ArrayList <Move> setRules ();
-	 public abstract ArrayList <Move> getRules ();
-	 public abstract boolean isPawn();
 	 public abstract boolean isKing();
+	 public abstract boolean isPawn();
+	 
+	 public void printmoves () {
+		 for (Square a : validMoves) {
+			System.out.println(a);
+		}
+	 }
+	  
+
 }

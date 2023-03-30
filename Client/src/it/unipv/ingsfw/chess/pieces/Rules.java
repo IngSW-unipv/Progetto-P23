@@ -2,14 +2,14 @@ package it.unipv.ingsfw.chess.pieces;
 
 import it.unipv.ingsfw.chess.Direction;
 
-public class Move {
+public class Rules {
 
 	private Direction d;
 	private int max;
 
 
 
-	public Move (Direction d , int max) {
+	public Rules (Direction d , int max) {
 		this.d = d;
 		this.max = max;
 	}

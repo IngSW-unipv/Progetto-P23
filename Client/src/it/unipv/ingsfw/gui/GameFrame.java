@@ -24,7 +24,7 @@ public class GameFrame  extends JFrame {
 		
 		
 		
-		setSize ( 700,700);
+		setSize ( 800,800);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

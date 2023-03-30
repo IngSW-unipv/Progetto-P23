@@ -10,34 +10,17 @@ public class King extends Piece{
 
 	public King (ChessColor c) {
 		super(c);
-		moves = setRules();
-	}
-	
-	@Override
-	public ArrayList <Move> setRules () {
+		rules.add(new Rules(Direction.V,1));
+		rules.add(new Rules(Direction.H,1));
+		rules.add(new Rules(Direction.D1,1));
+		rules.add(new Rules(Direction.D2,1));
 		
-		ArrayList <Move> r = new ArrayList <Move> ();
 		
-		r.add(new Move (Direction.NE,1));
-		r.add(new Move (Direction.SE,1));
-		r.add(new Move (Direction.SW,1));
-		r.add(new Move (Direction.NW,1));
-		r.add(new Move (Direction.N,1));
-		r.add(new Move (Direction.E,1));
-		r.add(new Move (Direction.S,1));
-		r.add(new Move (Direction.W,1));
-		
-		return r;
-	}
-	
-	@Override
-	public  ArrayList <Move> getRules(){
-		return moves;
-	}
+		validDirections.add(Direction.V);
+		validDirections.add(Direction.D1);
+		validDirections.add(Direction.D2);
+		validDirections.add(Direction.H);
 
-	@Override
-	public boolean isPawn() {
-		return false;
 	}
 
 	@Override
@@ -45,26 +28,12 @@ public class King extends Piece{
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
-		
+
 	@Override
-	public void setValidDirections (Direction d) {
-		 if (d == Direction.N || d == Direction.S ) {
-			 validDirections.add(new Move(Direction.N,1) );
-			 validDirections.add(new Move(Direction.S,1) );
-		 }
-		 
-		 if (d == Direction.W  || d == Direction.E ) {
-			 validDirections.add(new Move(Direction.W,1) );
-			 validDirections.add(new Move(Direction.E,1) );
-		 }
-		 if (d == Direction.NE || d == Direction.SW ) {
-			 validDirections.add(new Move(Direction.NE,1) );
-			 validDirections.add(new Move(Direction.SW,1) );
-		 }
-		 if (d == Direction.NW || d == Direction.SE ) {
-			 validDirections.add(new Move(Direction.NW,1) );
-			 validDirections.add(new Move(Direction.SE,1) );
-		 }
+	public boolean isPawn() {
+		// TODO Auto-generated method stub
+		return false;
 	}
+	
+
 }

@@ -9,30 +9,12 @@ public class Rook extends Piece{
 
 	public Rook (ChessColor c) {
 		super(c);
-		moves = setRules();
-	}
-	
-	@Override
-	public ArrayList <Move> setRules () {
+		rules.add(new Rules (Direction.V,8));
+		rules.add(new Rules (Direction.H,8));
 		
-		ArrayList <Move> r = new ArrayList <Move> ();
-		
-		r.add(new Move (Direction.N,8));
-		r.add(new Move (Direction.S,8));
-		r.add(new Move (Direction.E,8));
-		r.add(new Move (Direction.W,8));
-		
-		return r;
-	}
-	
-	@Override
-	public  ArrayList <Move> getRules(){
-		return moves;
-	}
+		validDirections.add(Direction.V);
+		validDirections.add(Direction.H);
 
-	@Override
-	public boolean isPawn() {
-		return false;
 	}
 
 	@Override
@@ -40,6 +22,16 @@ public class Rook extends Piece{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isPawn() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
+	
 }
 	
 
