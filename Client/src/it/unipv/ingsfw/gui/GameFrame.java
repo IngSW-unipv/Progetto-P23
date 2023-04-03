@@ -5,8 +5,9 @@ import javax.swing.*;
 
 public class GameFrame  extends JFrame {
 
-	private Board board;
+	private GameBoard gameBoard;
 	private ToolBar toolBar;
+	
 	
 	
 	public GameFrame (String xxx) {
@@ -14,17 +15,23 @@ public class GameFrame  extends JFrame {
 		
 		setLayout(new BorderLayout());
 		
-		board = new Board ();
+		gameBoard = new GameBoard ();
 		toolBar = new ToolBar ();
 		
-		add(board,BorderLayout.CENTER);
+		
+		
+	
+		
+		add(gameBoard,BorderLayout.CENTER);
 		add(toolBar,BorderLayout.PAGE_START);
 		
 		
 		
 		
 		
-		setSize ( 800,800);
+		
+		
+		setSize (800,800);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,4 +39,10 @@ public class GameFrame  extends JFrame {
 		
 		
 	}
+	
+	public GameBoard getGameBoard () {
+		return gameBoard;
+	}
+	
+
 }
