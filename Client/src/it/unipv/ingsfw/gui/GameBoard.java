@@ -1,5 +1,6 @@
 package it.unipv.ingsfw.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -11,6 +12,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import it.unipv.ingsfw.gui.buttons.GameButton;
+
 
 
 public class GameBoard extends JPanel implements ActionListener  {
@@ -24,12 +28,17 @@ public class GameBoard extends JPanel implements ActionListener  {
 	private Color lightGreen;
 	private Color originalColor;
 
+	
 
 
 	public GameBoard () {
 		super();
-		setPreferredSize(new Dimension (800,800));
 		
+
+	
+		
+		
+		setPreferredSize(new Dimension (800,800));
 		darkGreen = new Color (8,115,0);
 		lightGreen = new Color (223,253,214);		
 		tasti = new GameButton [8][8];
@@ -134,9 +143,7 @@ public class GameBoard extends JPanel implements ActionListener  {
 	}
 
 
-	public static void main(String[] args) {
-	GameFrame sandro = new GameFrame ("partita");
-	}
+	
 	
 
 
@@ -180,6 +187,7 @@ public class GameBoard extends JPanel implements ActionListener  {
 		}
 
 	} 
+	
 	
 
 }

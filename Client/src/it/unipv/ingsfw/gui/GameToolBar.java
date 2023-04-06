@@ -5,14 +5,14 @@ import java.awt.FlowLayout;
 
 import javax.swing.*;
 
-public class ToolBar extends JPanel {
+public class GameToolBar extends JPanel {
 
 	private JButton button1;
 	private JButton button2;
 	private JLabel label;
 	
 	
-	public ToolBar () {
+	public GameToolBar () {
 		super ();
 		
 		button1 = new JButton ("nuova partita");

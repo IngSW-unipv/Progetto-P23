@@ -1,4 +1,4 @@
-package it.unipv.ingsfw.gui;
+package it.unipv.ingsfw.gui.buttons;
 
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -16,6 +16,7 @@ public class GameButton extends JButton implements ActionListener  {
 	private int chessX , chessY ;
 	private JLabel idAlto;
 	private JLabel idBasso;
+	
 	
 
 	public GameButton (Color C,int chessX , int chessY) {
