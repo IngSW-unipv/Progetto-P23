@@ -141,11 +141,13 @@ public class Board {
 
 				if (s.isOccupied() && (s.getPieceColor() == ChessColor.BLACK)) {
 					Piece pieceFound = s.getPiece();
-					pieceFound.clear();
+					pieceFound.clearValidMoves();
 					
 					
 					ArrayList <Direction> validDirections = pieceFound.getValidDirections();
 					ArrayList <Rules> pieceRules = pieceFound.getRules();
+					
+					
 
 					for (Rules rule : pieceRules) {
 
@@ -171,6 +173,8 @@ public class Board {
 									}
 									else break;
 								}
+								
+								// aggiungere la limitazione del pedone (caso particolare) fare lo stesso per d1 e d2
 								
 								pieceFound.addValidMoves(valids(possibleMoves,pieceFound,c));
 								possibleMoves.clear();
@@ -377,7 +381,8 @@ public class Board {
 									possibleMoves.add(b[identificatoreSquareX][identificatoreSquareY]);
 								}
 								
-								// qui si deve chiamare un valid che si comporta in modo diverso perchè il cavallo scavalca i pezzi;
+								
+								pieceFound.addValidMoves(valids(possibleMoves,pieceFound,c));
 								possibleMoves.clear();
 
 								break;
@@ -396,8 +401,32 @@ public class Board {
 		Iterator <Square> iter = lista.iterator() ;
 		Square s;
 		
-
-		// guardare bene cosa succede con i pedoni
+		// caso pedone 
+		// caso re il quale non si può mettere in caselle attaccate dagli altri 
+		
+		
+		
+		// caso cavallo
+		
+		if (pieceFound.isKnight()) {
+			do {
+				s = iter.next();
+				if (!s.isOccupied()) {
+					validMoves.add(s);
+				}
+				else if (s.isOccupied() && s.getPieceColor() != x) {
+					validMoves.add(s);
+					
+				}
+				else continue;
+			}
+			while (iter.hasNext());
+			return validMoves;
+			
+		}
+		
+		
+		
 		do {
 			s = iter.next();
 			if (!s.isOccupied()) {
@@ -411,7 +440,8 @@ public class Board {
 		}
 		while (iter.hasNext());
 		
-		// da riguardare
+		// da riguardare aggiungere if del colore.
+		// cambiare questa cosa dell attacker 
 
 		do {
 			if (iter.hasNext()) {
@@ -423,6 +453,9 @@ public class Board {
 				else break;
 			}
 		}
+		
+		
+		
 		while (iter.hasNext());
 
 

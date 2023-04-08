@@ -121,9 +121,9 @@ public class GameBoard extends JPanel implements ActionListener  {
 
 
 
-		tasti[0][0].setIdAlto("7");
-		tasti[0][1].setIdAlto("6");
-		tasti[0][2].setIdAlto("5");
+		tasti[0][0].setIdAlto("8");
+		tasti[0][1].setIdAlto("7");
+		tasti[0][2].setIdAlto("6");
 		tasti[0][3].setIdAlto("5");
 		tasti[0][4].setIdAlto("4");
 		tasti[0][5].setIdAlto("3");

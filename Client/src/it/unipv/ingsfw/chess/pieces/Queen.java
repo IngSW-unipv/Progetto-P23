@@ -31,6 +31,12 @@ public class Queen extends Piece{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isKnight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	

@@ -33,6 +33,12 @@ public class Pawn extends Piece {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public boolean isKnight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	

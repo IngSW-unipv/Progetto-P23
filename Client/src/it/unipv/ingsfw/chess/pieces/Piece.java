@@ -57,7 +57,7 @@ public abstract class Piece {
 		 
 	 }
 	 
-	 public void clear () {
+	 public void clearValidMoves () {
 		 validMoves.clear();
 	 }
 	 
@@ -68,6 +68,7 @@ public abstract class Piece {
 	 
 	 public abstract boolean isKing();
 	 public abstract boolean isPawn();
+	 public abstract boolean isKnight();
 	 
 	 public void printmoves () {
 		 for (Square a : validMoves) {
