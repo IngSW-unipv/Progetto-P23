@@ -1,45 +1,30 @@
 package it.unipv.ingsfw.chess.pieces;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import it.unipv.ingsfw.chess.ChessColor;
-import it.unipv.ingsfw.chess.Direction;
+import it.unipv.ingsfw.chess.game.Direction;
+import it.unipv.ingsfw.chess.game.Rules;
 
 public class King extends Piece{
 
 
-	public King (ChessColor c) {
-		super(c);
-		rules.add(new Rules(Direction.V,1));
-		rules.add(new Rules(Direction.H,1));
-		rules.add(new Rules(Direction.D1,1));
-		rules.add(new Rules(Direction.D2,1));
-		
-		
-		validDirections.add(Direction.V);
-		validDirections.add(Direction.D1);
-		validDirections.add(Direction.D2);
-		validDirections.add(Direction.H);
-
+	public King (ChessColor c, PieceType type) {
+		super(c, type);
 	}
+
 
 	@Override
-	public boolean isKing() {
-		// TODO Auto-generated method stub
-		return true;
+	public ArrayList<Rules> directions() {
+		ArrayList<Rules> rules = new ArrayList<Rules>();
+		rules.add(new Rules(Direction.N,1));
+		rules.add(new Rules(Direction.S,1));
+		rules.add(new Rules(Direction.E,1));
+		rules.add(new Rules(Direction.W,1));
+		rules.add(new Rules(Direction.NE,1));
+		rules.add(new Rules(Direction.NW,1));
+		rules.add(new Rules(Direction.SE,1));
+		rules.add(new Rules(Direction.SW,1));
+		return rules;
 	}
-
-	@Override
-	public boolean isPawn() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isKnight() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-
 }

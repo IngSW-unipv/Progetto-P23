@@ -3,34 +3,21 @@ package it.unipv.ingsfw.chess.pieces;
 import java.util.ArrayList;
 
 import it.unipv.ingsfw.chess.ChessColor;
-import it.unipv.ingsfw.chess.Direction;
+import it.unipv.ingsfw.chess.game.Direction;
+import it.unipv.ingsfw.chess.game.Rules;
+
 
 public class Knight extends Piece{
 
-	public Knight (ChessColor c) {
-		super(c);
-		rules.add(new Rules (Direction.L,0));
-		
-		validDirections.add(Direction.L);
+	public Knight (ChessColor c, PieceType type) {
+		super(c, type);
 	}
+
 
 	@Override
-	public boolean isKing() {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Rules> directions() {
+		ArrayList<Rules> rules = new ArrayList<Rules>();
+		rules.add(new Rules(Direction.L));
+		return rules;
 	}
-
-	@Override
-	public boolean isPawn() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isKnight() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	
-
 }
