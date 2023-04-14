@@ -31,4 +31,13 @@ public class GameToolBar extends JPanel {
 		
 		
 	}
+
+
+	public JButton getButton1() {
+		return button1;
+	}
+
+
+	
+	
 }

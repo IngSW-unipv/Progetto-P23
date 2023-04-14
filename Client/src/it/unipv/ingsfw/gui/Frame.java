@@ -3,9 +3,12 @@ package it.unipv.ingsfw.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 
 import javax.swing.*;
+
+import it.unipv.ingsfw.chess.game.Board;
+import it.unipv.ingsfw.controller.Controller;
 
 public class Frame  extends JFrame implements ActionListener {
 
@@ -47,8 +50,13 @@ public class Frame  extends JFrame implements ActionListener {
 		
 	}
 	
+	//public static void main(String[] args) {
+	//	Frame sandro = new Frame ("partita");
+	//}
+	
 	public static void main(String[] args) {
-		Frame sandro = new Frame ("partita");
+		Frame sandro1 = new Frame ("partita");
+		
 	}
 
 	@Override
@@ -57,6 +65,8 @@ public class Frame  extends JFrame implements ActionListener {
 		gamePanel = new GamePanel ();
 		menu.setVisible(false);
 		add(gamePanel,BorderLayout.CENTER);
+		
+		Controller sandro = new Controller (new Board (), gamePanel);
 		
 	}
 

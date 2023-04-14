@@ -114,6 +114,10 @@ public class Board {
 				}
 			}
 	  }
+	  
+	  public Square[][] getB () {
+		  return board;
+	  }
 	
 
 }

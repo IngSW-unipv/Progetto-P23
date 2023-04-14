@@ -18,6 +18,17 @@ public class GamePanel extends JPanel{
 		add(gameBoard,BorderLayout.CENTER);
 		add(gameToolBar,BorderLayout.PAGE_START);
 	}
+	
+	public GameBoard getGameBoard () {
+		return gameBoard;
+	}
+
+	public GameToolBar getGameToolBar() {
+		return gameToolBar;
+	}
+
+	
+	
 
 
 }

@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import it.unipv.ingsfw.gui.buttons.GameButton;
@@ -27,6 +26,18 @@ public class GameBoard extends JPanel implements ActionListener  {
 	private Color darkGreen;
 	private Color lightGreen;
 	private Color originalColor;
+	private ImageIcon rookB = new ImageIcon(getClass().getResource("img/rookB.png"));
+	private ImageIcon rookW = new ImageIcon(getClass().getResource("img/rookW.png"));
+	private ImageIcon queenB = new ImageIcon(getClass().getResource("img/queenB.png"));
+	private ImageIcon queenW = new ImageIcon(getClass().getResource("img/queenW.png"));
+	private ImageIcon bishopB = new ImageIcon(getClass().getResource("img/bishopB.png"));
+	private ImageIcon bishopW = new ImageIcon(getClass().getResource("img/bishopW.png")); 
+	private ImageIcon kingB = new ImageIcon(getClass().getResource("img/kingB.png"));
+	private ImageIcon kingW = new ImageIcon(getClass().getResource("img/kingW.png"));
+	private ImageIcon pawnB = new ImageIcon(getClass().getResource("img/pawnB.png"));
+	private ImageIcon pawnW = new ImageIcon(getClass().getResource("img/pawnW.png"));
+	private ImageIcon knightB = new ImageIcon(getClass().getResource("img/knightB.png"));
+	private ImageIcon knightW = new ImageIcon(getClass().getResource("img/knightW.png")); 
 
 	
 
@@ -48,19 +59,6 @@ public class GameBoard extends JPanel implements ActionListener  {
 
 		setLayout(new GridLayout(8,8,0,0));
 		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
-
-		ImageIcon rookB = new ImageIcon(getClass().getResource("img/rookB.png"));
-		ImageIcon rookW = new ImageIcon(getClass().getResource("img/rookW.png"));
-		ImageIcon queenB = new ImageIcon(getClass().getResource("img/queenB.png"));
-		ImageIcon queenW = new ImageIcon(getClass().getResource("img/queenW.png"));
-		ImageIcon bishopB = new ImageIcon(getClass().getResource("img/bishopB.png"));
-		ImageIcon bishopW = new ImageIcon(getClass().getResource("img/bishopW.png")); 
-		ImageIcon kingB = new ImageIcon(getClass().getResource("img/kingB.png"));
-		ImageIcon kingW = new ImageIcon(getClass().getResource("img/kingW.png"));
-		ImageIcon pawnB = new ImageIcon(getClass().getResource("img/pawnB.png"));
-		ImageIcon pawnW = new ImageIcon(getClass().getResource("img/pawnW.png"));
-		ImageIcon knightB = new ImageIcon(getClass().getResource("img/knightB.png"));
-		ImageIcon knightW = new ImageIcon(getClass().getResource("img/knightW.png")); 
 
 
 
@@ -87,40 +85,6 @@ public class GameBoard extends JPanel implements ActionListener  {
 
 
 
-		for (int i = 0 ;i < 8 ; i++) {
-			tasti[i][6].setIcon(pawnW);
-		}
-
-		for (int i = 0 ;i < 8 ; i++) {
-			tasti[i][1].setIcon(pawnB);
-		}
-
-		tasti[0][0].setIcon(rookB);
-		tasti[7][0].setIcon(rookB);
-
-		tasti[0][7].setIcon(rookW);
-		tasti[7][7].setIcon(rookW);
-
-		tasti[2][0].setIcon(bishopB);
-		tasti[5][0].setIcon(bishopB);
-
-		tasti[2][7].setIcon(bishopW);
-		tasti[5][7].setIcon(bishopW);
-
-		tasti[1][0].setIcon(knightB);
-		tasti[6][0].setIcon(knightB);
-
-		tasti[1][7].setIcon(knightW);
-		tasti[6][7].setIcon(knightW);
-
-		tasti[4][0].setIcon(kingB);
-		tasti[3][0].setIcon(queenB);
-
-		tasti[4][7].setIcon(kingW);
-		tasti[3][7].setIcon(queenW);
-
-
-
 		tasti[0][0].setIdAlto("8");
 		tasti[0][1].setIdAlto("7");
 		tasti[0][2].setIdAlto("6");
@@ -141,8 +105,6 @@ public class GameBoard extends JPanel implements ActionListener  {
 		
 
 	}
-
-
 	
 	
 
@@ -186,7 +148,233 @@ public class GameBoard extends JPanel implements ActionListener  {
 
 		}
 
-	} 
+	}
+
+
+	public GameButton[][] getTasti() {
+		return tasti;
+	}
+
+
+
+
+
+
+	public ImageIcon getRookB() {
+		return rookB;
+	}
+
+
+
+
+
+
+	public ImageIcon getRookW() {
+		return rookW;
+	}
+
+
+
+
+
+
+	public ImageIcon getQueenB() {
+		return queenB;
+	}
+
+
+
+
+
+
+	public ImageIcon getQueenW() {
+		return queenW;
+	}
+
+
+
+
+
+
+	public ImageIcon getBishopB() {
+		return bishopB;
+	}
+
+
+
+
+
+
+	public ImageIcon getBishopW() {
+		return bishopW;
+	}
+
+
+
+
+
+
+	public ImageIcon getKingB() {
+		return kingB;
+	}
+
+
+
+
+
+
+	public ImageIcon getKingW() {
+		return kingW;
+	}
+
+
+
+
+
+
+	public ImageIcon getPawnB() {
+		return pawnB;
+	}
+
+
+
+
+
+
+	public ImageIcon getPawnW() {
+		return pawnW;
+	}
+
+
+
+
+
+
+	public ImageIcon getKnightB() {
+		return knightB;
+	}
+
+
+
+
+
+
+	public ImageIcon getKnightW() {
+		return knightW;
+	}
+
+
+
+
+
+
+	public void setRookB(ImageIcon rookB) {
+		this.rookB = rookB;
+	}
+
+
+
+
+
+
+	public void setRookW(ImageIcon rookW) {
+		this.rookW = rookW;
+	}
+
+
+
+
+
+
+	public void setQueenB(ImageIcon queenB) {
+		this.queenB = queenB;
+	}
+
+
+
+
+
+
+	public void setQueenW(ImageIcon queenW) {
+		this.queenW = queenW;
+	}
+
+
+
+
+
+
+	public void setBishopB(ImageIcon bishopB) {
+		this.bishopB = bishopB;
+	}
+
+
+
+
+
+
+	public void setBishopW(ImageIcon bishopW) {
+		this.bishopW = bishopW;
+	}
+
+
+
+
+
+
+	public void setKingB(ImageIcon kingB) {
+		this.kingB = kingB;
+	}
+
+
+
+
+
+
+	public void setKingW(ImageIcon kingW) {
+		this.kingW = kingW;
+	}
+
+
+
+
+
+
+	public void setPawnB(ImageIcon pawnB) {
+		this.pawnB = pawnB;
+	}
+
+
+
+
+
+
+	public void setPawnW(ImageIcon pawnW) {
+		this.pawnW = pawnW;
+	}
+
+
+
+
+
+
+	public void setKnightB(ImageIcon knightB) {
+		this.knightB = knightB;
+	}
+
+
+
+
+
+
+	public void setKnightW(ImageIcon knightW) {
+		this.knightW = knightW;
+	}
+
+	
+	
+
+
 	
 	
 
