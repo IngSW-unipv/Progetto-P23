@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import it.unipv.ingsfw.chess.game.Board;
+import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.controller.Controller;
 
 public class Frame  extends JFrame implements ActionListener {
@@ -66,7 +67,7 @@ public class Frame  extends JFrame implements ActionListener {
 		menu.setVisible(false);
 		add(gamePanel,BorderLayout.CENTER);
 		
-		Controller sandro = new Controller (new Board (), gamePanel);
+		Controller sandro = new Controller (new GameModel (), gamePanel);
 		
 	}
 

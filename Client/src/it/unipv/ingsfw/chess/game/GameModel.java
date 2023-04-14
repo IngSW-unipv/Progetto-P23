@@ -34,6 +34,10 @@ public class GameModel {
 	public Board getBoard() {
 		return board;
 	}
+	
+	public Square[][] getB () {
+		return board.getB();
+	}
 
 
 	public ChessColor getCurrentPlayer() {

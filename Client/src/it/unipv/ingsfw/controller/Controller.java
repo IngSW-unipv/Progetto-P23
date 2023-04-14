@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import it.unipv.ingsfw.chess.ChessColor;
-import it.unipv.ingsfw.chess.game.Board;
+import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.chess.pieces.Piece;
 import it.unipv.ingsfw.gui.GameBoard;
@@ -15,7 +15,7 @@ import it.unipv.ingsfw.gui.buttons.GameButton;
 
 public class Controller {
 
-	private Board model;
+	private GameModel model;
 	private GamePanel view;
 	private GameBoard viewBoard;
 	private GameToolBar toolBar;
@@ -24,7 +24,7 @@ public class Controller {
 
 
 
-	public Controller(Board model, GamePanel view)  {
+	public Controller(GameModel model, GamePanel view)  {
 		super();
 		this.model = model;
 		this.view = view;
@@ -46,6 +46,7 @@ public class Controller {
 			}
 		});
 
+		
 		tasti = viewBoard.getTasti();
 
 		for (int y = 0 ; y <8;  y++) {
@@ -54,7 +55,7 @@ public class Controller {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						System.out.println("suca");
+						
 
 					}
 				});
@@ -69,7 +70,7 @@ public class Controller {
 
 
 
-	public void inizializeView (Board model) {
+	public void inizializeView (GameModel model) {
 
 		Square [][] casa = model.getB();
 		Piece p;
