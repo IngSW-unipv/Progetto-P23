@@ -1,11 +1,14 @@
 package it.unipv.ingsfw.controller;
 
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.GameModel;
+import it.unipv.ingsfw.chess.game.Move;
 import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.chess.pieces.Piece;
 import it.unipv.ingsfw.gui.GameBoard;
@@ -20,6 +23,10 @@ public class Controller {
 	private GameBoard viewBoard;
 	private GameToolBar toolBar;
 	private GameButton [][] tasti;
+	private ChessColor currentPlayer;
+	private Boolean firstClick;
+	private int sX;
+	private int sY;
 
 
 
@@ -28,12 +35,14 @@ public class Controller {
 		super();
 		this.model = model;
 		this.view = view;
-		
+
 		viewBoard = view.getGameBoard();
 		toolBar = view.getGameToolBar();
 		tasti = viewBoard.getTasti();
 		inizializeView (model);
-		
+		currentPlayer = model.getCurrentPlayer();
+		firstClick = true;
+
 
 
 
@@ -46,16 +55,49 @@ public class Controller {
 			}
 		});
 
-		
+
 		tasti = viewBoard.getTasti();
 
 		for (int y = 0 ; y <8;  y++) {
 			for (int x = 0 ; x < 8 ;x++) {		
 				tasti[x][y].addActionListener(new ActionListener() {
 
+
 					@Override
 					public void actionPerformed(ActionEvent e) {
+
+						model.calculateMove(currentPlayer);
+						GameButton pressed = (GameButton)e.getSource();
+
+						int genericX = pressed.getChessX();
+						int genericY = pressed.getChessY();
+						List <Move> pm = model.getPossibleMoves();
 						
+
+						if (model.isOccupied(genericX,genericY) && 
+								(model.getBoard().getSquare(genericX,genericY).getPieceColor() == currentPlayer) &&
+								(firstClick)) {
+							
+							Toolkit.getDefaultToolkit().beep();
+							sX = genericX;
+							sY = genericY;
+							firstClick =false;
+
+						
+
+
+						}
+
+						else if (!firstClick) {
+							Toolkit.getDefaultToolkit().beep();
+							viewBoard.swapIcon(sX, sY, genericX, genericY);
+							model.getBoard().swap(sX, sY, genericX, genericY);
+							firstClick = true;
+							model.switchCurrentPlayer();
+							currentPlayer = model.getCurrentPlayer();
+							
+							
+						}
 
 					}
 				});
@@ -93,17 +135,17 @@ public class Controller {
 						case Rook :
 							tasti[x][y].setIcon(viewBoard.getRookW());
 							break;
-							
+
 						case King :
 							tasti[x][y].setIcon(viewBoard.getKingW());
 							break;
 
-							
+
 						case Queen :
 							tasti[x][y].setIcon(viewBoard.getQueenW());
 							break;
 
-							
+
 						case Knight :
 							tasti[x][y].setIcon(viewBoard.getKnightW());
 							break;
@@ -117,7 +159,7 @@ public class Controller {
 
 					}
 					else {
-						
+
 						switch (p.getType()) {
 
 						case Pawn :
@@ -127,17 +169,17 @@ public class Controller {
 						case Rook :
 							tasti[x][y].setIcon(viewBoard.getRookB());
 							break;
-							
+
 						case King :
 							tasti[x][y].setIcon(viewBoard.getKingB());
 							break;
 
-							
+
 						case Queen :
 							tasti[x][y].setIcon(viewBoard.getQueenB());
 							break;
 
-							
+
 						case Knight :
 							tasti[x][y].setIcon(viewBoard.getKnightB());
 							break;

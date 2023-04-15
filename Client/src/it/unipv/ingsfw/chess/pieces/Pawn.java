@@ -19,20 +19,20 @@ public class Pawn extends Piece {
 		ArrayList<Rules> rules = new ArrayList<Rules>();
 		if(this.color == ChessColor.WHITE) {
 			if(firstMove) {
-				rules.add(new Rules(Direction.N,2));			
-			}else {
-				rules.add(new Rules(Direction.N,1));			
-			}
-			rules.add(new Rules(Direction.NE,1));
-			rules.add(new Rules(Direction.NW,1));
-		}else {
-			if(firstMove) {
 				rules.add(new Rules(Direction.S,2));			
 			}else {
 				rules.add(new Rules(Direction.S,1));			
 			}
 			rules.add(new Rules(Direction.SE,1));
 			rules.add(new Rules(Direction.SW,1));
+		}else {
+			if(firstMove) {
+				rules.add(new Rules(Direction.N,2));			
+			}else {
+				rules.add(new Rules(Direction.N,1));			
+			}
+			rules.add(new Rules(Direction.NE,1));
+			rules.add(new Rules(Direction.NW,1));
 		}
 
 		return rules;

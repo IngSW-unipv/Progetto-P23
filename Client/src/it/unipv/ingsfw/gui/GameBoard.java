@@ -16,7 +16,7 @@ import it.unipv.ingsfw.gui.buttons.GameButton;
 
 
 
-public class GameBoard extends JPanel implements ActionListener  {
+public class GameBoard extends JPanel   {
 
 
 
@@ -69,12 +69,12 @@ public class GameBoard extends JPanel implements ActionListener  {
 				white = !white;
 				if (!white) {
 					tasti[x][y] = new GameButton(darkGreen,x,y);
-					tasti[x][y].addActionListener(this);
+			//		tasti[x][y].addActionListener(this);
 					
 				}
 				else {
 					tasti[x][y] = new GameButton(lightGreen,x,y);
-					tasti[x][y].addActionListener(this);
+			//		tasti[x][y].addActionListener(this);
 					
 				}
 				add(tasti [x][y]);
@@ -107,265 +107,115 @@ public class GameBoard extends JPanel implements ActionListener  {
 	}
 	
 	
-
-
-
-
-	// usata dal controller
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
+	public void swapIcon (int sX , int sY, int eX ,int eY ){
 		
 		Icon moveThis;
-		GameButton p =(GameButton)e.getSource();
-		
-		
-		if (!primosetted ) {
-			xPrimo = p.getChessX();
-			yPrimo = p.getChessY();
-			
-
-			originalColor = p.getBackground();
-	
-			p.setBackground(new Color (255,172,172));
-			
-			primosetted =  true ;
-		}
-		else {
-			xSecondo = p.getChessX();
-			ySecondo = p.getChessY();
-			
-			
-			moveThis = tasti[xPrimo][yPrimo].getIcon();
-			tasti[xPrimo][yPrimo].setIcon(null);
-			tasti[xPrimo][yPrimo].setBackground(originalColor);
-			tasti[xSecondo][ySecondo].setIcon(moveThis);
-			
-			moveThis = null;
-			primosetted = false;
-
-
-		}
-
+		moveThis = tasti[sX][sY].getIcon();
+		tasti[sX][sY].setIcon(null);
+		tasti[eX][eY].setIcon(moveThis);
+		moveThis = null;
 	}
+	
+
+
+
 
 
 	public GameButton[][] getTasti() {
 		return tasti;
 	}
 
-
-
-
-
-
 	public ImageIcon getRookB() {
 		return rookB;
 	}
-
-
-
-
-
 
 	public ImageIcon getRookW() {
 		return rookW;
 	}
 
-
-
-
-
-
 	public ImageIcon getQueenB() {
 		return queenB;
 	}
-
-
-
-
-
 
 	public ImageIcon getQueenW() {
 		return queenW;
 	}
 
-
-
-
-
-
 	public ImageIcon getBishopB() {
 		return bishopB;
 	}
-
-
-
-
-
 
 	public ImageIcon getBishopW() {
 		return bishopW;
 	}
 
-
-
-
-
-
 	public ImageIcon getKingB() {
 		return kingB;
 	}
-
-
-
-
-
 
 	public ImageIcon getKingW() {
 		return kingW;
 	}
 
-
-
-
-
-
 	public ImageIcon getPawnB() {
 		return pawnB;
 	}
-
-
-
-
-
 
 	public ImageIcon getPawnW() {
 		return pawnW;
 	}
 
-
-
-
-
-
 	public ImageIcon getKnightB() {
 		return knightB;
 	}
-
-
-
-
-
 
 	public ImageIcon getKnightW() {
 		return knightW;
 	}
 
-
-
-
-
-
 	public void setRookB(ImageIcon rookB) {
 		this.rookB = rookB;
 	}
-
-
-
-
-
 
 	public void setRookW(ImageIcon rookW) {
 		this.rookW = rookW;
 	}
 
-
-
-
-
-
 	public void setQueenB(ImageIcon queenB) {
 		this.queenB = queenB;
 	}
-
-
-
-
-
 
 	public void setQueenW(ImageIcon queenW) {
 		this.queenW = queenW;
 	}
 
-
-
-
-
-
 	public void setBishopB(ImageIcon bishopB) {
 		this.bishopB = bishopB;
 	}
-
-
-
-
-
 
 	public void setBishopW(ImageIcon bishopW) {
 		this.bishopW = bishopW;
 	}
 
-
-
-
-
-
 	public void setKingB(ImageIcon kingB) {
 		this.kingB = kingB;
 	}
-
-
-
-
-
 
 	public void setKingW(ImageIcon kingW) {
 		this.kingW = kingW;
 	}
 
-
-
-
-
-
 	public void setPawnB(ImageIcon pawnB) {
 		this.pawnB = pawnB;
 	}
-
-
-
-
-
 
 	public void setPawnW(ImageIcon pawnW) {
 		this.pawnW = pawnW;
 	}
 
-
-
-
-
-
 	public void setKnightB(ImageIcon knightB) {
 		this.knightB = knightB;
 	}
-
-
-
-
-
 
 	public void setKnightW(ImageIcon knightW) {
 		this.knightW = knightW;

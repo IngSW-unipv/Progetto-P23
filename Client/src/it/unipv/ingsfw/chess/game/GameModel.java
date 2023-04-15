@@ -38,6 +38,10 @@ public class GameModel {
 	public Square[][] getB () {
 		return board.getB();
 	}
+	
+	public Boolean isOccupied (int x , int y) {
+		return board.getSquare(x, y).isOccupied();
+	}
 
 
 	public ChessColor getCurrentPlayer() {

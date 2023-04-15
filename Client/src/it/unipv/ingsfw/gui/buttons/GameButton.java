@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
 
-public class GameButton extends JButton implements ActionListener  {
+public class GameButton extends JButton   {
 	
 	private int chessX , chessY ;
 	private JLabel idAlto;
@@ -31,7 +31,6 @@ public class GameButton extends JButton implements ActionListener  {
 		
 		add(idAlto);
 		add(idBasso);
-		addActionListener(this);
 		setOpaque(true);
 		setBackground(C);
 		setBorder(BorderFactory.createEmptyBorder());
@@ -68,10 +67,6 @@ public class GameButton extends JButton implements ActionListener  {
 		
 	}
 
-	@Override
-	  public void actionPerformed(ActionEvent e) {
-        Toolkit.getDefaultToolkit().beep();
-    }
 
 	
 
