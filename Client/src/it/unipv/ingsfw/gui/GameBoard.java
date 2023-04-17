@@ -21,11 +21,10 @@ public class GameBoard extends JPanel   {
 
 
 	private GameButton [][] tasti;
-	private int xPrimo , yPrimo , xSecondo , ySecondo ;
-	private boolean primosetted = false;
+	
 	private Color darkGreen;
 	private Color lightGreen;
-	private Color originalColor;
+	
 	private ImageIcon rookB = new ImageIcon(getClass().getResource("img/rookB.png"));
 	private ImageIcon rookW = new ImageIcon(getClass().getResource("img/rookW.png"));
 	private ImageIcon queenB = new ImageIcon(getClass().getResource("img/queenB.png"));
@@ -69,12 +68,12 @@ public class GameBoard extends JPanel   {
 				white = !white;
 				if (!white) {
 					tasti[x][y] = new GameButton(darkGreen,x,y);
-			//		tasti[x][y].addActionListener(this);
+		
 					
 				}
 				else {
 					tasti[x][y] = new GameButton(lightGreen,x,y);
-			//		tasti[x][y].addActionListener(this);
+			
 					
 				}
 				add(tasti [x][y]);

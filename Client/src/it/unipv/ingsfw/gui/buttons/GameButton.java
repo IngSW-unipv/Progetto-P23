@@ -16,10 +16,12 @@ public class GameButton extends JButton   {
 	private int chessX , chessY ;
 	private JLabel idAlto;
 	private JLabel idBasso;
+	public Color mainColor;
+	private Color otherColor ;
 	
 	
 
-	public GameButton (Color C,int chessX , int chessY) {
+	public GameButton (Color mainColor,int chessX , int chessY) {
 
 		super();
 		
@@ -27,12 +29,15 @@ public class GameButton extends JButton   {
 		idBasso = new JLabel();
 		this.chessX = chessX;
 		this.chessY = chessY;
+		this.mainColor = mainColor;
+		otherColor = new Color (253,203,211);
+		
 		
 		
 		add(idAlto);
 		add(idBasso);
 		setOpaque(true);
-		setBackground(C);
+		setBackground(mainColor);
 		setBorder(BorderFactory.createEmptyBorder());
 		
 		
@@ -65,6 +70,15 @@ public class GameButton extends JButton   {
 		idBasso.setBounds(89, 78, 10, 10);
 		
 		
+	}
+	
+	
+	public void color () {
+		setBackground(otherColor);
+	}
+	
+	public void reColor () {
+		setBackground(mainColor);
 	}
 
 

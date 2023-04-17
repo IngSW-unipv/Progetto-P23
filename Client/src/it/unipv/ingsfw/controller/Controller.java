@@ -72,31 +72,33 @@ public class Controller {
 						int genericX = pressed.getChessX();
 						int genericY = pressed.getChessY();
 						List <Move> pm = model.getPossibleMoves();
-						
+
 
 						if (model.isOccupied(genericX,genericY) && 
 								(model.getBoard().getSquare(genericX,genericY).getPieceColor() == currentPlayer) &&
 								(firstClick)) {
-							
+
 							Toolkit.getDefaultToolkit().beep();
+							pressed.color();
 							sX = genericX;
 							sY = genericY;
 							firstClick =false;
 
-						
+
 
 
 						}
 
 						else if (!firstClick) {
 							Toolkit.getDefaultToolkit().beep();
+							tasti[sX][sY].reColor();
 							viewBoard.swapIcon(sX, sY, genericX, genericY);
 							model.getBoard().swap(sX, sY, genericX, genericY);
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
-							
-							
+
+
 						}
 
 					}
