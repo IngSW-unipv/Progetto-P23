@@ -10,37 +10,51 @@ public class GameModel {
 
 	private Board board;
 	private ChessColor currentPlayer;
-	private List<Move> possibleMoves;
+	private List<Move> currentPlayerMoves;
+	private List<Move> opponentPlayerMoves;
 
 
 	public GameModel () {
 		this.board = new Board();
 		this.currentPlayer = ChessColor.WHITE;
-		this.possibleMoves = new ArrayList<Move>();
-
+		this.currentPlayerMoves = new ArrayList<Move>();
+		this.opponentPlayerMoves = new ArrayList<Move>();
 	}
 	
+	
+	public GameModel(Board board) {
+		this.board = board;
+		this.currentPlayer = ChessColor.WHITE;
+		this.currentPlayerMoves = new ArrayList<Move>();
+		this.opponentPlayerMoves = new ArrayList<Move>();
+	}
+
+
+	/*
 	public void switchCurrentPlayer() {
 		if(this.currentPlayer == ChessColor.WHITE) {
 			this.currentPlayer = ChessColor.BLACK;
-			this.possibleMoves = new ArrayList<Move>();
+			this.opponentPlayerMoves = this.currentPlayerMoves;
+			this.currentPlayerMoves = new ArrayList<Move>();
 		}else {
 			this.currentPlayer = ChessColor.WHITE;
-			this.possibleMoves = new ArrayList<Move>();
+			this.opponentPlayerMoves = this.currentPlayerMoves;
+			this.currentPlayerMoves = new ArrayList<Move>();
 		}
+	}
+	*/
+	
+	public void switchCurrentPlayer() {
+		//calcolateMove(currentPlayer);
+		this.currentPlayer = ChessColor.oppositeColor(currentPlayer);
+		this.opponentPlayerMoves = this.currentPlayerMoves;
+		this.currentPlayerMoves = new ArrayList<Move>();
+		
 	}
 
 
 	public Board getBoard() {
 		return board;
-	}
-	
-	public Square[][] getB () {
-		return board.getB();
-	}
-	
-	public Boolean isOccupied (int x , int y) {
-		return board.getSquare(x, y).isOccupied();
 	}
 
 
@@ -48,43 +62,67 @@ public class GameModel {
 		return currentPlayer;
 	}
 	
-	public List<Move> getPossibleMoves() {
-		return possibleMoves;
+	
+	public List<Move> getCurrentPlayerMoves() {
+		return currentPlayerMoves;
 	}
 
-	public void setPossibleMoves(List<Move> possibleMoves) {
-		this.possibleMoves = possibleMoves;
+	
+	public List<Move> getOpponentPlayerMoves() {
+		return opponentPlayerMoves;
 	}
-
-
-	public void calculateMove(ChessColor c) {
-		Square s;
+	
+	
+	public boolean isCheck(Move m) {
+		Square king = this.board.getKingSquare(currentPlayer);
+		/*
+		for(Move m: this.opponentPlayerMoves) {
+			if(king.equals(m.getFinalPosition())) {
+				return true;
+			}
+		}
+		*/
+		if(king.equals(m.getFinalPosition())) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isCheckMate(Move m) {
+		if(isCheck(m) && this.currentPlayerMoves == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public ArrayList<Move> calcolatorMoves(ChessColor c){
+		Square init;
+		ArrayList<Move> moves = new ArrayList<Move>();
 		for(int i = 0; i < 8; i++) {
 			for(int j=0; j < 8; j++) {
 				if(board.getSquare(j, i).isOccupied() && c == board.getSquare(j, i).getPieceColor()) {
-					s = board.getSquare(j, i);
-					this.possibleMoves.addAll(calcolator(s,c));
+					init = board.getSquare(j, i);
+					for(Rules r : init.getPiece().getDirections()) {
+						moves.addAll(createPath(init,r));
+					}
 				}
 			}
 		}
-		
+		return moves;
 	}
 	
-	
-	public ArrayList<Move> calcolator(Square init, ChessColor c) {
-		Piece p = init.getPiece();
-		ArrayList<Move> pieceMoves = new ArrayList<Move>();
-		for(Rules r : p.directions()) {
-			pieceMoves.addAll(createPath(init,r,c));
-		}
-		return pieceMoves;
+	public void initTurn() {
+		this.currentPlayerMoves = calcolatorMoves(currentPlayer);
+		this.opponentPlayerMoves = calcolatorMoves(ChessColor.oppositeColor(currentPlayer));
+		checkCurrentMoves();
 	}
+	
 
-
-	public ArrayList<Move> createPath(Square init, Rules r, ChessColor c) {
+	public ArrayList<Move> createPath(Square init, Rules r) {
 		ArrayList<Move> path = new ArrayList<Move>();
 		Square fin;
 		Piece p = init.getPiece();
+		ChessColor c = p.getColor();
 		int j;
 		switch(r.getDirection()) {
 			case N:				
@@ -96,8 +134,11 @@ public class GameModel {
 							if(!fin.isOccupied()) {
 								path.add(new Move(init, fin));
 							}
-						}else if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -115,8 +156,11 @@ public class GameModel {
 							if(!fin.isOccupied()) {
 								path.add(new Move(init, fin));
 							}
-						}else if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -130,8 +174,11 @@ public class GameModel {
 					j=i+1;
 					if(this.board.isInBoard(new Square(init.getX()+j, init.getY()))) {
 						fin = this.board.getSquare(init.getX()+j, init.getY());
-						if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -145,8 +192,11 @@ public class GameModel {
 					j=i+1;
 					if(this.board.isInBoard(new Square(init.getX()-j, init.getY()))) {
 						fin = this.board.getSquare(init.getX()-j, init.getY());
-						if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -164,8 +214,11 @@ public class GameModel {
 							if(fin.isOccupied() && fin.getPieceColor() != c) {
 								path.add(new Move(init, fin));
 							}
-						}else if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -183,8 +236,11 @@ public class GameModel {
 							if(fin.isOccupied() && fin.getPieceColor() != c) {
 								path.add(new Move(init, fin));
 							}
-						}else if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -202,8 +258,11 @@ public class GameModel {
 							if(fin.isOccupied() && fin.getPieceColor() != c) {
 								path.add(new Move(init, fin));
 							}
-						}else if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -221,8 +280,11 @@ public class GameModel {
 							if(fin.isOccupied() && fin.getPieceColor() != c) {
 								path.add(new Move(init, fin));
 							}
-						}else if((fin.isOccupied() && fin.getPieceColor() != c) || !fin.isOccupied()) {
+						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
+						}else if(fin.isOccupied() && fin.getPieceColor() != c) {
+							path.add(new Move(init, fin));
+							break;
 						}else {
 							break;
 						}
@@ -286,23 +348,68 @@ public class GameModel {
 		}
 		return path;
 	}
+	
+	public void makeMove(Move m) {
+		board.makeMove(m);
+	}
+	
+	public void undoMove(Move m) {
+		board.makeMove(new Move(m.getFinalPosition(),m.getInitialPosition()));
+	}
+	
+	public void checkCurrentMoves() {
+		for(int i = 0;i < 8;i++) {
+			for(int j = 0;j < 8;j++) {
+				if(board.getSquare(j, i).getPieceColor()==currentPlayer) {
+					removeMoves(board.getSquare(j, i));
+				}
+			}
+		}
+	}
+	
+	public void removeMoves(Square s) {
+		for(Move m1: movesPerPiece(s)) {
+			makeMove(m1);
+			for(Move m2: calcolatorMoves(ChessColor.oppositeColor(currentPlayer))) {
+				if(isCheck(m2)) {
+					this.currentPlayerMoves.remove(m1);
+				}
+			}
+			undoMove(m1);
+		}
+	}
+	
+	public ArrayList<Move> movesPerPiece(Square init){
+		ArrayList<Move> movesPerPiece = new ArrayList<Move>();
+		if(init.getPieceColor() == null) {
+			return null;
+		}else if(init.getPieceColor() == this.currentPlayer) {
+			for(Move m: this.currentPlayerMoves) {
+				if(init.equals(m.getInitialPosition())) {
+					movesPerPiece.add(m);
+				}
+			}
+		}else {
+			for(Move m: this.opponentPlayerMoves) {
+				if(init.equals(m.getInitialPosition())) {
+					movesPerPiece.add(m);
+				}
+			}
+		}
+	
+		return movesPerPiece;
+	}
 
 	
 	public static void main(String[] args) {
 		GameModel g1 = new GameModel();
-		Square s;
-		/*for(int i = 0; i < 8; i++) {
-			for(int j=0; j < 8; j++) {
-					s = g1.getBoard().getSquare(j, i);
-					System.out.println(s.getPieceString()+": "+s.toString()+"\n");
-			}
-		}*/
-		g1.calculateMove(ChessColor.BLACK);
-		for(Move m: g1.getPossibleMoves()) {
-			System.out.println(m.getInitialPosition().getPieceString()+":\n"+m.getInitialPosition().toString()+"\n"+m.getFinalPosition().toString()+"\n");
+		g1.initTurn();
+		for(Move m: g1.getOpponentPlayerMoves()) {
+			System.out.println(m.getInitialPosition().getPieceString()+":\n"+m.getInitialPosition().toString()+"\n"+m.getFinalPosition().toString());
 		}
-		g1.switchCurrentPlayer();
-		
+		for(Move m: g1.getCurrentPlayerMoves()) {
+			System.out.println(m.getInitialPosition().getPieceString()+":\n"+m.getInitialPosition().toString()+"\n"+m.getFinalPosition().toString());
+		}
 		
 	}
 	

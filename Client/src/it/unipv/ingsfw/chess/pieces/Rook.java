@@ -14,7 +14,7 @@ public class Rook extends Piece{
 
 
 	@Override
-	public ArrayList<Rules> directions() {
+	public ArrayList<Rules> pieceRules() {
 		ArrayList<Rules> rules = new ArrayList<Rules>();
 		rules.add(new Rules(Direction.N,8));
 		rules.add(new Rules(Direction.S,8));
@@ -22,6 +22,7 @@ public class Rook extends Piece{
 		rules.add(new Rules(Direction.W,8));
 		return rules;
 	}
+	
 }
 	
 

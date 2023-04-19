@@ -59,6 +59,7 @@ public class Board {
 			this.board[i][1].setPiece(new Pawn(ChessColor.BLACK, PieceType.Pawn));
 		}
 	}
+
 	
 	public Square getSquare(int x, int y) {
 		return board[x][y];
@@ -106,29 +107,4 @@ public class Board {
 		setPiece(fin,p);
 	}
 	
-	
-	
-	
-	  public static void  main(String[] args) {
-			Board b1 = new Board();
-			for(int i=0; i < 8; i++) {
-				for(int j=0; j < 8; j++) {
-					System.out.println(b1.getSquare(j, i).getPieceString()+" "+b1.getSquare(j, i).toString());
-				}
-			}
-	  }
-	  
-	  public Square[][] getB () {
-		  return board;
-	  }
-	  
-	  public void swap (int x1 , int y1, int x2 , int y2) {
-			
-			Piece p = board[x1][y1].getPiece();
-			board[x2][y2].setPiece(p);
-			board[x1][y1].setPiece(null);;
-			
-		}
-	
-
 }

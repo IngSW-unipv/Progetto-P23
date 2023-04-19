@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 
 
 	@Override
-	public ArrayList<Rules> directions() {
+	public ArrayList<Rules> pieceRules() {
 		ArrayList<Rules> rules = new ArrayList<Rules>();
 		if(this.color == ChessColor.WHITE) {
 			if(firstMove) {
@@ -37,4 +37,5 @@ public class Pawn extends Piece {
 
 		return rules;
 	}
+	
 }

@@ -15,7 +15,7 @@ public class King extends Piece{
 
 
 	@Override
-	public ArrayList<Rules> directions() {
+	public ArrayList<Rules> pieceRules() {
 		ArrayList<Rules> rules = new ArrayList<Rules>();
 		rules.add(new Rules(Direction.N,1));
 		rules.add(new Rules(Direction.S,1));
@@ -27,4 +27,5 @@ public class King extends Piece{
 		rules.add(new Rules(Direction.SW,1));
 		return rules;
 	}
+	
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unipv.ingsfw.chess.ChessColor;
-import it.unipv.ingsfw.chess.game.Move;
+import it.unipv.ingsfw.chess.game.Direction;
 import it.unipv.ingsfw.chess.game.Rules;
 
 
@@ -12,26 +12,48 @@ public abstract class Piece {
 
 	 protected ChessColor color;
 	 protected PieceType type;
-	 protected boolean attacker;	
+	 protected boolean defender;	
 	 protected boolean firstMove;
-	 protected List<Move> currentMoves;
+	 protected List<Rules> directions;
 	 
 
-	 public Piece (ChessColor color, PieceType type) {
+
+	public Piece (ChessColor color, PieceType type) {
 		 this.color = color;
 		 this.firstMove = true;
+		 this.defender = false;
 		 this.type = type;
+		 directions = new ArrayList<Rules>();
+		 initDirections();
 	 }
 	 
+	
+	private void initDirections() {
+		// TODO Auto-generated method stub
+		this.directions.addAll(pieceRules());
+	}
+
+	 public List<Rules> getDirections() {
+		return directions;
+	}
 	 
-	 public ChessColor getColor () {
+	public void removeDirection(Direction direction) {
+		for(Rules r: this.directions) {
+			if(r.getDirection() == direction) {
+				this.directions.remove(r);
+				break;
+			}
+		}
+	}
+
+	public ChessColor getColor () {
 		 return color;
 	 }
 	 
 
-	 public void setAttacker(boolean attacker) {
-		 this.attacker = attacker;
-	 }
+	public void setDefe(boolean attacker) {
+		this.defender = attacker;
+	}
 
 
 	public PieceType getType() {
@@ -39,22 +61,12 @@ public abstract class Piece {
 	}
 
 
-	public List<Move> getCurrentMoves() {
-		return currentMoves;
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " " + color;
 	}
-
-
-	public void setCurrentMoves(List<Move> currentMoves) {
-		this.currentMoves = currentMoves;
-	}
-
 	 
-	 @Override
-	 public String toString() {
-		 return getClass().getSimpleName() + " " + color;
-	 }
-	 
-	 
-	 public abstract ArrayList<Rules> directions();
+	
+	public abstract ArrayList<Rules> pieceRules();
 
 }

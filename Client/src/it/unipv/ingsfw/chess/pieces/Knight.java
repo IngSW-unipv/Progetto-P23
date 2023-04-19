@@ -15,9 +15,10 @@ public class Knight extends Piece{
 
 
 	@Override
-	public ArrayList<Rules> directions() {
+	public ArrayList<Rules> pieceRules() {
 		ArrayList<Rules> rules = new ArrayList<Rules>();
 		rules.add(new Rules(Direction.L));
 		return rules;
 	}
+
 }

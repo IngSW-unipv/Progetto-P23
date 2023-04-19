@@ -1,8 +1,8 @@
 package it.unipv.ingsfw.chess.game;
 
-import it.unipv.ingsfw.chess.pieces.Piece;
 
 public class Move {
+	
 	private Square initialPosition;
 	private Square finalPosition;
 	private Direction d;
