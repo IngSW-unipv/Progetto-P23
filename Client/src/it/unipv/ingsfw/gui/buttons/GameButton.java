@@ -10,25 +10,26 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
+import it.unipv.ingsfw.chess.game.Square;
+
 
 public class GameButton extends JButton   {
 	
-	private int chessX , chessY ;
 	private JLabel idAlto;
 	private JLabel idBasso;
 	public Color mainColor;
 	private Color otherColor ;
+	private Square position;
 	
 	
-
-	public GameButton (Color mainColor,int chessX , int chessY) {
+	
+	public GameButton (Color mainColor,Square position) {
 
 		super();
 		
 		idAlto = new JLabel();
 		idBasso = new JLabel();
-		this.chessX = chessX;
-		this.chessY = chessY;
+		this.position = position;
 		this.mainColor = mainColor;
 		otherColor = new Color (253,203,211);
 		
@@ -44,13 +45,13 @@ public class GameButton extends JButton   {
 		
 	}
 	
-	public int getChessX () {
-		return chessX;
-	}
+
 	
-	public int getChessY () {
-		return chessY;
+	public Square getChessPosition () {
+		return position;
 	}
+
+
 	
 	public void setIdAlto (String strng) {
 		

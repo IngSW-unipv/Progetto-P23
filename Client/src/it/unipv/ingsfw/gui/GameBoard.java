@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.gui.buttons.GameButton;
 
 
@@ -67,12 +68,12 @@ public class GameBoard extends JPanel   {
 			for (int x = 0 ; x < 8 ;x++) {
 				white = !white;
 				if (!white) {
-					tasti[x][y] = new GameButton(darkGreen,x,y);
+					tasti[x][y] = new GameButton(darkGreen,new Square (x,y));
 		
 					
 				}
 				else {
-					tasti[x][y] = new GameButton(lightGreen,x,y);
+					tasti[x][y] = new GameButton(lightGreen,new Square (x,y));
 			
 					
 				}
@@ -106,12 +107,12 @@ public class GameBoard extends JPanel   {
 	}
 	
 	
-	public void swapIcon (int sX , int sY, int eX ,int eY ){
+	public void swapIcon (Square start, Square end ){
 		
 		Icon moveThis;
-		moveThis = tasti[sX][sY].getIcon();
-		tasti[sX][sY].setIcon(null);
-		tasti[eX][eY].setIcon(moveThis);
+		moveThis = tasti[start.getX()][start.getY()].getIcon();
+		tasti[start.getX()][start.getY()].setIcon(null);
+		tasti[end.getX()][end.getY()].setIcon(moveThis);
 		moveThis = null;
 	}
 	

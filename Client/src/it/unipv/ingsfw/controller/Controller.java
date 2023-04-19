@@ -25,8 +25,8 @@ public class Controller {
 	private GameButton [][] tasti;
 	private ChessColor currentPlayer;
 	private Boolean firstClick;
-	private int sX;
-	private int sY;
+	private Square startPosition;
+	
 
 
 
@@ -41,6 +41,7 @@ public class Controller {
 		tasti = viewBoard.getTasti();
 		inizializeView (model);
 		currentPlayer = model.getCurrentPlayer();
+		startPosition = new Square (0,0);
 		firstClick = true;
 
 
@@ -66,22 +67,20 @@ public class Controller {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 
-						model.calculateMove(currentPlayer);
+						model.initTurn();
 						GameButton pressed = (GameButton)e.getSource();
+	
+						Square genericPosition = pressed.getChessPosition();
+			
+						
+						
+						if (model.isOccupied(genericPosition) && 
+							(model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPieceColor() == currentPlayer) &&
+							(firstClick)) {
 
-						int genericX = pressed.getChessX();
-						int genericY = pressed.getChessY();
-						List <Move> pm = model.getPossibleMoves();
-
-
-						if (model.isOccupied(genericX,genericY) && 
-								(model.getBoard().getSquare(genericX,genericY).getPieceColor() == currentPlayer) &&
-								(firstClick)) {
-
+							
 							Toolkit.getDefaultToolkit().beep();
-							pressed.color();
-							sX = genericX;
-							sY = genericY;
+							startPosition = genericPosition;
 							firstClick =false;
 
 
@@ -91,9 +90,8 @@ public class Controller {
 
 						else if (!firstClick) {
 							Toolkit.getDefaultToolkit().beep();
-							tasti[sX][sY].reColor();
-							viewBoard.swapIcon(sX, sY, genericX, genericY);
-							model.getBoard().swap(sX, sY, genericX, genericY);
+							viewBoard.swapIcon(startPosition,genericPosition );
+							model.getBoard().makeMove(new Move (startPosition,genericPosition));
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();

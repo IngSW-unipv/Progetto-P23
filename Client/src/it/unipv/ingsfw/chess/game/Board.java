@@ -106,5 +106,15 @@ public class Board {
 		capturePiece(fin);
 		setPiece(fin,p);
 	}
+
+	public Square[][] getB() {
+		return board;
+	}
+	
+	
+
+	
+	
+	
 	
 }

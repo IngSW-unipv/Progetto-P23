@@ -413,6 +413,14 @@ public class GameModel {
 		
 	}
 	
+	public boolean isOccupied (Square a) {
+		return board.getSquare(a.getX(), a.getY()).isOccupied();
+	}
+	
+	public Square[][] getB () {
+		return board.getB();
+	}
+	
 
 }
 
