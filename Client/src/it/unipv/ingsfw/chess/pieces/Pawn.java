@@ -38,4 +38,10 @@ public class Pawn extends Piece {
 		return rules;
 	}
 	
+	@Override
+	public void setFirstMove(boolean firstMove) {
+		this.firstMove=firstMove;
+		this.directions=pieceRules();
+	}
+	
 }

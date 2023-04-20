@@ -30,6 +30,8 @@ public class Board {
 		setBlackPiece();
 	}
 	
+
+
 	public void setWhitePiece() {
 		this.board[0][7].setPiece(new Rook(ChessColor.WHITE, PieceType.Rook));
 		this.board[1][7].setPiece(new Knight(ChessColor.WHITE, PieceType.Knight));
@@ -99,6 +101,19 @@ public class Board {
 	}
 	
 	public void makeMove(Move move) {
+		if(isInBoard(move.getInitialPosition()) && isInBoard(move.getFinalPosition())) {
+			Square init = getSquare(move.getInitialPosition().getX(),move.getInitialPosition().getY());
+			Square fin = getSquare(move.getFinalPosition().getX(),move.getFinalPosition().getY());
+			Piece p = init.getPiece();
+			init.releasePiece();
+			capturePiece(fin);
+			setPiece(fin,p);
+			p.setFirstMove(false);
+		}
+
+	}
+	
+	public void fakeMove(Move move) {
 		if(isInBoard(move.getInitialPosition()) && isInBoard(move.getFinalPosition())) {
 			Square init = getSquare(move.getInitialPosition().getX(),move.getInitialPosition().getY());
 			Square fin = getSquare(move.getFinalPosition().getX(),move.getFinalPosition().getY());

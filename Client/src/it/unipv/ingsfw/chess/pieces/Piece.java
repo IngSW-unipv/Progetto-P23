@@ -11,8 +11,7 @@ import it.unipv.ingsfw.chess.game.Rules;
 public abstract class Piece {
 
 	 protected ChessColor color;
-	 protected PieceType type;
-	 protected boolean defender;	
+	 protected PieceType type;	
 	 protected boolean firstMove;
 	 protected List<Rules> directions;
 	 
@@ -21,7 +20,6 @@ public abstract class Piece {
 	public Piece (ChessColor color, PieceType type) {
 		 this.color = color;
 		 this.firstMove = true;
-		 this.defender = false;
 		 this.type = type;
 		 directions = new ArrayList<Rules>();
 		 initDirections();
@@ -46,15 +44,20 @@ public abstract class Piece {
 		}
 	}
 
+	public boolean isFirstMove() {
+		return firstMove;
+	}
+
+
+	public void setFirstMove(boolean firstMove) {
+		this.firstMove = firstMove;
+	}
+
+
 	public ChessColor getColor () {
 		 return color;
 	 }
 	 
-
-	public void setDefe(boolean attacker) {
-		this.defender = attacker;
-	}
-
 
 	public PieceType getType() {
 		return type;

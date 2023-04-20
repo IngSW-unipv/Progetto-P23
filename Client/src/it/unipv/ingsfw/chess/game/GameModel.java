@@ -21,13 +21,6 @@ public class GameModel {
 		this.opponentPlayerMoves = new ArrayList<Move>();
 	}
 	
-	
-	public GameModel(Board board) {
-		this.board = board;
-		this.currentPlayer = ChessColor.WHITE;
-		this.currentPlayerMoves = new ArrayList<Move>();
-		this.opponentPlayerMoves = new ArrayList<Move>();
-	}
 
 
 	/*
@@ -124,7 +117,7 @@ public class GameModel {
 		Square fin;
 		Piece p = init.getPiece();
 		ChessColor c = p.getColor();
-		int j;
+		int j=0;
 		switch(r.getDirection()) {
 			case N:				
 				for(int i=0;i<r.getMaxdim();i++) {
@@ -359,7 +352,7 @@ public class GameModel {
 	}
 	
 	public void undoMove(Move m) {
-		board.makeMove(new Move(m.getFinalPosition(),m.getInitialPosition()));
+		board.fakeMove(new Move(m.getFinalPosition(),m.getInitialPosition()));
 	}
 	
 	public void checkCurrentMoves() {
@@ -374,7 +367,7 @@ public class GameModel {
 	
 	public void removeMoves(Square s) {
 		for(Move m1: movesPerPiece(s)) {
-			makeMove(m1);
+			board.fakeMove(m1);
 			for(Move m2: calcolatorMoves(ChessColor.oppositeColor(currentPlayer))) {
 				if(isCheck(m2)) {
 					this.currentPlayerMoves.remove(m1);
@@ -406,18 +399,6 @@ public class GameModel {
 	}
 
 	
-	public static void main(String[] args) {
-		GameModel g1 = new GameModel();
-		g1.initTurn();
-		for(Move m: g1.getOpponentPlayerMoves()) {
-			System.out.println(m.getInitialPosition().getPieceString()+":\n"+m.getInitialPosition().toString()+"\n"+m.getFinalPosition().toString());
-		}
-		for(Move m: g1.getCurrentPlayerMoves()) {
-			System.out.println(m.getInitialPosition().getPieceString()+":\n"+m.getInitialPosition().toString()+"\n"+m.getFinalPosition().toString());
-		}
-		
-	}
-	
 	public boolean isOccupied (Square a) {
 		return board.getSquare(a.getX(), a.getY()).isOccupied();
 	}
@@ -436,7 +417,7 @@ public class GameModel {
 		return false;
 	}
 		
-	
+
 	
 
 }
