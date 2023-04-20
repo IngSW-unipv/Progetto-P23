@@ -99,12 +99,15 @@ public class Board {
 	}
 	
 	public void makeMove(Move move) {
-		Square init = move.getInitialPosition();
-		Square fin = move.getFinalPosition();
-		Piece p = init.getPiece();
-		init.releasePiece();
-		capturePiece(fin);
-		setPiece(fin,p);
+		if(isInBoard(move.getInitialPosition()) && isInBoard(move.getFinalPosition())) {
+			Square init = getSquare(move.getInitialPosition().getX(),move.getInitialPosition().getY());
+			Square fin = getSquare(move.getFinalPosition().getX(),move.getFinalPosition().getY());
+			Piece p = init.getPiece();
+			init.releasePiece();
+			capturePiece(fin);
+			setPiece(fin,p);
+		}
+
 	}
 
 	public Square[][] getB() {

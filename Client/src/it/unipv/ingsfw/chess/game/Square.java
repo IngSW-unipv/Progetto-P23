@@ -7,7 +7,7 @@ import it.unipv.ingsfw.chess.pieces.PieceType;
 
 
 
-public class Square implements Comparable<Square>{
+public class Square{
 	
 
 	private Piece piece;
@@ -96,22 +96,7 @@ public class Square implements Comparable<Square>{
 	
 	public String toString () {
 		return "x:" + this.x +" y:" + this.y;
-	}
-
-
-	@Override
-	public int compareTo(Square o) {
-		if(this.x != o.x) {
-			return this.x-o.x;
-		}else if(this.y != o.y) {
-			return this.y - o.y;
-		}else {
-			return 0;
-		}
-		
-	}
-	
-	
+	}	
 }
 
 	

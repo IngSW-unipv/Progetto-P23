@@ -117,6 +117,7 @@ public class GameModel {
 		checkCurrentMoves();
 	}
 	
+	
 
 	public ArrayList<Move> createPath(Square init, Rules r) {
 		ArrayList<Move> path = new ArrayList<Move>();
@@ -350,7 +351,11 @@ public class GameModel {
 	}
 	
 	public void makeMove(Move m) {
-		board.makeMove(m);
+		for(Move possible: currentPlayerMoves) {
+			if(m.equals(possible)) {
+				board.makeMove(m);
+			}
+		}
 	}
 	
 	public void undoMove(Move m) {

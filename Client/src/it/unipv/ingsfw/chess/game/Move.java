@@ -35,6 +35,13 @@ public class Move {
 	public Direction getD() {
 		return d;
 	}
+	
+	public boolean equals(Move m) {
+		if(this.initialPosition.equals(m.initialPosition) && this.finalPosition.equals(m.finalPosition)) {
+			return true;
+		}
+		return false;
+	}
 
 
 }
