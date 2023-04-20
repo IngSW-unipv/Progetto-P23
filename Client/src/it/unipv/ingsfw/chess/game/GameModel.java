@@ -426,6 +426,18 @@ public class GameModel {
 		return board.getB();
 	}
 	
+	public boolean xxx (Move m) {
+		for(Move possible: currentPlayerMoves) {
+			if(m.equals(possible)) {
+				return true;
+			}
+			
+		}
+		return false;
+	}
+		
+	
+	
 
 }
 

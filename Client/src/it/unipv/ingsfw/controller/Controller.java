@@ -4,6 +4,7 @@ package it.unipv.ingsfw.controller;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unipv.ingsfw.chess.ChessColor;
@@ -67,7 +68,7 @@ public class Controller {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 
-						model.initTurn();
+					//	model.initTurn();
 						GameButton pressed = (GameButton)e.getSource();
 	
 						Square genericPosition = pressed.getChessPosition();
@@ -77,8 +78,7 @@ public class Controller {
 						if (model.isOccupied(genericPosition) && 
 							(model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPieceColor() == currentPlayer) &&
 							(firstClick)) {
-
-							
+							model.initTurn();
 							Toolkit.getDefaultToolkit().beep();
 							startPosition = genericPosition;
 							firstClick =false;
@@ -88,10 +88,10 @@ public class Controller {
 
 						}
 
-						else if (!firstClick) {
+						else if (!firstClick && model.xxx(new Move (startPosition,genericPosition))) {
 							Toolkit.getDefaultToolkit().beep();
 							viewBoard.swapIcon(startPosition,genericPosition );
-							model.getBoard().makeMove(new Move (startPosition,genericPosition));
+							model.makeMove(new Move (startPosition,genericPosition));
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
