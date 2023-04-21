@@ -107,8 +107,8 @@ public class Board {
 			Piece p = init.getPiece();
 			init.releasePiece();
 			capturePiece(fin);
-			setPiece(fin,p);
 			p.setFirstMove(false);
+			setPiece(fin,p);
 		}
 
 	}
