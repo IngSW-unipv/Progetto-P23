@@ -108,6 +108,7 @@ public class Controller {
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
+							view.updateToolBar();
 
 
 						}
@@ -222,6 +223,9 @@ public class Controller {
 			}
 
 		}
+		
+		
+		
 
 
 	}

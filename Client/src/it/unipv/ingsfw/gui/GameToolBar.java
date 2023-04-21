@@ -12,12 +12,13 @@ public class GameToolBar extends JPanel  {
 	private JLabel label;
 	
 	
+	
 	public GameToolBar () {
 		super ();
 		
 		button1 = new JButton ("nuova partita");
 		button2 = new JButton ("resa");
-		label = new JLabel ("stato partita");
+		label = new JLabel ("white turn");
 		setLayout(new FlowLayout (FlowLayout.LEFT));
 		
 		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
@@ -33,6 +34,16 @@ public class GameToolBar extends JPanel  {
 
 	public JButton getButton1() {
 		return button1;
+	}
+	
+	public void update () {
+		
+		if (label.getText().equals("white turn")) {
+			label.setText("black turn");
+		}
+		else {
+			label.setText("white turn");
+		}
 	}
 
 

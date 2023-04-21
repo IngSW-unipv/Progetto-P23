@@ -26,6 +26,10 @@ public class GamePanel extends JPanel{
 	public GameToolBar getGameToolBar() {
 		return gameToolBar;
 	}
+	
+	public void updateToolBar () {
+		gameToolBar.update();
+	}
 
 	
 	
