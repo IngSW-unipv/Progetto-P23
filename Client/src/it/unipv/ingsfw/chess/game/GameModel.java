@@ -351,8 +351,9 @@ public class GameModel {
 		}
 	}
 	
-	public void undoMove(Move m) {
+	public void undoMove(Move m, Piece p) {
 		board.fakeMove(new Move(m.getFinalPosition(),m.getInitialPosition()));
+		board.setPiece(board.getSquare(m.getInitialPosition().getX(), m.getInitialPosition().getY()), p);
 	}
 	
 	public void checkCurrentMoves() {
@@ -366,14 +367,16 @@ public class GameModel {
 	}
 	
 	public void removeMoves(Square s) {
+		Piece p;
 		for(Move m1: movesPerPiece(s)) {
-			board.fakeMove(m1);
+			p = board.fakeMove(m1);
 			for(Move m2: calcolatorMoves(ChessColor.oppositeColor(currentPlayer))) {
+				
 				if(isCheck(m2)) {
 					this.currentPlayerMoves.remove(m1);
 				}
 			}
-			undoMove(m1);
+			undoMove(m1,p);
 		}
 	}
 	
