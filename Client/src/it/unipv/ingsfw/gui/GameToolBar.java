@@ -5,7 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.*;
 
-public class GameToolBar extends JPanel {
+public class GameToolBar extends JPanel  {
 
 	private JButton button1;
 	private JButton button2;
@@ -26,9 +26,7 @@ public class GameToolBar extends JPanel {
 		add(button2);
 		add(label);
 	
-		
-		
-		
+			
 		
 	}
 
@@ -36,6 +34,9 @@ public class GameToolBar extends JPanel {
 	public JButton getButton1() {
 		return button1;
 	}
+
+
+	
 
 
 	

@@ -416,6 +416,26 @@ public class GameModel {
 		}
 		return false;
 	}
+	
+	public List <Square> getPositions  (Square a){
+		int x,y;
+		x = a.getX();
+		y = a.getY();
+		
+		List <Square> lista = new ArrayList <Square> ();
+		for (Move move : currentPlayerMoves) {
+			
+			if (move.getInitialPosition().getX() == x && move.getInitialPosition().getY() == y ) {
+				Square b = new Square (move.getFinalPosition().getX(),move.getFinalPosition().getY());
+				lista.add(b);
+				
+			}
+			
+			
+		}
+		return lista;
+		
+	}
 		
 
 	

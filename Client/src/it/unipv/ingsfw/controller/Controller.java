@@ -27,6 +27,8 @@ public class Controller {
 	private ChessColor currentPlayer;
 	private Boolean firstClick;
 	private Square startPosition;
+	private List <Square> colorThis;
+	
 	
 
 
@@ -52,8 +54,9 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ciao");
-
+				
+			 
+				
 			}
 		});
 
@@ -80,6 +83,12 @@ public class Controller {
 							(firstClick)) {
 							model.initTurn();
 							Toolkit.getDefaultToolkit().beep();
+							
+							colorThis = model.getPositions(genericPosition);
+							for (Square s : colorThis) {
+								tasti[s.getX()][s.getY()].color();
+							}
+							
 							startPosition = genericPosition;
 							firstClick =false;
 
@@ -92,11 +101,25 @@ public class Controller {
 							Toolkit.getDefaultToolkit().beep();
 							viewBoard.swapIcon(startPosition,genericPosition );
 							model.makeMove(new Move (startPosition,genericPosition));
+							for (Square s : colorThis) {
+								tasti[s.getX()][s.getY()].reColor();
+							}
+							
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
 
 
+						}
+						
+						else if (!firstClick) {
+							
+							for (Square s : colorThis) {
+								tasti[s.getX()][s.getY()].reColor();
+								
+							}
+							firstClick = true;
+							
 						}
 
 					}
