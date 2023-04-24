@@ -93,44 +93,59 @@ public class Board {
 		s.setPiece(p);
 	}
 	
-	public void capturePiece(Square s) {
+	public Piece capturePiece(Square s) {
 		if(s.isOccupied()) {
 			Piece p = s.getPiece();
 			s.releasePiece();
+			return p;
 		}
+		return null;
 	}
 	
 	public void makeMove(Move move) {
 		if(isInBoard(move.getInitialPosition()) && isInBoard(move.getFinalPosition())) {
 			Square init = getSquare(move.getInitialPosition().getX(),move.getInitialPosition().getY());
 			Square fin = getSquare(move.getFinalPosition().getX(),move.getFinalPosition().getY());
-			Piece p = init.getPiece();
+			Piece p1 = init.getPiece();
 			init.releasePiece();
-			capturePiece(fin);
-			p.setFirstMove(false);
-			setPiece(fin,p);
+			Piece p2 = capturePiece(fin);
+			setPiece(fin,p1);
+			p1.setFirstMove(false);
 		}
 
 	}
 	
-	public Piece fakeMove(Move move) {
-		Piece p = null;
+	public Piece emulateMove(Move move) {
 		if(isInBoard(move.getInitialPosition()) && isInBoard(move.getFinalPosition())) {
 			Square init = getSquare(move.getInitialPosition().getX(),move.getInitialPosition().getY());
 			Square fin = getSquare(move.getFinalPosition().getX(),move.getFinalPosition().getY());
 			Piece p1 = init.getPiece();
-			p = fin.getPiece();
 			init.releasePiece();
+			Piece p2 = capturePiece(fin);
 			capturePiece(fin);
 			setPiece(fin,p1);
-
-			
+			return p2;
 		}
-		return p;
+		return null;
 	}
 
 	public Square[][] getB() {
 		return board;
+	}
+
+
+
+	public void undoMove(Move move, Piece p) {
+		Piece p1 = move.getFinalPosition().getPiece();
+		if(isInBoard(move.getInitialPosition()) && isInBoard(move.getFinalPosition())) {
+			Square init = getSquare(move.getFinalPosition().getX(),move.getFinalPosition().getY());
+			Square fin = getSquare(move.getInitialPosition().getX(),move.getInitialPosition().getY());
+			init.releasePiece();
+			fin.releasePiece();
+			setPiece(init,p);
+			setPiece(fin,p1);
+		}
+		
 	}
 	
 	
