@@ -5,21 +5,25 @@ public class Move {
 	
 	private Square initialPosition;
 	private Square finalPosition;
-	private Direction d;
+	private boolean specialMove;
 	
-	
-	public Move (Square initialPosition, Square finalPosition, Direction d) {
+		
+	public Move(Square initialPosition, Square finalPosition, boolean specialMove) {
 		super();
 		this.initialPosition = initialPosition;
 		this.finalPosition = finalPosition;
-		this.d = d;
+		this.specialMove = specialMove;
 	}
+	
 	
 	public Move(Square initialPosition, Square finalPosition) {
 		super();
 		this.initialPosition = initialPosition;
 		this.finalPosition = finalPosition;
+		this.specialMove=false;
 	}
+
+
 
 
 	public Square getInitialPosition() {
@@ -32,10 +36,11 @@ public class Move {
 	}
 	
 	
-	public Direction getD() {
-		return d;
+	public boolean isSpecialMove() {
+		return specialMove;
 	}
-	
+
+
 	public boolean equals(Move m) {
 		if(this.initialPosition.equals(m.initialPosition) && this.finalPosition.equals(m.finalPosition)) {
 			return true;

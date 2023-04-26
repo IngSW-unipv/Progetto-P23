@@ -27,7 +27,6 @@ public abstract class Piece {
 	 
 	
 	private void initDirections() {
-		// TODO Auto-generated method stub
 		this.directions.addAll(pieceRules());
 	}
 
@@ -66,7 +65,7 @@ public abstract class Piece {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " " + color;
+		return color.toString() + type.toString();
 	}
 	 
 	

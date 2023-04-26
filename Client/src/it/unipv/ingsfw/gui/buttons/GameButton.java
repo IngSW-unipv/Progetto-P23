@@ -31,7 +31,6 @@ public class GameButton extends JButton   {
 		idBasso = new JLabel();
 		this.position = position;
 		this.mainColor = mainColor;
-		otherColor = new Color (253,203,211);
 		
 		
 		
@@ -75,8 +74,16 @@ public class GameButton extends JButton   {
 	
 	
 	public void color () {
-		setBackground(otherColor);
+		Color change = mainColor;
+		setBackground(change.darker().darker());
 	}
+	
+	
+	public void highlightPiece() {
+		Color change = mainColor;
+		setBackground(change.brighter().brighter());
+	}
+	
 	
 	public void reColor () {
 		setBackground(mainColor);

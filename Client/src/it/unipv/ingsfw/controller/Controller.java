@@ -4,8 +4,9 @@ package it.unipv.ingsfw.controller;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JLabel;
 
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.GameModel;
@@ -46,6 +47,8 @@ public class Controller {
 		currentPlayer = model.getCurrentPlayer();
 		startPosition = new Square (0,0);
 		firstClick = true;
+		toolBar.update(currentPlayer);
+		toolBar.updateStatus(model.getGameStatus());
 
 
 
@@ -54,6 +57,20 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				model.resetGame();
+				inizializeView (model);
+				currentPlayer = model.getCurrentPlayer();
+				startPosition = new Square (0,0);
+				firstClick = true;
+				view.updateToolBar(currentPlayer);
+			}
+		});
+		
+		toolBar.getButton2().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.resignation();
 				
 			 
 				
@@ -62,7 +79,7 @@ public class Controller {
 
 
 		tasti = viewBoard.getTasti();
-
+		
 		for (int y = 0 ; y <8;  y++) {
 			for (int x = 0 ; x < 8 ;x++) {		
 				tasti[x][y].addActionListener(new ActionListener() {
@@ -75,41 +92,39 @@ public class Controller {
 						GameButton pressed = (GameButton)e.getSource();
 	
 						Square genericPosition = pressed.getChessPosition();
-			
 						
 						
 						if (model.isOccupied(genericPosition) && 
 							(model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPieceColor() == currentPlayer) &&
 							(firstClick)) {
 							model.initTurn();
+							toolBar.updateStatus(model.getGameStatus());
 							Toolkit.getDefaultToolkit().beep();
-							
 							colorThis = model.getPositions(genericPosition);
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].color();
 							}
 							
 							startPosition = genericPosition;
-							firstClick =false;
+							firstClick = false;
 
 
 
 
 						}
 
-						else if (!firstClick && model.xxx(new Move (startPosition,genericPosition))) {
+						else if (!firstClick && model.isValidMove(new Move (startPosition,genericPosition))) {
 							Toolkit.getDefaultToolkit().beep();
 							viewBoard.swapIcon(startPosition,genericPosition );
 							model.makeMove(new Move (startPosition,genericPosition));
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].reColor();
 							}
-							
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
-							view.updateToolBar();
-
+							view.updateToolBar(currentPlayer);
+							inizializeView (model);
 
 						}
 						

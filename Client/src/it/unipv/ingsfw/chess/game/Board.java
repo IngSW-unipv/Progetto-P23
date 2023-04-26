@@ -18,6 +18,13 @@ public class Board {
 
 	public Board() {
 
+		setSquare();
+		setWhitePiece();
+		setBlackPiece();
+	}
+	
+	
+	public void setSquare() {
 		board = new Square [MAXDIM][MAXDIM];
 
 		for (int i = 0 ; i < MAXDIM ; i++) {
@@ -25,11 +32,7 @@ public class Board {
 				board[j][i] = new Square (j,i);
 			}
 		}
-		
-		setWhitePiece();
-		setBlackPiece();
 	}
-	
 
 
 	public void setWhitePiece() {
@@ -60,6 +63,12 @@ public class Board {
 		for(int i = 0; i < MAXDIM; i++) {
 			this.board[i][1].setPiece(new Pawn(ChessColor.BLACK, PieceType.Pawn));
 		}
+	}
+	
+	public void resetBoard() {
+		setSquare();
+		setWhitePiece();
+		setBlackPiece();
 	}
 
 	
@@ -110,7 +119,10 @@ public class Board {
 			init.releasePiece();
 			Piece p2 = capturePiece(fin);
 			setPiece(fin,p1);
-			p1.setFirstMove(false);
+			if(p1.isFirstMove()) {
+				p1.setFirstMove(false);
+			}
+
 		}
 
 	}

@@ -3,13 +3,20 @@ package it.unipv.ingsfw.gui;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
-import javax.swing.*;
+import it.unipv.ingsfw.chess.game.Status;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import it.unipv.ingsfw.chess.ChessColor;
 
 public class GameToolBar extends JPanel  {
 
 	private JButton button1;
 	private JButton button2;
 	private JLabel label;
+	private JLabel status;
 	
 	
 	
@@ -18,7 +25,8 @@ public class GameToolBar extends JPanel  {
 		
 		button1 = new JButton ("nuova partita");
 		button2 = new JButton ("resa");
-		label = new JLabel ("white turn");
+		label = new JLabel ("");
+		status = new JLabel ("");
 		setLayout(new FlowLayout (FlowLayout.LEFT));
 		
 		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
@@ -26,8 +34,7 @@ public class GameToolBar extends JPanel  {
 		add(button1);
 		add(button2);
 		add(label);
-	
-			
+		//add(status);
 		
 	}
 
@@ -36,16 +43,30 @@ public class GameToolBar extends JPanel  {
 		return button1;
 	}
 	
-	public void update () {
-		
-		if (label.getText().equals("white turn")) {
-			label.setText("black turn");
-		}
-		else {
-			label.setText("white turn");
-		}
+	
+	public JButton getButton2() {
+		return button2;
 	}
 
+	
+
+	public JLabel getStatus() {
+		return status;
+	}
+
+
+	public void update (ChessColor c) {
+		if(c == ChessColor.WHITE) {
+			label.setText("white turn");
+		}else {
+			label.setText("black turn");
+		}
+
+	}
+
+	public void updateStatus (Status s) {
+		label.setText(s.toString());
+	}
 
 	
 
