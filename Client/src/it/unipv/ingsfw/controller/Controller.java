@@ -234,6 +234,10 @@ public class Controller {
 					}
 
 				}
+				
+				else {
+					tasti[x][y].setIcon(null);
+				}
 
 			}
 
