@@ -26,18 +26,18 @@ public class GameBoard extends JPanel   {
 	private Color darkGreen;
 	private Color lightGreen;
 	
-	private ImageIcon rookB = new ImageIcon(getClass().getResource("img/rookB.png"));
-	private ImageIcon rookW = new ImageIcon(getClass().getResource("img/rookW.png"));
-	private ImageIcon queenB = new ImageIcon(getClass().getResource("img/queenB.png"));
-	private ImageIcon queenW = new ImageIcon(getClass().getResource("img/queenW.png"));
-	private ImageIcon bishopB = new ImageIcon(getClass().getResource("img/bishopB.png"));
-	private ImageIcon bishopW = new ImageIcon(getClass().getResource("img/bishopW.png")); 
-	private ImageIcon kingB = new ImageIcon(getClass().getResource("img/kingB.png"));
-	private ImageIcon kingW = new ImageIcon(getClass().getResource("img/kingW.png"));
-	private ImageIcon pawnB = new ImageIcon(getClass().getResource("img/pawnB.png"));
-	private ImageIcon pawnW = new ImageIcon(getClass().getResource("img/pawnW.png"));
-	private ImageIcon knightB = new ImageIcon(getClass().getResource("img/knightB.png"));
-	private ImageIcon knightW = new ImageIcon(getClass().getResource("img/knightW.png")); 
+	private ImageIcon rookB = new ImageIcon(this.getClass().getResource("img/kingB.png"));
+	private ImageIcon rookW = new ImageIcon(this.getClass().getResource("img/rookW.png"));
+	private ImageIcon queenB = new ImageIcon(this.getClass().getResource("img/queenB.png"));
+	private ImageIcon queenW = new ImageIcon(this.getClass().getResource("img/queenW.png"));
+	private ImageIcon bishopB = new ImageIcon(this.getClass().getResource("img/bishopB.png"));
+	private ImageIcon bishopW = new ImageIcon(this.getClass().getResource("img/bishopW.png")); 
+	private ImageIcon kingB = new ImageIcon(this.getClass().getResource("img/kingB.png"));
+	private ImageIcon kingW = new ImageIcon(this.getClass().getResource("img/kingW.png"));
+	private ImageIcon pawnB = new ImageIcon(this.getClass().getResource("img/pawnB.png"));
+	private ImageIcon pawnW = new ImageIcon(this.getClass().getResource("img/pawnW.png"));
+	private ImageIcon knightB = new ImageIcon(this.getClass().getResource("img/knightB.png"));
+	private ImageIcon knightW = new ImageIcon(this.getClass().getResource("img/knightW.png")); 
 
 	
 

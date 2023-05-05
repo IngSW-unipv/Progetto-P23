@@ -17,7 +17,8 @@ public class Frame  extends JFrame implements ActionListener {
 	private GamePanel gamePanel;
 	private JPanel menu;
 	private JButton local;
-	/* momentaneo così bisogna gestire multi buttons*/
+	private JButton online;
+	//private ImageIcon pepe = new ImageIcon(getClass().getResource("img/pepe.png"));
 	
 	
 	public Frame (String xxx) {
@@ -27,14 +28,13 @@ public class Frame  extends JFrame implements ActionListener {
 		
 		menu = new JPanel ();
 		local = new JButton("LOCALE");
+		online = new JButton("ONLINE");
 		local.addActionListener(this);
 		menu.add(local);
+		menu.add(online);
 		
 		
 	
-		
-		
-		
 		
 		add(menu,BorderLayout.CENTER);
 	

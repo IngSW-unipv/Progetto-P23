@@ -124,7 +124,7 @@ public class Controller {
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
 							view.updateToolBar(currentPlayer);
-							inizializeView (model);
+							//inizializeView (model);
 
 						}
 						

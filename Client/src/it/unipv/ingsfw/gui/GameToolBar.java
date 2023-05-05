@@ -17,38 +17,38 @@ public class GameToolBar extends JPanel  {
 	private JButton button2;
 	private JLabel label;
 	private JLabel status;
-	
-	
-	
+
+
+
 	public GameToolBar () {
 		super ();
-		
+
 		button1 = new JButton ("nuova partita");
 		button2 = new JButton ("resa");
 		label = new JLabel ("");
 		status = new JLabel ("");
 		setLayout(new FlowLayout (FlowLayout.LEFT));
-		
+
 		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
-		
+
 		add(button1);
 		add(button2);
 		add(label);
 		//add(status);
-		
+
 	}
 
 
 	public JButton getButton1() {
 		return button1;
 	}
-	
-	
+
+
 	public JButton getButton2() {
 		return button2;
 	}
 
-	
+
 
 	public JLabel getStatus() {
 		return status;
@@ -68,9 +68,9 @@ public class GameToolBar extends JPanel  {
 		label.setText(s.toString());
 	}
 
-	
 
 
-	
-	
+
+
+
 }
