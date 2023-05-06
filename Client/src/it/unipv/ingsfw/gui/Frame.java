@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.Board;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.controller.Controller;
@@ -18,7 +19,7 @@ public class Frame  extends JFrame implements ActionListener {
 	private JPanel menu;
 	private JButton local;
 	private JButton online;
-	//private ImageIcon pepe = new ImageIcon(getClass().getResource("img/pepe.png"));
+	
 	
 	
 	public Frame (String xxx) {
@@ -61,7 +62,7 @@ public class Frame  extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		gamePanel = new GamePanel ();
+		gamePanel = new GamePanel (ChessColor.WHITE);
 		menu.setVisible(false);
 		add(gamePanel,BorderLayout.CENTER);
 		

@@ -12,6 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.gui.buttons.GameButton;
 
@@ -26,7 +27,7 @@ public class GameBoard extends JPanel   {
 	private Color darkGreen;
 	private Color lightGreen;
 	
-	private ImageIcon rookB = new ImageIcon(this.getClass().getResource("img/kingB.png"));
+	private ImageIcon rookB = new ImageIcon(this.getClass().getResource("img/rookB.png"));
 	private ImageIcon rookW = new ImageIcon(this.getClass().getResource("img/rookW.png"));
 	private ImageIcon queenB = new ImageIcon(this.getClass().getResource("img/queenB.png"));
 	private ImageIcon queenW = new ImageIcon(this.getClass().getResource("img/queenW.png"));
@@ -42,7 +43,7 @@ public class GameBoard extends JPanel   {
 	
 
 
-	public GameBoard () {
+	public GameBoard (ChessColor color) {
 		super();
 		
 
@@ -53,16 +54,17 @@ public class GameBoard extends JPanel   {
 		darkGreen = new Color (8,115,0);
 		lightGreen = new Color (223,253,214);		
 		tasti = new GameButton [8][8];
-		
+		boolean white = true;
 		
 
 
 		setLayout(new GridLayout(8,8,0,0));
 		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
 
-
-
-		boolean white = true;
+		
+		if (color.equals(ChessColor.WHITE)) {
+		
+		
 		for (int y = 0 ; y <8;  y++) {
 			white = !white;
 			for (int x = 0 ; x < 8 ;x++) {
@@ -80,28 +82,69 @@ public class GameBoard extends JPanel   {
 				add(tasti [x][y]);
 
 			}
+			tasti[0][0].setIdAlto("8");
+			tasti[0][1].setIdAlto("7");
+			tasti[0][2].setIdAlto("6");
+			tasti[0][3].setIdAlto("5");
+			tasti[0][4].setIdAlto("4");
+			tasti[0][5].setIdAlto("3");
+			tasti[0][6].setIdAlto("2");
+			tasti[0][7].setIdAlto("1");
+			
+			tasti[0][7].setIdBasso("A");
+			tasti[1][7].setIdBasso("B");
+			tasti[2][7].setIdBasso("C");
+			tasti[3][7].setIdBasso("D");
+			tasti[4][7].setIdBasso("E");
+			tasti[5][7].setIdBasso("F");
+			tasti[6][7].setIdBasso("G");
+			tasti[7][7].setIdBasso("H");
+		}
+		
+		}
+		else {
+			
+			for (int y = 7 ; y > -1;  y--) {
+				white = !white;
+				for (int x = 7 ; x > -1 ;x--) {
+					white = !white;
+					if (!white) {
+						tasti[x][y] = new GameButton(darkGreen,new Square (x,y));
+			
+						
+					}
+					else {
+						tasti[x][y] = new GameButton(lightGreen,new Square (x,y));
+				
+						
+					}
+					add(tasti [x][y]);
+
+				}
+			}
+			
+			tasti[7][0].setIdAlto("8");
+			tasti[7][1].setIdAlto("7");
+			tasti[7][2].setIdAlto("6");
+			tasti[7][3].setIdAlto("5");
+			tasti[7][4].setIdAlto("4");
+			tasti[7][5].setIdAlto("3");
+			tasti[7][6].setIdAlto("2");
+			tasti[7][7].setIdAlto("1");
+			
+			tasti[0][0].setIdBasso("A");
+			tasti[1][0].setIdBasso("B");
+			tasti[2][0].setIdBasso("C");
+			tasti[3][0].setIdBasso("D");
+			tasti[4][0].setIdBasso("E");
+			tasti[5][0].setIdBasso("F");
+			tasti[6][0].setIdBasso("G");
+			tasti[7][0].setIdBasso("H");
 		}
 
 
 
 
-		tasti[0][0].setIdAlto("8");
-		tasti[0][1].setIdAlto("7");
-		tasti[0][2].setIdAlto("6");
-		tasti[0][3].setIdAlto("5");
-		tasti[0][4].setIdAlto("4");
-		tasti[0][5].setIdAlto("3");
-		tasti[0][6].setIdAlto("2");
-		tasti[0][7].setIdAlto("1");
-		
-		tasti[0][7].setIdBasso("A");
-		tasti[1][7].setIdBasso("B");
-		tasti[2][7].setIdBasso("C");
-		tasti[3][7].setIdBasso("D");
-		tasti[4][7].setIdBasso("E");
-		tasti[5][7].setIdBasso("F");
-		tasti[6][7].setIdBasso("G");
-		tasti[7][7].setIdBasso("H");
 		
 
 	}

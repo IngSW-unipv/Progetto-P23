@@ -12,10 +12,10 @@ public class GamePanel extends JPanel{
 	private GameBoard gameBoard;
 	private GameToolBar gameToolBar;
 
-	public GamePanel () {
+	public GamePanel (ChessColor color) {
 		super ();
 		setLayout(new BorderLayout());
-		gameBoard = new GameBoard ();
+		gameBoard = new GameBoard (color);
 		gameToolBar = new GameToolBar ();
 		add(gameBoard,BorderLayout.CENTER);
 		add(gameToolBar,BorderLayout.PAGE_START);

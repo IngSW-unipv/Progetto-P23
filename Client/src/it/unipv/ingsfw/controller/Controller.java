@@ -152,6 +152,8 @@ public class Controller {
 
 
 	public void inizializeView (GameModel model) {
+		
+		
 
 		Square [][] casa = model.getB();
 		Piece p;
@@ -179,11 +181,9 @@ public class Controller {
 							tasti[x][y].setIcon(viewBoard.getKingW());
 							break;
 
-
 						case Queen :
 							tasti[x][y].setIcon(viewBoard.getQueenW());
 							break;
-
 
 						case Knight :
 							tasti[x][y].setIcon(viewBoard.getKnightW());
