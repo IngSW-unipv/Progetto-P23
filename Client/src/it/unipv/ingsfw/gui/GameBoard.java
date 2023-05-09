@@ -76,12 +76,16 @@ public class GameBoard extends JPanel   {
 				}
 				else {
 					tasti[x][y] = new GameButton(lightGreen,new Square (x,y));
-			
+				
 					
 				}
 				add(tasti [x][y]);
+				
+			
 
 			}
+			
+		}
 			tasti[0][0].setIdAlto("8");
 			tasti[0][1].setIdAlto("7");
 			tasti[0][2].setIdAlto("6");
@@ -100,8 +104,9 @@ public class GameBoard extends JPanel   {
 			tasti[6][7].setIdBasso("G");
 			tasti[7][7].setIdBasso("H");
 		}
+	
 		
-		}
+		
 		else {
 			
 			for (int y = 7 ; y > -1;  y--) {
