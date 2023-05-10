@@ -37,7 +37,7 @@ public class Frame  extends JFrame implements ActionListener {
 		
 	
 		
-		add(menu,BorderLayout.CENTER);
+		getContentPane().add(menu,BorderLayout.CENTER);
 	
 		
 		
@@ -62,7 +62,11 @@ public class Frame  extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		gamePanel = new GamePanel (ChessColor.WHITE);
+		if (gamePanel != null) {
+			remove(gamePanel);
+		
+		}
+		gamePanel = new GamePanel (ChessColor.WHITE,menu);
 		//gamePanel = new GamePanel (ChessColor.BLACK);
 		menu.setVisible(false);
 		add(gamePanel,BorderLayout.CENTER);
