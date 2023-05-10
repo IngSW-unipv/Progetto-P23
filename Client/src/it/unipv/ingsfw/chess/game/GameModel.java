@@ -23,11 +23,13 @@ public class GameModel {
 		this.GameStatus = Status.PLAY;
 		this.currentPlayerMoves = new ArrayList<Move>();
 		this.opponentPlayerMoves = new ArrayList<Move>();
+		initTurn();
 	}
 	
 	
 	public void switchCurrentPlayer() {
-		this.currentPlayer = ChessColor.oppositeColor(currentPlayer);		
+		this.currentPlayer = ChessColor.oppositeColor(currentPlayer);
+		initTurn();
 	}
 
 
@@ -59,9 +61,8 @@ public class GameModel {
 	public void resetGame() {
 		this.currentPlayer = ChessColor.WHITE;
 		this.GameStatus = Status.PLAY;
-		this.currentPlayerMoves = new ArrayList<Move>();
-		this.opponentPlayerMoves = new ArrayList<Move>();
 		this.board.resetBoard();
+		initTurn();
 	}
 	
 	
@@ -75,7 +76,7 @@ public class GameModel {
 	
 	
 	public boolean isCheckMate() {
-		if(isCheck() && this.currentPlayerMoves == null) {
+		if(isCheck() && this.currentPlayerMoves.isEmpty()) {
 			return true;
 		}
 		return false;
@@ -107,7 +108,7 @@ public class GameModel {
 			}else {
 				this.GameStatus=Status.CHECK;
 			}
-		}else if(this.currentPlayerMoves==null){
+		}else if(this.currentPlayerMoves.isEmpty()){
 			this.GameStatus=Status.STALEMATE;
 		}
 	}
@@ -115,6 +116,7 @@ public class GameModel {
 	
 	public void resignation() {
 		this.GameStatus = Status.winner(ChessColor.oppositeColor(currentPlayer));
+		
 	}
 	
 	

@@ -25,8 +25,8 @@ public class GameToolBar extends JPanel  {
 
 		button1 = new JButton ("nuova partita");
 		button2 = new JButton ("resa");
-		label = new JLabel ("");
-		status = new JLabel ("");
+		label = new JLabel ("ciao");
+		status = new JLabel ("aaaa");
 		setLayout(new FlowLayout (FlowLayout.LEFT));
 
 		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
@@ -34,7 +34,7 @@ public class GameToolBar extends JPanel  {
 		add(button1);
 		add(button2);
 		add(label);
-		//add(status);
+		add(status);
 
 	}
 
@@ -65,7 +65,7 @@ public class GameToolBar extends JPanel  {
 	}
 
 	public void updateStatus (Status s) {
-		label.setText(s.toString());
+		status.setText(s.toString());
 	}
 
 

@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 import it.unipv.ingsfw.chess.ChessColor;
+import it.unipv.ingsfw.chess.game.Status;
 
 public class GamePanel extends JPanel{
 
@@ -29,8 +30,9 @@ public class GamePanel extends JPanel{
 		return gameToolBar;
 	}
 	
-	public void updateToolBar (ChessColor c) {
+	public void updateToolBar (ChessColor c, Status s) {
 		gameToolBar.update(c);
+		gameToolBar.updateStatus(s);
 	}
 
 	

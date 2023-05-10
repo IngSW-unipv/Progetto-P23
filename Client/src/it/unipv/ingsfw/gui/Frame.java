@@ -63,6 +63,7 @@ public class Frame  extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		gamePanel = new GamePanel (ChessColor.WHITE);
+		//gamePanel = new GamePanel (ChessColor.BLACK);
 		menu.setVisible(false);
 		add(gamePanel,BorderLayout.CENTER);
 		

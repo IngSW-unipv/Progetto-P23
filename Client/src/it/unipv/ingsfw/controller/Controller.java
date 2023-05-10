@@ -6,12 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JLabel;
-
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.chess.game.Move;
 import it.unipv.ingsfw.chess.game.Square;
+import it.unipv.ingsfw.chess.game.Status;
 import it.unipv.ingsfw.chess.pieces.Piece;
 import it.unipv.ingsfw.gui.GameBoard;
 import it.unipv.ingsfw.gui.GamePanel;
@@ -26,6 +25,7 @@ public class Controller {
 	private GameToolBar toolBar;
 	private GameButton [][] tasti;
 	private ChessColor currentPlayer;
+	private Status currentStatus;
 	private Boolean firstClick;
 	private Square startPosition;
 	private List <Square> colorThis;
@@ -45,10 +45,10 @@ public class Controller {
 		tasti = viewBoard.getTasti();
 		inizializeView (model);
 		currentPlayer = model.getCurrentPlayer();
+		currentStatus = model.getGameStatus();
 		startPosition = new Square (0,0);
 		firstClick = true;
-		toolBar.update(currentPlayer);
-		toolBar.updateStatus(model.getGameStatus());
+		view.updateToolBar(currentPlayer, currentStatus);
 
 
 
@@ -62,7 +62,7 @@ public class Controller {
 				currentPlayer = model.getCurrentPlayer();
 				startPosition = new Square (0,0);
 				firstClick = true;
-				view.updateToolBar(currentPlayer);
+				view.updateToolBar(currentPlayer,currentStatus);
 			}
 		});
 		
@@ -97,8 +97,8 @@ public class Controller {
 						if (model.isOccupied(genericPosition) && 
 							(model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPieceColor() == currentPlayer) &&
 							(firstClick)) {
-							model.initTurn();
-							toolBar.updateStatus(model.getGameStatus());
+							//model.initTurn();
+							//toolBar.updateStatus(model.getGameStatus());
 							Toolkit.getDefaultToolkit().beep();
 							colorThis = model.getPositions(genericPosition);
 							for (Square s : colorThis) {
@@ -123,8 +123,9 @@ public class Controller {
 							firstClick = true;
 							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
-							view.updateToolBar(currentPlayer);
-							//inizializeView (model);
+							currentStatus = model.getGameStatus();
+							view.updateToolBar(currentPlayer,currentStatus);
+							inizializeView (model);
 
 						}
 						
@@ -135,6 +136,7 @@ public class Controller {
 								
 							}
 							firstClick = true;
+							inizializeView (model);
 							
 						}
 
