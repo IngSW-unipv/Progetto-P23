@@ -17,7 +17,9 @@ public class GameButton extends JButton   {
 	
 	private JLabel idAlto;
 	private JLabel idBasso;
-	public Color mainColor;
+	private Color mainColor;
+	private Color colorFirstMove;
+	private Color colorNoFirstMove;
 	private Square position;
 	
 	
@@ -30,7 +32,8 @@ public class GameButton extends JButton   {
 		idBasso = new JLabel();
 		this.position = position;
 		this.mainColor = mainColor;
-		
+		colorFirstMove = new Color (0,0,255);
+		colorNoFirstMove = new Color (255,0,0);
 		
 		
 		add(idAlto);
@@ -87,10 +90,16 @@ public class GameButton extends JButton   {
 	
 	public void reColor () {
 		setBackground(mainColor);
-		setBorder(BorderFactory.createEmptyBorder());
+	//	setBorder(BorderFactory.createEmptyBorder());
+	}
+	
+	public void ColorFirstmove () {
+		setBackground(colorFirstMove);
 	}
 
-
+	public void ColorNoFirstmove () {
+		setBackground(colorNoFirstMove);
+	}
 	
 
 	

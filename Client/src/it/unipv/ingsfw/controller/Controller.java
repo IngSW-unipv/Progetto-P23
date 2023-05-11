@@ -99,11 +99,20 @@ public class Controller {
 							(firstClick)) {
 							//model.initTurn();
 							//toolBar.updateStatus(model.getGameStatus());
+							
 							Toolkit.getDefaultToolkit().beep();
 							colorThis = model.getPositions(genericPosition);
+							
+							if (model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPiece().isFirstMove()) {
+								tasti[genericPosition.getX()][genericPosition.getY()].ColorFirstmove();
+							}
+							else {
+								tasti[genericPosition.getX()][genericPosition.getY()].ColorNoFirstmove();
+							}
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].color();
 							}
+					//		tasti[genericPosition.getX()][genericPosition.getY()]
 							
 							startPosition = genericPosition;
 							firstClick = false;
@@ -117,6 +126,7 @@ public class Controller {
 							Toolkit.getDefaultToolkit().beep();
 							viewBoard.swapIcon(startPosition,genericPosition );
 							model.makeMove(new Move (startPosition,genericPosition));
+							tasti[startPosition.getX()][startPosition.getY()].reColor();
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].reColor();
 							}
