@@ -72,7 +72,7 @@ public class GamePanel extends JPanel{
 
 		if (s == Status.CHECK_MATE) {
 
-			dialog = new Dialog (c.oppositeColor(c),back,gameBoard,gameToolBar,mainMenu);
+			dialog = new Dialog (c,back,gameBoard,gameToolBar,mainMenu);
 
 		}
 	}

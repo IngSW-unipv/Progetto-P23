@@ -47,17 +47,7 @@ public class Dialog extends JDialog {
             }
         });
         
-       // JRootPane rootPane = getRootPane();
-       // JButton closeButton = new JButton("X");
-       // rootPane.setDefaultButton(closeButton);
-        
-//        closeButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Azione personalizzata di chiusura della finestra
-//            }
-//        });
-        
+      
 
 	}
 }

@@ -50,7 +50,7 @@ public class GameBoard extends JPanel   {
 	
 		
 		
-		setPreferredSize(new Dimension (800,800));
+		setPreferredSize(new Dimension (800,720));
 		darkGreen = new Color (8,115,0);
 		lightGreen = new Color (223,253,214);		
 		tasti = new GameButton [8][8];
