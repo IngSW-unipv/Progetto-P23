@@ -95,7 +95,8 @@ public class Square{
 	}
 	
 	public String toString () {
-		return "x:" + this.x +" y:" + this.y;
+		String s=this.x+""+this.y;
+		return s;
 	}	
 }
 

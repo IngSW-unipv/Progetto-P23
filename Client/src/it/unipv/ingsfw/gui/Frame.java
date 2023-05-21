@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.Board;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.controller.Controller;
+import it.unipv.ingsfw.controller.MessageReceivedListener;
+import it.unipv.ingsfw.controller.OnlineController;
 
 public class Frame  extends JFrame  {
 
@@ -53,17 +56,25 @@ public class Frame  extends JFrame  {
 				
 				Controller sandro = new Controller (new GameModel (), gamePanel);	
 			}
-		});
-		
-		
+		});		
+	
 		online.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (gamePanel != null) {
+					remove(gamePanel);
+				}
 				
-				loginPanel = new LoginPanel ();
-				menu.setVisible(false);
-				centerPanel.add(loginPanel);
+				setGamePanel(ChessColor.WHITE,menu);
+				OnlineController sandro2 = new OnlineController(new GameModel(), gamePanel, "127.0.0.1", 1234);
+				sandro2.setMessageReceivedListener(new MessageReceivedListener() {
+		            @Override
+		            public void onMessageReceived(String message) {
+		                // Gestisci l'evento di ricezione del messaggio
+		                sandro2.onMessageReceived(message);
+		            }
+		        });				
 			}
 		});
 		
@@ -78,7 +89,14 @@ public class Frame  extends JFrame  {
 		
 	}
 	
-	
+	public void setGamePanel(ChessColor c, JPanel x) {
+
+		gamePanel = new GamePanel (c,x);
+		this.add(gamePanel,BorderLayout.CENTER);
+		menu.setVisible(false);
+
+
+	}
 	
 	public static void main(String[] args) {
 		Frame sandro1 = new Frame ("partita");
