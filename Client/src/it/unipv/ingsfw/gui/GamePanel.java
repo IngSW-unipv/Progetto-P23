@@ -26,9 +26,8 @@ public class GamePanel extends JPanel{
 	private JPanel mainMenu;
 	
 
-	public GamePanel (ChessColor color, JPanel mainMenu) {
+	public GamePanel (ChessColor color) {
 		super ();
-		this.mainMenu = mainMenu;
 		setLayout(new BorderLayout());
 		gameBoard = new GameBoard (color);
 		gameToolBar = new GameToolBar ();
@@ -75,6 +74,10 @@ public class GamePanel extends JPanel{
 			dialog = new Dialog (c,back,gameBoard,gameToolBar,mainMenu);
 
 		}
+	}
+	
+	public void setmenu (JPanel menu) {
+		mainMenu = menu ;
 	}
 	
 	

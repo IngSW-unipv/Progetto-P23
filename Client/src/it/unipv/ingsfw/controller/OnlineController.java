@@ -41,7 +41,7 @@ public class OnlineController extends MessageReceivedListener {
 	private Boolean firstClick;
 	private Square startPosition;
 	private List <Square> colorThis;
-	private Player pippo = new Player(ChessColor.BLACK);
+	private Player player = new Player(ChessColor.BLACK);
 	private Socket socket = null;
 	private DataInputStream in = null;
 	private PrintWriter out = null;	
@@ -50,10 +50,10 @@ public class OnlineController extends MessageReceivedListener {
 	private MessageReceivedListener messageReceivedListener;
 
 
-	public OnlineController(GameModel model, GamePanel view,String address,int port) {
+	public OnlineController(GameModel model,String address,int port) {
 		super();
 		this.model = model;
-		this.view = view;
+		//this.view = view;
 
 		try{
 			socket = new Socket(address, port);
@@ -86,13 +86,16 @@ public class OnlineController extends MessageReceivedListener {
 
 			System.out.println(line);
 			if(line.equals("White")) {
-				pippo.setColor(ChessColor.WHITE);
+				player.setColor(ChessColor.WHITE);
 				System.out.println("Sei il bianco, attendi avversario ...");
+				view = new GamePanel (ChessColor.WHITE);
+				
 
 
 			}
 			else {
-				pippo.setColor(ChessColor.BLACK);
+				player.setColor(ChessColor.BLACK);
+				view = new GamePanel (ChessColor.BLACK);
 				System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
 
 			}
@@ -309,6 +312,10 @@ public class OnlineController extends MessageReceivedListener {
 			}
 		}
 	}
+	
+	public GamePanel getGamePanel () {
+		return view;
+	}
 
 
 
@@ -324,7 +331,7 @@ public class OnlineController extends MessageReceivedListener {
 
 	}
 	public ChessColor getPlayerColor () {
-		return pippo.getColor();
+		return player.getColor();
 	}
 	@Override
 	public void onMessageReceived(String message) {

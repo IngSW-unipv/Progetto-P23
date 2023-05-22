@@ -24,6 +24,7 @@ public class Frame  extends JFrame  {
 	private JPanel menu;
 	private JButton local;
 	private JButton online;
+	private JButton onlineRapid;
 	
 	
 	
@@ -37,8 +38,10 @@ public class Frame  extends JFrame  {
 		menu = new JPanel ();
 		local = new JButton("LOCALE");
 		online = new JButton("ONLINE");
+		onlineRapid = new JButton ("veloce");
 		menu.add(local);
 		menu.add(online);
+		menu.add(onlineRapid);
 		
 		local.addActionListener(new ActionListener() {
 			
@@ -49,16 +52,28 @@ public class Frame  extends JFrame  {
 					remove(gamePanel);
 				
 				}
-				gamePanel = new GamePanel (ChessColor.WHITE,menu);
+				//gamePanel = new GamePanel (ChessColor.WHITE);
 				//gamePanel = new GamePanel (ChessColor.BLACK);
-				menu.setVisible(false);
-				centerPanel.add(gamePanel);
+				//menu.setVisible(false);
+				//centerPanel.add(gamePanel);
 				
+				setGamePanel(ChessColor.WHITE,menu);
 				Controller sandro = new Controller (new GameModel (), gamePanel);	
 			}
-		});		
-	
+		});	
+		
 		online.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			    loginPanel = new LoginPanel ();
+				menu.setVisible(false);
+				centerPanel.add(loginPanel);
+			}
+		});
+	
+		onlineRapid.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -66,8 +81,10 @@ public class Frame  extends JFrame  {
 					remove(gamePanel);
 				}
 				
-				setGamePanel(ChessColor.WHITE,menu);
-				OnlineController sandro2 = new OnlineController(new GameModel(), gamePanel, "127.0.0.1", 1234);
+			    //setGamePanel(ChessColor.WHITE,menu);
+				OnlineController sandro2 = new OnlineController(new GameModel(), "127.0.0.1", 1234);
+				gamePanel = sandro2.getGamePanel();
+				setGamePanel(gamePanel,menu);
 				sandro2.setMessageReceivedListener(new MessageReceivedListener() {
 		            @Override
 		            public void onMessageReceived(String message) {
@@ -91,8 +108,19 @@ public class Frame  extends JFrame  {
 	
 	public void setGamePanel(ChessColor c, JPanel x) {
 
-		gamePanel = new GamePanel (c,x);
+		gamePanel = new GamePanel (c);
+		gamePanel.setmenu(x);
+		
 		this.add(gamePanel,BorderLayout.CENTER);
+		menu.setVisible(false);
+
+
+	}
+	public void setGamePanel(GamePanel p , JPanel x) {
+
+		
+		p.setmenu(x);
+		this.add(p,BorderLayout.CENTER);
 		menu.setVisible(false);
 
 
