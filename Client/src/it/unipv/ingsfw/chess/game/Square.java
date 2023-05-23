@@ -2,6 +2,7 @@ package it.unipv.ingsfw.chess.game;
 
 
 import it.unipv.ingsfw.chess.ChessColor;
+import it.unipv.ingsfw.chess.pieces.Pawn;
 import it.unipv.ingsfw.chess.pieces.Piece;
 import it.unipv.ingsfw.chess.pieces.PieceType;
 
@@ -69,6 +70,13 @@ public class Square{
 		return piece.getColor();
 	}
 	
+	public PieceType getPieceType() {
+		if(this.piece == null) {
+			return null;
+		}
+		return piece.getType();
+	}
+	
 	public void releasePiece() {
 		this.piece = null;
 	}
@@ -94,10 +102,19 @@ public class Square{
 		return piece.toString();
 	}
 	
+	@Override
 	public String toString () {
-		String s=this.x+""+this.y;
-		return s;
+		return Integer.toString(x) + Integer.toString(y);
 	}	
+
+	public static void main(String[] args) {
+		Square s = new Square(new Pawn(ChessColor.WHITE,PieceType.Pawn),1,2);
+		Square s1 = new Square(2,2);
+		Piece p = s.getPiece();
+		s.releasePiece();
+		s1.setPiece(p);
+		System.out.println(p.getType());
+	}
 }
 
 	

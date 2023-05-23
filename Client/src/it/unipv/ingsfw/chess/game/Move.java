@@ -1,28 +1,25 @@
 package it.unipv.ingsfw.chess.game;
 
+import it.unipv.ingsfw.chess.pieces.Piece;
 
 public class Move {
 	
 	private Square initialPosition;
 	private Square finalPosition;
-	private boolean specialMove;
+	private Piece pInit;
+	private Piece pFin;
 	
 		
-	public Move(Square initialPosition, Square finalPosition, boolean specialMove) {
-		super();
-		this.initialPosition = initialPosition;
-		this.finalPosition = finalPosition;
-		this.specialMove = specialMove;
-	}
-	
-	
 	public Move(Square initialPosition, Square finalPosition) {
 		super();
 		this.initialPosition = initialPosition;
 		this.finalPosition = finalPosition;
-		this.specialMove=false;
+		this.pInit = initialPosition.getPiece();
+		if(finalPosition.getPiece() != null) {
+			this.pFin = finalPosition.getPiece();
+		}
 	}
-
+	
 	public Move(String st) {
 		 char s[] = st.toCharArray();
 	     int x1 = Character.getNumericValue(s[0]);
@@ -33,8 +30,7 @@ public class Move {
 	     this.finalPosition = new Square(x2,y2);
 	     
 	}
-
-
+	
 
 	public Square getInitialPosition() {
 		return initialPosition;
@@ -46,13 +42,15 @@ public class Move {
 	}
 	
 	
-	public boolean isSpecialMove() {
-		return specialMove;
+	public Piece getpInit() {
+		return pInit;
 	}
 
-	public String toString() {
-		return initialPosition.toString()+finalPosition.toString();
+
+	public Piece getpFin() {
+		return pFin;
 	}
+
 
 	public boolean equals(Move m) {
 		if(this.initialPosition.equals(m.initialPosition) && this.finalPosition.equals(m.finalPosition)) {
@@ -60,6 +58,9 @@ public class Move {
 		}
 		return false;
 	}
-
-
+	
+	@Override
+	public String toString() {
+		return this.initialPosition.toString() + this.finalPosition.toString();
+	}
 }

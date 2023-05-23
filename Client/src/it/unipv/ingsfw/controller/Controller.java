@@ -88,7 +88,6 @@ public class Controller {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 
-					//	model.initTurn();
 						GameButton pressed = (GameButton)e.getSource();
 	
 						Square genericPosition = pressed.getChessPosition();
@@ -131,7 +130,6 @@ public class Controller {
 								tasti[s.getX()][s.getY()].reColor();
 							}
 							firstClick = true;
-							model.switchCurrentPlayer();
 							currentPlayer = model.getCurrentPlayer();
 							currentStatus = model.getGameStatus();
 							view.updateToolBar(currentPlayer,currentStatus);
@@ -174,6 +172,8 @@ public class Controller {
 			for (int x = 0 ; x < 8 ;x++) {		
 
 				p  = casa[x][y].getPiece();
+				
+				tasti[x][y].reColor();
 
 				if (p !=  null)		{
 

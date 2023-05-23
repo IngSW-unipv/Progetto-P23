@@ -14,7 +14,8 @@ public class GameModel {
 	private ChessColor currentPlayer;
 	private Status GameStatus;
 	private List<Move> currentPlayerMoves;
-	private List<Move> opponentPlayerMoves;
+	private List<Move> movesDone;
+	
 
 
 	public GameModel () {
@@ -22,7 +23,7 @@ public class GameModel {
 		this.currentPlayer = ChessColor.WHITE;
 		this.GameStatus = Status.PLAY;
 		this.currentPlayerMoves = new ArrayList<Move>();
-		this.opponentPlayerMoves = new ArrayList<Move>();
+		this.movesDone = new ArrayList<Move>();
 		initTurn();
 	}
 	
@@ -48,8 +49,8 @@ public class GameModel {
 	}
 
 	
-	public List<Move> getOpponentPlayerMoves() {
-		return opponentPlayerMoves;
+	public List<Move> getmovesDone() {
+		return movesDone;
 	}
 	
 	
@@ -61,6 +62,8 @@ public class GameModel {
 	public void resetGame() {
 		this.currentPlayer = ChessColor.WHITE;
 		this.GameStatus = Status.PLAY;
+		this.currentPlayerMoves = new ArrayList<Move>();
+		this.movesDone = new ArrayList<Move>();
 		this.board.resetBoard();
 		initTurn();
 	}
@@ -85,14 +88,15 @@ public class GameModel {
 	
 	public void initTurn() {
 		this.currentPlayerMoves = calcolatorMoves(currentPlayer);
-		this.opponentPlayerMoves = calcolatorMoves(ChessColor.oppositeColor(currentPlayer));
+		castle();
+		enPassant();
 		checkCurrentMoves();
 		changeStatus();
 	}
 	
 	
 	public boolean isCheck() {
-		for(Move m: this.opponentPlayerMoves) {
+		for(Move m: calcolatorMoves(ChessColor.oppositeColor(currentPlayer))) {
 			if(isMakeCheck(m)) {
 				return true;
 			}
@@ -273,7 +277,7 @@ public class GameModel {
 						fin = this.board.getSquare(init.getX()-j, init.getY()+j);
 						if(p.getType()==PieceType.Pawn) {
 							if(fin.isOccupied() && fin.getPieceColor() != c) {
-									path.add(new Move(init, fin,true));
+									path.add(new Move(init, fin));
 							}
 						}else if(!fin.isOccupied()) {
 							path.add(new Move(init, fin));
@@ -398,27 +402,39 @@ public class GameModel {
 		}
 	}
 
+
 	public void removeMoves(Square s) {
 		for(Move m1: movesPerPiece(s)) {
-			Piece p = board.emulateMove(m1);
+			board.emulateMove(m1);
 			for(Move m2: calcolatorMoves(ChessColor.oppositeColor(currentPlayer))) {
 				if(isMakeCheck(m2)) {
 					this.currentPlayerMoves.remove(m1);
+					break;
 				}
 			}
-			board.undoMove(m1,p);
+			board.undoMove(m1);
 		}
 	}
+	
 	
 	public void makeMove(Move m) {
 		for(Move possible: currentPlayerMoves) {
 			if(m.equals(possible)) {
-				board.makeMove(m);
-				Piece p = m.getFinalPosition().getPiece();
-				Square fin = board.getSquare(m.getFinalPosition().getX(), m.getFinalPosition().getY());
-				if(isPromotion(fin)) {
-					board.setPiece(fin, new Queen(this.currentPlayer,PieceType.Queen));
+				if(isCastling(possible)) {
+					board.makeCastle(possible);
+				}else {
+					board.makeMove(possible);
+					if(isEnPassant(possible)) {
+						board.getSquare(possible.getFinalPosition().getX(),possible.getInitialPosition().getY()).releasePiece();
+					}
+					Square fin = board.getSquare(possible.getFinalPosition().getX(), possible.getFinalPosition().getY());
+					if(isPromotion(fin)) {
+						board.setPiece(fin, new Queen(this.currentPlayer,PieceType.Queen));
+					}
 				}
+				movesDone.add(possible);
+				switchCurrentPlayer();
+				break;
 			}
 		}
 	}
@@ -426,22 +442,16 @@ public class GameModel {
 
 	public ArrayList<Move> movesPerPiece(Square init){
 		ArrayList<Move> movesPerPiece = new ArrayList<Move>();
-		if(init.getPieceColor() == null) {
-			return null;
-		}else if(init.getPieceColor() == this.currentPlayer) {
-			for(Move m: this.currentPlayerMoves) {
-				if(init.equals(m.getInitialPosition())) {
-					movesPerPiece.add(m);
-				}
-			}
-		}else {
-			for(Move m: this.opponentPlayerMoves) {
-				if(init.equals(m.getInitialPosition())) {
+		Piece currentPiece = init.getPiece();
+		if(currentPiece != null) {
+			Piece p;
+			for(Move m: currentPlayerMoves){
+				p = m.getpInit();
+				if(currentPiece == p){
 					movesPerPiece.add(m);
 				}
 			}
 		}
-	
 		return movesPerPiece;
 	}
 
@@ -475,8 +485,111 @@ public class GameModel {
 		return possibleSquare;
 		
 	}
-		
 	
+
+		
+	public void castle() {
+		Square king = this.board.getKingSquare(currentPlayer);
+		Square s;
+		Square rook;
+		if(!isCheck()) {
+			if((king.getPiece().isFirstMove())) {
+				for(int i=0;i<8;i++) {
+					s = board.getSquare(i,king.getY());
+					if(s.isOccupied() && s.getPieceType()==PieceType.Rook && s.getPieceColor()==currentPlayer && s.getPiece().isFirstMove()) {
+						rook = s;
+						if(king.getX()<rook.getX()) {
+							if(isClearPath(king,rook)) {
+								this.currentPlayerMoves.add(new Move(king,rook));
+							}
+						}else {
+							if(isClearPath(rook,king)) {
+								this.currentPlayerMoves.add(new Move(king,rook));
+							}
+						}
+					}
+				}	
+			}
+		}
+	}
+
+	
+
+	public boolean isClearPath(Square s1, Square s2) {
+		Square path;
+		if(s1.getY() != s2.getY()) {
+			return false;
+		}
+		for(int i= s1.getX()+1;i<s2.getX();i++) {
+			path=board.getSquare(i, s1.getY());
+			if(path.isOccupied()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isCastling(Move m) {
+		Square init = board.getSquare(m.getInitialPosition().getX(),m.getInitialPosition().getY());
+		Square fin = board.getSquare(m.getFinalPosition().getX(),m.getFinalPosition().getY());
+		if(init.isKing() && fin.isOccupied()) {
+			if(fin.getPieceType()==PieceType.Rook) {
+				return true;
+			}else {
+				return false;
+			}
+
+		}
+		return false;
+	}
+	
+	
+	public void enPassant() {
+		if(!movesDone.isEmpty()) {
+			Move m = movesDone.get(movesDone.size()-1);
+			if(m.getpInit().getType() == PieceType.Pawn && Math.abs(m.getFinalPosition().getY() - m.getInitialPosition().getY()) == 2) {
+				Square s = m.getFinalPosition();
+				Square s1,s2;
+				
+				if(board.isInBoard(new Square(s.getX()+1,s.getY()))) {
+					s1 = board.getSquare(s.getX()+1,s.getY());
+					if(s1.isOccupied()) {
+						if(s1.getPieceColor() == currentPlayer && s1.getPieceType() == PieceType.Pawn) {
+							if(currentPlayer == ChessColor.WHITE) {
+								currentPlayerMoves.add(new Move(s1,board.getSquare(s.getX(),s.getY()-1)));
+							}else {
+								currentPlayerMoves.add(new Move(s1,board.getSquare(s.getX(),s.getY()+1)));
+							}
+						}
+					}
+				}
+				
+				if(board.isInBoard(new Square(s.getX()-1,s.getY()))) {
+					s2 = board.getSquare(s.getX()-1,s.getY());
+					if(s2.isOccupied()) {
+						if(s2.getPieceColor() == currentPlayer && s2.getPieceType() == PieceType.Pawn) {
+							if(currentPlayer == ChessColor.WHITE) {
+								currentPlayerMoves.add(new Move(s2,board.getSquare(s.getX(),s.getY()-1)));
+							}else {
+								currentPlayerMoves.add(new Move(s2,board.getSquare(s.getX(),s.getY()+1)));
+							}
+						}
+					}
+
+				}
+			}
+		}		
+	}
+	
+	public boolean isEnPassant(Move m){
+		Piece init = m.getpInit();
+		if(init.getType() == PieceType.Pawn) {
+			if(m.getpFin() == null && m.getInitialPosition().getX() != m.getFinalPosition().getX()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	
 
