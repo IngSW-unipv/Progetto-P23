@@ -340,7 +340,7 @@ public class OnlineController extends MessageReceivedListener {
 		else {
 			Move m2=new Move(message);		                
 			model.makeMove(m2);
-			model.switchCurrentPlayer();
+			
 			viewBoard.swapIcon(m2.getInitialPosition() ,m2.getFinalPosition());
 			currentPlayer = model.getCurrentPlayer();
 			currentStatus = model.getGameStatus();
