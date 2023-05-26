@@ -16,10 +16,11 @@ public class LoginPanel extends JPanel {
         
 
         JLabel usernameLabel = new JLabel("Username:");
-        usernameField = new JTextField();
+        usernameField = new JTextField(20);
         JLabel passwordLabel = new JLabel("Password:");
-        passwordField = new JPasswordField();
-        JButton loginButton = new JButton("Login");
+        passwordField = new JPasswordField(20);
+        JButton loginButton = new JButton("Log in");
+        JButton singUpButton = new JButton("Sing up");
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -31,23 +32,26 @@ public class LoginPanel extends JPanel {
                 System.out.println("Password: " + new String(password));
             }
         });
+        
+        singUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                char[] password = passwordField.getPassword();
+                // Esegui l'autenticazione o l'azione desiderata qui
+                System.out.println("Username: " + username);
+                System.out.println("Password: " + new String(password));
+            }
+        });
+        
+       
 
         add(usernameLabel);
         add(usernameField);
         add(passwordLabel);
         add(passwordField);
         add(loginButton);
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Login");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        LoginPanel loginPanel = new LoginPanel();
-        frame.getContentPane().add(loginPanel);
-
-        frame.pack();
-        frame.setVisible(true);
+        add (singUpButton);
     }
 }
 
