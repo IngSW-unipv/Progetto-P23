@@ -11,6 +11,10 @@ public class User {
 		
 	}
 
+	public User(String string) {
+		this.username = string;
+	}
+
 	public String getUsername() {
 		return username;
 	}
