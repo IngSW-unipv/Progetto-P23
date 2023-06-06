@@ -1,5 +1,4 @@
-package it.unipv.ingsfw.controller;
-
+package it.unipv.ingsfw;
 
 public interface MessageReceivedListener {
 	
