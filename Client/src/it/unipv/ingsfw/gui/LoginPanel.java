@@ -28,7 +28,7 @@ public class LoginPanel extends JPanel {
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField(20);
         JButton loginButton = new JButton("Log in");
-        JButton singUpButton = new JButton("Sing up");
+        JButton singUpButton = new JButton("Sign up");
         JButton back = new JButton("Back");
 
         loginButton.addActionListener(new ActionListener() {

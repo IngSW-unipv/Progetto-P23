@@ -102,7 +102,7 @@ public class UserDAO implements IUserDAO{
 
 		try {
 
-			String query = "INSERT INTO UTENTI VALUES(?,?)";
+			String query = "INSERT INTO UTENTI(username,password) VALUES(?,?)";
 			st1 = conn.prepareStatement(query);
 
 			st1.setString(1, u.getUsername());
