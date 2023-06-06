@@ -102,12 +102,7 @@ public class Controller {
 							Toolkit.getDefaultToolkit().beep();
 							colorThis = model.getPositions(genericPosition);
 							
-							if (model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPiece().isFirstMove()) {
-								tasti[genericPosition.getX()][genericPosition.getY()].ColorFirstmove();
-							}
-							else {
-								tasti[genericPosition.getX()][genericPosition.getY()].ColorNoFirstmove();
-							}
+							
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].color();
 							}
