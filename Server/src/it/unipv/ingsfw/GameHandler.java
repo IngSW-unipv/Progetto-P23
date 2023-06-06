@@ -2,10 +2,13 @@ package it.unipv.ingsfw;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameHandler implements Runnable {
     private Socket clientSocket1;
     private Socket clientSocket2;
+    private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
     // Constructor
     public GameHandler(Socket socket1, Socket socket2)
@@ -32,7 +35,7 @@ public class GameHandler implements Runnable {
             out2 = new PrintWriter(clientSocket2.getOutputStream(), true);
             
             // get the inputstream of client2
-            in2 = new BufferedReader(new InputStreamReader(clientSocket2.getInputStream()));
+            //in2 = new BufferedReader(new InputStreamReader(clientSocket2.getInputStream()));
 
             String line1 = "WHITE";
             String line2 = "BLACK";
@@ -40,14 +43,14 @@ public class GameHandler implements Runnable {
             while (!line1.equals("Done") && !line2.equals("Done")) {
 				try {
 
-					line1 = in1.readLine();
+					line1 = in1.readLine();//messageQueue.take();
 					System.out.println(line1);         
 					out2.println(line1);
 					
 					//if(line1.equals("Done")) break;
 					
 
-					line2 = in2.readLine();
+					line2 = in2.readLine();//messageQueue.take();
 					System.out.println(line2);
 					out1.println(line2);
 					

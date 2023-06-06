@@ -272,7 +272,7 @@ class Server implements MessageReceivedListener{
 				System.out.println("thread");
 				boolean x = true;
 				PrintStream oss = getOs();
-				BufferedReader reader = getReader();
+				//BufferedReader reader = getReader();
 				oss.println("username-password");
 				while (x) {
 
@@ -306,26 +306,10 @@ class Server implements MessageReceivedListener{
 			}
 		});
 		childThreads.put(client, loginThread); 
-
-
 		queueMap.put(loginThread, messageQueue);
 		loginThread.start();
 
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-
-
-
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
 
 
 
@@ -334,9 +318,9 @@ class Server implements MessageReceivedListener{
 		String pass = new String(password);
 
 		if (u == null)
-			throw new AccountNotFoundException(username);
+			throw new AccountNotFoundException(os);
 		if (!u.getPsw().equals(pass))
-			throw new WrongPasswordException(username);
+			throw new WrongPasswordException(os);
 
 		this.setUser(u);
 	}
@@ -345,15 +329,17 @@ class Server implements MessageReceivedListener{
 	public void onMessageReceived(String message) {
 
 		System.out.println(message);
+
 		switch (message) {
 		case "login":
-			System.out.println("qui");
-			// fai login
-			//gestire richiesta login database
-			// new DBConnection, query check username e password + exception, 
-			// esito posivo mandare al client statistiche legate username(query)
+
 			loginThread();
 
+			break;
+
+		case "signup":
+
+			signupThread();
 			break;
 
 		case "gioca":
@@ -378,11 +364,9 @@ class Server implements MessageReceivedListener{
 				os2.println("Inizia");
 				this.client2=this.client;
 				waiting=false;
-				GameHandler clientSock
-				= new GameHandler(client1,client2);
-
-
-				new Thread(clientSock).start();
+				gameThread(client1,client2);
+				//GameHandler clientSock = new GameHandler(client1,client2);
+				//new Thread(clientSock).start();
 			}
 			break;
 
@@ -394,10 +378,128 @@ class Server implements MessageReceivedListener{
 				e.printStackTrace();
 			}
 			break;
+
 		}
 	}
-}
 
+	private void gameThread(Socket client1, Socket client2) {
+		BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
+
+		Thread gameThread = new Thread(() -> {
+			try {
+				System.out.println("thread");
+
+				PrintStream oss = getOs();
+				PrintWriter out1 = new PrintWriter(client1.getOutputStream(), true);
+				PrintWriter out2 = new PrintWriter(client2.getOutputStream(), true);
+				String line1 = "",line2 = "";
+				try {
+					while (!line1.equals("Done") && !line2.equals("Done")){
+
+
+
+						line1 = messageQueue.take();
+
+						System.out.println(line1);         
+						out2.println(line1);
+
+						//if(line1.equals("Done")) break;
+
+
+						line2 = messageQueue.take();
+						System.out.println(line2);
+						out1.println(line2);
+
+						//if(line2.equals("Done")) break;
+
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				finally {
+
+					if (out1 != null) {
+						out1.close();
+					}
+
+					if (out2 != null) {
+						out2.close();
+					}
+				}
+
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}	
+
+		});
+		childThreads.put(client, gameThread); 
+		queueMap.put(gameThread, messageQueue);
+		gameThread.start();
+
+	}
+
+
+
+
+
+	private void signupThread() {
+		BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
+
+		Thread signupThread = new Thread(() -> {
+			try {
+				System.out.println("thread");
+				boolean x = true;
+				PrintStream oss = getOs();
+				BufferedReader reader = getReader();
+				oss.println("username-password");
+				while (x) {
+
+					String message = messageQueue.take();
+					System.out.println(message);
+					if (message.equals("stats pls")) {
+						x=false;
+
+					}
+					else {
+						String[] uspsw = message.split("-",-1);
+						User user = new User(uspsw[0],uspsw[1]);
+
+						System.out.println("Username: "+user.getUsername());
+						//metodo userDAO per check password
+						if(insertUser(uspsw[0], uspsw[1])) {
+							//esito positivo
+							oss.println("registration completed");
+						}
+						else {						
+							oss.println("SUUUUUCCCAAAA!!!!!");
+						}
+					}
+				}
+			}catch (InterruptedException e) {
+
+				e.printStackTrace();
+			}
+		});
+		childThreads.put(client, signupThread); 
+		queueMap.put(signupThread, messageQueue);
+		signupThread.start();
+
+	}
+	public boolean insertUser(String username, String password){
+		return (new UserDAO().insertUser(new User(username,password)));		
+
+	}
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+}
 
 
 

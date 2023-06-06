@@ -36,7 +36,7 @@ public class LoginPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
-
+                exist(username, new String(password));
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + new String(password));
             }
@@ -48,6 +48,8 @@ public class LoginPanel extends JPanel {
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
                 // Esegui l'autenticazione o l'azione desiderata qui
+                registration(username, new String(password));
+                
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + new String(password));
             }
@@ -81,8 +83,7 @@ public class LoginPanel extends JPanel {
     private void exist (String id , String psw) {
     	OnlineController oc = new OnlineController (null , "127.0.0.1", 1234 );
     	oc.setUser(new User (id , psw));
-    	
-    	
+    	    	
     	oc.setMessageReceivedListener(new MessageReceivedListener() {
             @Override
             public void onMessageReceived(String message) {
@@ -90,6 +91,21 @@ public class LoginPanel extends JPanel {
                 oc.onMessageReceived(message);
             }
         });	
+    	oc.loginCall();
+    }
+    
+    private void registration(String id , String psw) {
+    	OnlineController oc = new OnlineController (null , "127.0.0.1", 1234 );
+    	oc.setUser(new User (id , psw));
+    	    	
+    	oc.setMessageReceivedListener(new MessageReceivedListener() {
+            @Override
+            public void onMessageReceived(String message) {
+                // Gestisci l'evento di ricezione del messaggio
+                oc.onMessageReceived(message);
+            }
+        });	
+    	oc.signupCall();
     }
     
     

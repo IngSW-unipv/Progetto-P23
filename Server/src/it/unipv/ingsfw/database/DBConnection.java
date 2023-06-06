@@ -23,7 +23,7 @@ public class DBConnection {
 	private static void init() {
 		Properties p = new Properties(System.getProperties());
 		try {
-			p.load(new FileInputStream("properties/properties"));
+			//p.load(new FileInputStream("properties/properties"));
 			dbDriver = "com.mysql.cj.jdbc.Driver";//p.getProperty(PROPERTYDBDRIVER);
 			dbURL ="jdbc:mysql://127.0.0.1:3306/%s";// p.getProperty(PROPERTYDBURL);//
 			dbusn ="username";//p.getProperty(usn); //

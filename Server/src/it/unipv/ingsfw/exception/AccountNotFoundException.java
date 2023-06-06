@@ -1,9 +1,11 @@
 package it.unipv.ingsfw.exception;
 
+import java.io.PrintStream;
+
 public class AccountNotFoundException extends Exception {
 
-	public AccountNotFoundException(String username) {
-		// TODO Auto-generated constructor stub
+	public AccountNotFoundException(PrintStream os) {
+		os.println("login denied");
 	}
 
 }

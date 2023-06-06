@@ -349,7 +349,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		System.out.println("Messaggio ricevuto: " + message);
 		if(message.equals("???")) {
 			System.out.println("dentro");
-			out.println("login");
+			
 		}		
 		else if(message.equals("White")) {
 			player.setColor(ChessColor.WHITE);
@@ -376,7 +376,12 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			
 			out.println(user.getUsername()+"-"+user.getPsw());
 		}
-		else if(message.equals("login accepted")) {
+		else if(message.equals("login denied")){
+			//modifica colori schermata
+		}		
+		else if(message.equals("login accepted") || message.equals("registration completed")) {
+			
+			//schermata gioca
 			out.println("stats pls");
 			while (true) {
 
@@ -394,6 +399,16 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			}
 
 		}
+	}
+	
+	public void loginCall() {
+		out.println("login");
+	}
+	public void signupCall() {
+		out.println("signup");
+	}
+	public void playCall() {
+		out.println("gioca");
 	}
 
 	public User getUser() {
