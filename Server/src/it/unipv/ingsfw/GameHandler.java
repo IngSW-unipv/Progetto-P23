@@ -3,12 +3,12 @@ package it.unipv.ingsfw;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientHandler implements Runnable {
+public class GameHandler implements Runnable {
     private Socket clientSocket1;
     private Socket clientSocket2;
 
     // Constructor
-    public ClientHandler(Socket socket1, Socket socket2)
+    public GameHandler(Socket socket1, Socket socket2)
     {
         this.clientSocket1 = socket1;
         this.clientSocket2 = socket2;

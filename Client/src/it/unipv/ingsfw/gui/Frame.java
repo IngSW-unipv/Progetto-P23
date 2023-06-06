@@ -67,7 +67,7 @@ public class Frame  extends JFrame  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-			    loginPanel = new LoginPanel ();
+			    loginPanel = new LoginPanel (menu);
 				menu.setVisible(false);
 				centerPanel.add(loginPanel);
 			}

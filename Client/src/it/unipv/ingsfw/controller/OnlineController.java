@@ -9,14 +9,16 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
 
-
 import it.unipv.ingsfw.chess.ChessColor;
+import it.unipv.ingsfw.chess.dbobject.User;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.chess.game.Move;
 import it.unipv.ingsfw.chess.game.Square;
@@ -29,7 +31,7 @@ import it.unipv.ingsfw.gui.GameToolBar;
 import it.unipv.ingsfw.gui.buttons.GameButton;
 
 
-public class OnlineController extends MessageReceivedListener {
+public class OnlineController implements MessageReceivedListener ,Runnable{
 
 	private GameModel model;
 	private GamePanel view;
@@ -48,6 +50,7 @@ public class OnlineController extends MessageReceivedListener {
 	private String line = "";	
 	private BufferedReader reader;
 	private MessageReceivedListener messageReceivedListener;
+	private User user;
 
 
 	public OnlineController(GameModel model,String address,int port) {
@@ -56,8 +59,9 @@ public class OnlineController extends MessageReceivedListener {
 		//this.view = view;
 
 		try{
+
 			socket = new Socket(address, port);
-			
+
 			// reading from server
 			in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
@@ -69,42 +73,52 @@ public class OnlineController extends MessageReceivedListener {
 			Thread messageListenerThread = new Thread(() -> {
 				try {
 					while (true) {
+
 						String message = reader.readLine();
 						if (message != null) {
 							fireMessageReceivedEvent(message);
 						}
 					}
 				} catch (IOException e) {
-					
+
 					e.printStackTrace();
 				}
 			});
 			messageListenerThread.start();
 
 
-			line = in.readLine();
-
-			System.out.println(line);
-			if(line.equals("White")) {
-				player.setColor(ChessColor.WHITE);
-				System.out.println("Sei il bianco, attendi avversario ...");
-				view = new GamePanel (ChessColor.WHITE);
-				
+			//			line = in.readLine();
+			//			if(line.equals("???")) {
+			//				out.println("gioca");
+			//			}
 
 
-			}
-			else {
-				player.setColor(ChessColor.BLACK);
-				view = new GamePanel (ChessColor.BLACK);
-				System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
-
-			}
+			//						line = in.readLine();
+			//						
+			//			
+			//						System.out.println(line);
+			//						if(line.equals("White")) {
+			//							player.setColor(ChessColor.WHITE);
+			//							System.out.println("Sei il bianco, attendi avversario ...");
+			//							view = new GamePanel (ChessColor.WHITE);
+			//							
+			//			
+			//			
+			//						}
+			//						else {
+			//							player.setColor(ChessColor.BLACK);
+			//							view = new GamePanel (ChessColor.BLACK);
+			//							System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
+			//			
+			//						}
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void run() {
 
 		viewBoard = view.getGameBoard();
 		toolBar = view.getGameToolBar();
@@ -200,7 +214,7 @@ public class OnlineController extends MessageReceivedListener {
 							firstClick = true;
 							currentPlayer = model.getCurrentPlayer();
 							currentStatus = model.getGameStatus();
-							view.updateToolBar(currentPlayer,currentStatus);
+							view.updateToolBar(currentPlayer,currentStatus); // if checkmate qui close connection (qui o dialog)
 							inizializeView (model);
 
 						}
@@ -225,7 +239,7 @@ public class OnlineController extends MessageReceivedListener {
 
 	}
 
-	
+
 
 	public void inizializeView (GameModel model) {
 
@@ -307,7 +321,8 @@ public class OnlineController extends MessageReceivedListener {
 			}
 		}
 	}
-	
+
+
 	public GamePanel getGamePanel () {
 		return view;
 	}
@@ -328,26 +343,70 @@ public class OnlineController extends MessageReceivedListener {
 	public ChessColor getPlayerColor () {
 		return player.getColor();
 	}
-	@Override
+	
 	public void onMessageReceived(String message) {
 		System.out.println("Messaggio ricevuto: " + message);
-		if(message.length()!=4) {}
-		else {
+		if(message.equals("???")) {
+			System.out.println("dentro");
+			out.println("login");
+		}		
+		else if(message.equals("White")) {
+			player.setColor(ChessColor.WHITE);
+			System.out.println("Sei il bianco, attendi avversario ...");
+			view = new GamePanel (ChessColor.WHITE);
+		}
+		else if(message.equals("Black")) {
+			player.setColor(ChessColor.BLACK);
+			view = new GamePanel (ChessColor.BLACK);
+			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
+		}		
+		else if(message.length()==4){
 			Move m2=new Move(message);		                
 			model.makeMove(m2);
-			
+
 			viewBoard.swapIcon(m2.getInitialPosition() ,m2.getFinalPosition());
 			currentPlayer = model.getCurrentPlayer();
 			currentStatus = model.getGameStatus();
 			view.updateToolBar(currentPlayer,currentStatus);
 			inizializeView (model);
 		}
+		else  if(message.equals("username-password")){
+			System.out.println(message);
+			
+			out.println(user.getUsername()+"-"+user.getPsw());
+		}
+		else if(message.equals("login accepted")) {
+			out.println("stats pls");
+			while (true) {
+
+				String message2;
+				try {
+					message2 = reader.readLine();
+
+					if (message2 != null) {
+						System.out.println("Vittoria!=)");
+					}
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+			}
+
+		}
+	}
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public void sendMove(Move m) {
 
 		line = m.toString();
 		out.println(line);			
 	}
+
 
 
 }
