@@ -1,4 +1,4 @@
-package it.unipv.ingsfw.exception;
+package it.unipv.ingsfw.Exception;
 
 public class AccountNotFoundException extends Exception {
 

@@ -3,6 +3,7 @@ package it.unipv.ingsfw.gui;
 import javax.swing.*;
 
 import it.unipv.ingsfw.chess.dbobject.User;
+
 import it.unipv.ingsfw.controller.MessageReceivedListener;
 import it.unipv.ingsfw.controller.OnlineController;
 
@@ -35,8 +36,7 @@ public class LoginPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
-                
-                
+
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + new String(password));
             }
