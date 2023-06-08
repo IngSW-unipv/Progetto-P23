@@ -108,9 +108,10 @@ class Server implements MessageReceivedListener{
 
 				Thread messageListenerThread = new Thread(() -> {
 					try {
+						BufferedReader reader = server.getReader();
 						while (true) {
 
-							String message = server.getReader().readLine();
+							String message = reader.readLine();
 							if (message != null) {
 								server.fireMessageReceivedEvent(message);
 							}
@@ -273,7 +274,7 @@ class Server implements MessageReceivedListener{
 				boolean x = true;
 				PrintStream oss = getOs();
 				//BufferedReader reader = getReader();
-				oss.println("username-password");
+				oss.println("username_password");
 				while (x) {
 
 					String message = messageQueue.take();

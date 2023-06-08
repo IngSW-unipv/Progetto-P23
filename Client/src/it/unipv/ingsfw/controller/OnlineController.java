@@ -18,6 +18,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.dbobject.User;
 import it.unipv.ingsfw.chess.game.GameModel;
@@ -51,7 +53,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private String line = "";	
 	private BufferedReader reader;
 	private MessageReceivedListener messageReceivedListener;
-	private User user;
+	private User user,opponent;
 
 
 	public OnlineController(GameModel model,String address,int port) {
@@ -347,21 +349,31 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	
 	public void onMessageReceived(String message) {
 		System.out.println("Messaggio ricevuto: " + message);
-		if(message.equals("???")) {
+		String[] message2 = message.split("-",-1);
+		if(message2[0].equals("???")) {
 			System.out.println("dentro");
 			
 		}		
-		else if(message.equals("White")) {
+		else if(message2[0].equals("White")) {
 			player.setColor(ChessColor.WHITE);
 			System.out.println("Sei il bianco, attendi avversario ...");
 			view = new GamePanel (ChessColor.WHITE);
+//			view = new JPanel();
+			// 
 		}
-		else if(message.equals("Black")) {
+		else if(message2[0].equals("Inizia")) {
+//			opponent.setUsername(message2[1]);
+//			player.setColor(ChessColor.WHITE);
+			// notify thread
+			
+		}
+		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
 			view = new GamePanel (ChessColor.BLACK);
+//			opponent.setUsername(message2[1]);
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
 		}		
-		else if(message.length()==4){
+		else if(message2[0].length()==4){
 			Move m2=new Move(message);		                
 			model.makeMove(m2);
 
@@ -371,25 +383,25 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			view.updateToolBar(currentPlayer,currentStatus);
 			inizializeView (model);
 		}
-		else  if(message.equals("username-password")){
+		else  if(message2[0].equals("username_password")){
 			System.out.println(message);
 			
 			out.println(user.getUsername()+"-"+user.getPsw());
 		}
-		else if(message.equals("login denied")){
+		else if(message2[0].equals("login denied")){
 			//modifica colori schermata
 		}		
-		else if(message.equals("login accepted") || message.equals("registration completed")) {
+		else if(message2[0].equals("login accepted") || message2[0].equals("registration completed")) {
 			
 			//schermata gioca
 			out.println("stats pls");
 			while (true) {
 
-				String message2;
+				String message3;
 				try {
-					message2 = reader.readLine();
+					message3 = reader.readLine();
 
-					if (message2 != null) {
+					if (message3 != null) {
 						System.out.println("Vittoria!=)");
 					}
 				} catch (IOException e) {
@@ -420,7 +432,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	public void sendMove(Move m) {
 
 		line = m.toString();
-		out.println(line);			
+		out.println(line);
+		System.out.println("Messaggio inviato: "+line);
 	}
 
 

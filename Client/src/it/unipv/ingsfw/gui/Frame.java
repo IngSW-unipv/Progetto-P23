@@ -93,12 +93,14 @@ public class Frame  extends JFrame  {
 				sandro2.playCall();
 				try {
 					Thread.sleep(1000);
+					
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				gamePanel = sandro2.getGamePanel();
 				setGamePanel(gamePanel,menu);
+				
 				sandro2.run();
 								
 			}
