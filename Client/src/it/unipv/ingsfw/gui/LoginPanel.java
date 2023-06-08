@@ -16,15 +16,17 @@ public class LoginPanel extends JPanel {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JPanel menu;
+    private JPanel centerPanel;
     private JPanel statsPanel;
     
 
-    public LoginPanel(JPanel menu) {
+    public LoginPanel(JPanel menu, JPanel centerPanel) {
     	
         setLayout(new GridLayout(4, 2, 10, 10));
         
         
         this.menu = menu;
+        this.centerPanel = centerPanel;
         JLabel usernameLabel = new JLabel("Username:");
         usernameField = new JTextField(20);
         JLabel passwordLabel = new JLabel("Password:");
@@ -43,8 +45,8 @@ public class LoginPanel extends JPanel {
                 // osserva qui 
                 
                 statsPanel = new StatsPanel(menu);
-                add(statsPanel);
-                
+                centerPanel.add(statsPanel);
+                close();
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + new String(password));
             }
