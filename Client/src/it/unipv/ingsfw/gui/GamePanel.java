@@ -25,6 +25,7 @@ public class GamePanel extends JPanel{
 	private Dialog dialog;
 	private JPanel mainMenu;
 	
+	
 
 	public GamePanel (ChessColor color) {
 		super ();
@@ -34,6 +35,7 @@ public class GamePanel extends JPanel{
 
 		add(gameBoard,BorderLayout.CENTER);
 		add(gameToolBar,BorderLayout.PAGE_START);
+		
 		
 		 back = new JButton("Chiudi");
          back.addActionListener(new ActionListener() {
@@ -80,7 +82,16 @@ public class GamePanel extends JPanel{
 		mainMenu = menu ;
 	}
 	
+	public void waitSecondPlayer () {
+		gameBoard.setVisible(false);
+		gameToolBar.setVisible(false);
+		
+	}
 	
+	public void secondPlayerIn () {
+		gameBoard.setVisible(true);
+		gameToolBar.setVisible(true);
+	}
 
 
 

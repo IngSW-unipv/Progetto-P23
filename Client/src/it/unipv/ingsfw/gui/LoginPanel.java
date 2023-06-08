@@ -12,9 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel {
+	
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JPanel menu;
+    private JPanel statsPanel;
     
 
     public LoginPanel(JPanel menu) {
@@ -37,6 +39,12 @@ public class LoginPanel extends JPanel {
                 String username = usernameField.getText();
                 char[] password = passwordField.getPassword();
                 exist(username, new String(password));
+                
+                // osserva qui 
+                
+                statsPanel = new StatsPanel(menu);
+                add(statsPanel);
+                
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + new String(password));
             }

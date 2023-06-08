@@ -52,11 +52,7 @@ public class Frame  extends JFrame  {
 					remove(gamePanel);
 				
 				}
-				//gamePanel = new GamePanel (ChessColor.WHITE);
-				//gamePanel = new GamePanel (ChessColor.BLACK);
-				//menu.setVisible(false);
-				//centerPanel.add(gamePanel);
-				
+			
 				setGamePanel(ChessColor.WHITE,menu);
 				Controller sandro = new Controller (new GameModel (), gamePanel);	
 			}
