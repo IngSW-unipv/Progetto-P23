@@ -16,8 +16,9 @@ public class GameDAO {
 
 	public GameDAO() {
 		super();
-		this.schema = "java";
-				conn=DBConnection.startConnection(conn,schema);
+		this.schema = "PEPETHECHESS";
+		this.conn = null;
+		conn=DBConnection.startConnection(conn,schema);
 	}
 
 	public ArrayList<Game> selectAll(){

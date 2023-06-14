@@ -3,11 +3,7 @@ package it.unipv.ingsfw.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.*;
-
-
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.Board;
 import it.unipv.ingsfw.chess.game.GameModel;

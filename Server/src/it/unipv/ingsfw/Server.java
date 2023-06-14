@@ -1,18 +1,25 @@
 
 package it.unipv.ingsfw;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import it.unipv.ingsfw.exception.AccountNotFoundException;
-
 import it.unipv.ingsfw.classi.User;
 import it.unipv.ingsfw.database.UserDAO;
+import it.unipv.ingsfw.exception.AccountNotFoundException;
+import it.unipv.ingsfw.exception.ExistingAccountException;
 import it.unipv.ingsfw.exception.WrongPasswordException;
 
 
@@ -446,7 +453,7 @@ class Server implements MessageReceivedListener{
 
 
 
-	private void signupThread() {
+	private synchronized void signupThread() {
 		BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
 		Thread signupThread = new Thread(() -> {
@@ -454,30 +461,34 @@ class Server implements MessageReceivedListener{
 				System.out.println("thread");
 				boolean x = true;
 				PrintStream oss = getOs();
-				BufferedReader reader = getReader();
-				oss.println("username-password");
+				//BufferedReader reader = getReader();
+				oss.println("username_password");
 				while (x) {
+					try {
+						String message = messageQueue.take();
+						System.out.println(message);
+						if (message.equals("stats pls")) {
+							x=false;
 
-					String message = messageQueue.take();
-					System.out.println(message);
-					if (message.equals("stats pls")) {
-						x=false;
-
-					}
-					else {
-						String[] uspsw = message.split("-",-1);
-						User user = new User(uspsw[0],uspsw[1]);
-
-						System.out.println("Username: "+user.getUsername());
-						//metodo userDAO per check password
-						if(insertUser(uspsw[0], uspsw[1])) {
-							//esito positivo
-							oss.println("registration completed");
 						}
-						else {						
-							oss.println("SUUUUUCCCAAAA!!!!!");
+						else {
+							String[] uspsw = message.split("-",-1);
+							User user = new User(uspsw[0],uspsw[1]);
+
+							System.out.println("Username: "+user.getUsername());
+							//metodo userDAO per check password
+							if(insertUser(uspsw[0], uspsw[1])) {
+								//esito positivo
+								oss.println("registration completed");
+							}
+							else {		
+								throw  new ExistingAccountException(os);
+							}
 						}
+					}catch(ExistingAccountException e) {
+						e.printStackTrace();
 					}
+
 				}
 			}catch (InterruptedException e) {
 

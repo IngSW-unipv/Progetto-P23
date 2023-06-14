@@ -18,8 +18,7 @@ public class UserDAO implements IUserDAO{
 
 	public UserDAO() {
 		super();
-		this.schema = "java";
-				conn=DBConnection.startConnection(conn,schema);
+		this.schema = "PEPETHECHESS";
 	}
 
 	public ArrayList<User> selectAll(){

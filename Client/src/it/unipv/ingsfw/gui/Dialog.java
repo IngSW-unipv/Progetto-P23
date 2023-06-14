@@ -47,7 +47,33 @@ public class Dialog extends JDialog {
             }
         });
         
-      
+        
 
+	}
+	
+	public Dialog(String text, JButton back ) {
+		super();
+        setSize(300, 300);
+        setLocationRelativeTo(null);
+
+        // Crea una label per visualizzare il testo nel JDialog
+        JLabel label = new JLabel(text);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        getContentPane().add(label);
+        
+        
+        //crea il bottone 
+        
+        getContentPane().add(back, BorderLayout.SOUTH);
+        //back
+        
+        // modifica del bottone di chiusura 
+        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+				dispose();
+            }
+        });
 	}
 }
