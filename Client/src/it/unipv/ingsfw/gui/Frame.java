@@ -74,7 +74,7 @@ public class Frame  extends JFrame  {
 				}
 				
 			    //setGamePanel(ChessColor.WHITE,menu);
-				OnlineController sandro2 = new OnlineController(new GameModel(), "127.0.0.1", 1234);
+				OnlineController sandro2 = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
 				sandro2.setMessageReceivedListener(new MessageReceivedListener() {
 		            @Override
 		            public void onMessageReceived(String message) {

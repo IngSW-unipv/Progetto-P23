@@ -9,16 +9,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class StatsPanel extends JPanel  {
-	
+
 	private JLabel name;
 	private JLabel wn ;
 	private JLabel dn ;
 	private JLabel ln ;
 	private JButton logout;
 	private JButton play;
-	
+
 	public StatsPanel (JPanel menu) {
-		
+
 		setLayout(new GridLayout(5, 2, 10, 10));
 		wn = new JLabel("leggi da database");
 		dn = new JLabel("leggi da database");
@@ -28,44 +28,50 @@ public class StatsPanel extends JPanel  {
 		JLabel wins = new JLabel ("Wins:");
 		JLabel draws = new JLabel ("Draws:");
 		JLabel loses = new JLabel ("Loses:");
-		
-		
+
+
 		logout = new JButton ("logout");
 		play = new JButton ("play");
-		
-        logout.addActionListener(new ActionListener() {
-			
+
+		logout.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				close();
 				menu.setVisible(true);
-				
+
 			}
 		});
-		
-        
-        add(username);
-        add(name);
-        add(wins);
-        add(wn);
-        add(draws);
-        add(dn);
-        add(loses);
-        add(ln);
-        add(logout);
-        add(play);
-        
-		
-		
-		
-	}
-	
-	  private void close () {
-	    	this.setVisible(false);
-	    }
-	
 
-	
-	
+
+		add(username);
+		add(name);
+		add(wins);
+		add(wn);
+		add(draws);
+		add(dn);
+		add(loses);
+		add(ln);
+		add(logout);
+		add(play);
+
+
+
+
+	}
+
+	private void close () {
+		this.setVisible(false);
+	}
+	public void setStats(String w,String d,String l) {
+		wn.setText(w);
+		dn.setText(d);
+		ln.setText(l);
+	}
+
+
+
+
+
 
 }

@@ -18,7 +18,7 @@ public class UserDAO implements IUserDAO{
 
 	public UserDAO() {
 		super();
-		this.schema = "PEPETHECHESS";
+		this.schema = "pepethechess";
 	}
 
 	public ArrayList<User> selectAll(){
@@ -93,6 +93,29 @@ public class UserDAO implements IUserDAO{
 		return result;
 		
 	}
+	public User setStats(String username) {
+		User result = null;
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+		ResultSet rs1;
+		
+		try
+		{
+			String query = "SELECT * FROM UTENTI WHERE USERNAME=? ";
+			st1 = conn.prepareStatement(query);
+			st1.setString(1,username);
+			rs1 = st1.executeQuery();
+			
+			while(rs1.next()) {
+				
+				result = new User(rs1.getString(1), rs1.getString(2),rs1.getInt(3),rs1.getInt(4),rs1.getInt(5));
+			}
+			
+		} catch (Exception e) {e.printStackTrace();}
+		
+		DBConnection.closeConnection(conn); 
+		return result;
+	}
 	
 	public boolean insertUser(User u) {
 		conn = DBConnection.startConnection(conn, schema);
@@ -101,11 +124,14 @@ public class UserDAO implements IUserDAO{
 
 		try {
 
-			String query = "INSERT INTO UTENTI(username,password) VALUES(?,?)";
+			String query = "INSERT INTO UTENTI(username,password,win,draw,lose) VALUES(?,?,?,?,?)";
 			st1 = conn.prepareStatement(query);
 
 			st1.setString(1, u.getUsername());
 			st1.setString(2, u.getPsw());
+			st1.setInt(3, u.getWin());
+			st1.setInt(4, u.getDraw());
+			st1.setInt(5, u.getLose());
 
 			st1.executeUpdate();
 

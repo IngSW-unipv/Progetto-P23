@@ -31,6 +31,8 @@ import it.unipv.ingsfw.gui.Frame;
 import it.unipv.ingsfw.gui.GameBoard;
 import it.unipv.ingsfw.gui.GamePanel;
 import it.unipv.ingsfw.gui.GameToolBar;
+import it.unipv.ingsfw.gui.LoginPanel;
+import it.unipv.ingsfw.gui.StatsPanel;
 import it.unipv.ingsfw.gui.buttons.GameButton;
 
 
@@ -54,10 +56,13 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private BufferedReader reader;
 	private MessageReceivedListener messageReceivedListener;
 	private User user,opponent;
+	private LoginPanel loginPanel;
+	private JPanel statsPanel;
 
 
-	public OnlineController(GameModel model,String address,int port) {
+	public OnlineController(GameModel model,String address,int port,LoginPanel loginPanel) {
 		super();
+		this.loginPanel = loginPanel;
 		this.model = model;
 		//this.view = view;
 
@@ -388,27 +393,22 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			
 			out.println(user.getUsername()+"-"+user.getPsw());
 		}
-		else if(message2[0].equals("login denied")){
-			//modifica colori schermata
+		else if(message2[0].equals("login denied") || message2[0].equals("account already exist")){
+			loginPanel.changeColor();
 		}		
 		else if(message2[0].equals("login accepted") || message2[0].equals("registration completed")) {
 			
-			//schermata gioca
-			out.println("stats pls");
-			while (true) {
+			user.setWin(Integer.parseInt(message2[1])); 
+			user.setDraw(Integer.parseInt(message2[2])); 
+			user.setLose(Integer.parseInt(message2[3])); 
+			
+				
+			
+//			out.println("stats pls");
 
-				String message3;
-				try {
-					message3 = reader.readLine();
-
-					if (message3 != null) {
-						System.out.println("Vittoria!=)");
-					}
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
-			}
+			statsPanel = loginPanel.createStats();
+			((StatsPanel) statsPanel).setStats(message2[1], message2[2], message2[3]);
+			
 
 		}
 	}

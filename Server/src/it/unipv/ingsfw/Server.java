@@ -298,7 +298,9 @@ class Server implements MessageReceivedListener{
 						//metodo userDAO per check password
 						checkLogin(uspsw[0], uspsw[1]);
 						//esito positivo
-						oss.println("login accepted");
+						user = getStats(uspsw[0]);
+						
+						oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 
 					}
 				}
@@ -318,6 +320,16 @@ class Server implements MessageReceivedListener{
 		loginThread.start();
 
 	}
+
+
+
+	private User getStats(String username) {
+		User u = new UserDAO().setStats(username);
+		
+		return u;		
+	}
+
+
 
 
 
