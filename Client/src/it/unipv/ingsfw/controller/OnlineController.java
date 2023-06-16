@@ -407,7 +407,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 //			out.println("stats pls");
 
 			statsPanel = loginPanel.createStats();
-			((StatsPanel) statsPanel).setStats(message2[1], message2[2], message2[3]);
+			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
 			
 
 		}

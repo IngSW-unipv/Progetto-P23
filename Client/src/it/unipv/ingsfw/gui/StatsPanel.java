@@ -1,5 +1,6 @@
 package it.unipv.ingsfw.gui;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import it.unipv.ingsfw.chess.ChessColor;
+import it.unipv.ingsfw.chess.game.GameModel;
+import it.unipv.ingsfw.controller.MessageReceivedListener;
+import it.unipv.ingsfw.controller.OnlineController;
 
 public class StatsPanel extends JPanel  {
 
@@ -16,8 +22,12 @@ public class StatsPanel extends JPanel  {
 	private JLabel ln ;
 	private JButton logout;
 	private JButton play;
+	private GamePanel gamePanel;
+	private OnlineController oc;
 
-	public StatsPanel (JPanel menu) {
+	public StatsPanel (JPanel menu,OnlineController oc) {
+
+		this.oc =oc;
 
 		setLayout(new GridLayout(5, 2, 10, 10));
 		wn = new JLabel("leggi da database");
@@ -63,10 +73,21 @@ public class StatsPanel extends JPanel  {
 	private void close () {
 		this.setVisible(false);
 	}
-	public void setStats(String w,String d,String l) {
+	public void setStats(String n,String w,String d,String l) {
+		name.setText(n);
 		wn.setText(w);
 		dn.setText(d);
 		ln.setText(l);
+	}
+
+	public void setGamePanel(GamePanel p , JPanel x) {
+
+
+		p.setmenu(x);
+		this.add(p,BorderLayout.CENTER);
+		//		this.setVisible(false);
+
+
 	}
 
 
