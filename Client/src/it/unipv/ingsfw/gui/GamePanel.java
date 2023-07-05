@@ -49,20 +49,45 @@ public class GamePanel extends JPanel{
 					
 				}
 			});
-
-
-
-
-
-
 	}
 
+	public GamePanel (ChessColor color,int i) {
+		super ();
+		setLayout(new BorderLayout());
+		gameBoard = new GameBoard (color);
+		gameToolBar = new GameToolBar (i);
+
+		add(gameBoard,BorderLayout.CENTER);
+		add(gameToolBar,BorderLayout.PAGE_START);
+		
+		
+		 back = new JButton("Chiudi");
+         back.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					mainMenu.setVisible(true);
+					gameBoard.setVisible(false);
+					gameToolBar.setVisible(false);
+					dialog.dispose();
+					
+				}
+			});
+	}
+
+	
+	
 	public GameBoard getGameBoard () {
 		return gameBoard;
 	}
 
 	public GameToolBar getGameToolBar() {
 		return gameToolBar;
+	}
+	
+	public void setGameToolBar (GameToolBar g) {
+		this.gameToolBar = g;
+		
 	}
 
 
@@ -71,11 +96,16 @@ public class GamePanel extends JPanel{
 		gameToolBar.update(c);
 		gameToolBar.updateStatus(s);
 
-		if (s == Status.CHECK_MATE) {
+		if (s == Status.CHECK_MATE || s == Status.BLACK_WIN || s == Status.WHITE_WIN) {
 
 			dialog = new Dialog (c,back,gameBoard,gameToolBar,mainMenu);
 
 		}
+		
+
+		
+		
+		
 	}
 	
 	public void setmenu (JPanel menu) {
@@ -91,6 +121,10 @@ public class GamePanel extends JPanel{
 	public void secondPlayerIn () {
 		gameBoard.setVisible(true);
 		gameToolBar.setVisible(true);
+	}
+	
+	public void close () {
+		this.setVisible(false);
 	}
 
 

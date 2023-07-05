@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.chess.game.Move;
@@ -21,6 +23,7 @@ public class Controller {
 
 	private GameModel model;
 	private GamePanel view;
+	private JPanel menu;
 	private GameBoard viewBoard;
 	private GameToolBar toolBar;
 	private GameButton [][] tasti;
@@ -35,7 +38,7 @@ public class Controller {
 
 
 
-	public Controller(GameModel model, GamePanel view)  {
+	public Controller(GameModel model, GamePanel view, JPanel menu)  {
 		super();
 		this.model = model;
 		this.view = view;
@@ -70,10 +73,9 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.resignation();
-				
-			 
-				
+				view.close();
+				menu.setVisible(true);
+
 			}
 		});
 

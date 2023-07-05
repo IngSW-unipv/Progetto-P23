@@ -64,7 +64,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		super();
 		this.loginPanel = loginPanel;
 		this.model = model;
-		//this.view = view;
+		
+	
 
 		try{
 
@@ -129,8 +130,11 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	public void run() {
 
 		viewBoard = view.getGameBoard();
-		toolBar = view.getGameToolBar();
+		
+		
+		
 		tasti = viewBoard.getTasti();
+		toolBar = view.getGameToolBar();
 		inizializeView (model);
 		currentPlayer = model.getCurrentPlayer();
 		currentStatus = model.getGameStatus();
@@ -146,26 +150,24 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.resetGame();
-				inizializeView (model);
+			if(player.getColor()==ChessColor.WHITE)	{
+				model.setGameStatus(Status.BLACK_WIN);
 				currentPlayer = model.getCurrentPlayer();
-				startPosition = new Square (0,0);
-				firstClick = true;
+				currentStatus = model.getGameStatus();
+				view.updateToolBar(currentPlayer,currentStatus);
+				
+			}
+			else {
+				model.setGameStatus(Status.WHITE_WIN);
+				currentPlayer = model.getCurrentPlayer();
+				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
 			}
-		});
-
-		toolBar.getButton2().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.resignation();
-
-
-
+			
 			}
 		});
 
+	
 
 		tasti = viewBoard.getTasti();
 
@@ -362,7 +364,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		else if(message2[0].equals("White")) {
 			player.setColor(ChessColor.WHITE);
 			System.out.println("Sei il bianco, attendi avversario ...");
-			view = new GamePanel (ChessColor.WHITE);
+			view = new GamePanel (ChessColor.WHITE,1);
+		
 //			view = new JPanel();
 			// 
 		}
@@ -374,7 +377,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		}
 		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
-			view = new GamePanel (ChessColor.BLACK);
+			view = new GamePanel (ChessColor.BLACK,1);
+		
 //			opponent.setUsername(message2[1]);
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
 		}		

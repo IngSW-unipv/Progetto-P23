@@ -12,7 +12,7 @@ public class GameModel {
 
 	private Board board;
 	private ChessColor currentPlayer;
-	private Status GameStatus;
+	private Status gameStatus;
 	private List<Move> currentPlayerMoves;
 	private List<Move> movesDone;
 	
@@ -21,7 +21,7 @@ public class GameModel {
 	public GameModel () {
 		this.board = new Board();
 		this.currentPlayer = ChessColor.WHITE;
-		this.GameStatus = Status.PLAY;
+		this.gameStatus = Status.PLAY;
 		this.currentPlayerMoves = new ArrayList<Move>();
 		this.movesDone = new ArrayList<Move>();
 		initTurn();
@@ -55,13 +55,18 @@ public class GameModel {
 	
 	
 	public Status getGameStatus() {
-		return GameStatus;
+		return gameStatus;
+	}
+	
+	public void setGameStatus(Status s) {
+	gameStatus = s;
+		
 	}
 	
 	
 	public void resetGame() {
 		this.currentPlayer = ChessColor.WHITE;
-		this.GameStatus = Status.PLAY;
+		this.gameStatus = Status.PLAY;
 		this.currentPlayerMoves = new ArrayList<Move>();
 		this.movesDone = new ArrayList<Move>();
 		this.board.resetBoard();
@@ -108,18 +113,18 @@ public class GameModel {
 	public void changeStatus() {
 		if(isCheck()) {
 			if(isCheckMate()) {
-				this.GameStatus=Status.CHECK_MATE;
+				this.gameStatus=Status.CHECK_MATE;
 			}else {
-				this.GameStatus=Status.CHECK;
+				this.gameStatus=Status.CHECK;
 			}
 		}else if(this.currentPlayerMoves.isEmpty()){
-			this.GameStatus=Status.STALEMATE;
+			this.gameStatus=Status.STALEMATE;
 		}
 	}
 	
 	
 	public void resignation() {
-		this.GameStatus = Status.winner(ChessColor.oppositeColor(currentPlayer));
+		this.gameStatus = Status.winner(ChessColor.oppositeColor(currentPlayer));
 		
 	}
 	

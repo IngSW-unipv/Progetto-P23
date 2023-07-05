@@ -16,6 +16,7 @@ public class Frame  extends JFrame  {
 	
 	private GamePanel gamePanel;
 	private LoginPanel loginPanel;
+	private JPanel centerPanel;
 	
 	private JPanel menu;
 	private JButton local;
@@ -29,15 +30,15 @@ public class Frame  extends JFrame  {
 		
 		setLayout(new BorderLayout());
 		
-		JPanel centerPanel = new JPanel ();
+		centerPanel = new JPanel ();
 		getContentPane().add(centerPanel,BorderLayout.CENTER);
 		menu = new JPanel ();
 		local = new JButton("LOCALE");
 		online = new JButton("ONLINE");
-		onlineRapid = new JButton ("veloce");
+		//onlineRapid = new JButton ("veloce");
 		menu.add(local);
 		menu.add(online);
-		menu.add(onlineRapid);
+		//menu.add(onlineRapid);
 		
 		local.addActionListener(new ActionListener() {
 			
@@ -50,7 +51,7 @@ public class Frame  extends JFrame  {
 				}
 			
 				setGamePanel(ChessColor.WHITE,menu);
-				Controller sandro = new Controller (new GameModel (), gamePanel);	
+				Controller sandro = new Controller (new GameModel (), gamePanel, menu);	
 			}
 		});	
 		
@@ -65,38 +66,7 @@ public class Frame  extends JFrame  {
 			}
 		});
 	
-		onlineRapid.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (gamePanel != null) {
-					remove(gamePanel);
-				}
-				
-			    //setGamePanel(ChessColor.WHITE,menu);
-				OnlineController sandro2 = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
-				sandro2.setMessageReceivedListener(new MessageReceivedListener() {
-		            @Override
-		            public void onMessageReceived(String message) {
-		                // Gestisci l'evento di ricezione del messaggio
-		                sandro2.onMessageReceived(message);
-		            }
-		        });
-				sandro2.playCall();
-				try {
-					Thread.sleep(1000);
-					
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				gamePanel = sandro2.getGamePanel();
-				setGamePanel(gamePanel,menu);
-				
-				sandro2.run();
-								
-			}
-		});
 		
 		
 		centerPanel.add(menu);
@@ -119,15 +89,8 @@ public class Frame  extends JFrame  {
 
 
 	}
-	public void setGamePanel(GamePanel p , JPanel x) {
+	
 
-		
-		p.setmenu(x);
-		this.add(p,BorderLayout.CENTER);
-		menu.setVisible(false);
-
-
-	}
 	
 	public static void main(String[] args) {
 		Frame sandro1 = new Frame ("partita");

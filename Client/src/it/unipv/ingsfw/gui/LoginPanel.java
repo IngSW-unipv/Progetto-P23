@@ -61,7 +61,7 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
 				char[] password = passwordField.getPassword();
-				// Esegui l'autenticazione o l'azione desiderata qui
+				
 				registration(username, new String(password));
 
 				System.out.println("Username: " + username);
@@ -96,7 +96,7 @@ public class LoginPanel extends JPanel {
 		this.setVisible(false);
 	}
 	public JPanel createStats() {
-		statsPanel = new StatsPanel(menu,oc);
+		statsPanel = new StatsPanel(menu,oc,centerPanel);
 		
 		centerPanel.add(statsPanel);
 		close();

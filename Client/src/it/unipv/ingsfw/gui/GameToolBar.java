@@ -25,7 +25,7 @@ public class GameToolBar extends JPanel  {
 		super ();
 
 		button1 = new JButton ("new game");
-		button2 = new JButton ("surrend");
+		button2 = new JButton ("back");
 		
 		label = new JLabel ();
 		status = new JLabel ();
@@ -34,6 +34,27 @@ public class GameToolBar extends JPanel  {
 
 		add(button1);
 		add(button2);
+		add(label);
+		add(status);
+		
+		
+		
+
+	}
+	
+	public GameToolBar(int i) {
+		super ();
+		
+		
+		button1 = new JButton ("surrend");
+		
+		
+		label = new JLabel ();
+		status = new JLabel ();
+		setLayout(new FlowLayout (FlowLayout.LEFT));
+		setBorder(BorderFactory.createLineBorder(Color.WHITE,3));
+
+		add(button1);
 		add(label);
 		add(status);
 		
