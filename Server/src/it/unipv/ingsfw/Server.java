@@ -393,23 +393,31 @@ class Server implements MessageReceivedListener{
 		}
 	}
 
-	public void endCheck(String line,PrintWriter out2 ,Socket client) {
+	public void endCheck(String line,PrintWriter out2,PrintWriter out1 ,Socket client) {
 		String[] line1 = line.split("-",-1);
 		if(line1[0].equals("Done")) {
 			new UserDAO().addLose(line1[1]);
+			user = getStats(line1[1]);
+			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 
 			out2.println("forfait"); 
 
 		}
 		else if(line1[0].equals("vittoria")){
 			new UserDAO().addWin(line1[1]);
+			user = getStats(line1[1]);
+			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 			
 		}
 		else if(line1[0].equals("sconfitta")){
 			new UserDAO().addLose(line1[1]);
+			user = getStats(line1[1]);
+			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 		}
 		else if(line1[0].equals("pareggio")){
 			new UserDAO().addDraw(line1[1]);
+			user = getStats(line1[1]);
+			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 		}
 		else {
 			out2.println(line1[0]);
@@ -436,31 +444,16 @@ class Server implements MessageReceivedListener{
 
 						System.out.println(line1); 
 
-						endCheck(line1, out2,client1);
+						endCheck(line1, out2,out1,client1);
 
-						//						if(line1.equals("Done")) {
-						//
-						//							out2.println("forfait"); 
-						//							break;
-						//						}
-						//						else {
-						//							out2.println(line1);
-						//						}
-
+				
 
 						line2 = messageQueue.take();
 						System.out.println(line2);
 
-						endCheck(line2, out1,client2);
+						endCheck(line2, out1,out2,client2);
 
-						//						if(line2.equals("Done")) {
-						//							out1.println("forfait");
-						//							break;
-						//						}
-						//						else {
-						//							out1.println(line2);
-						//						}
-
+				
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block

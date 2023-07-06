@@ -55,18 +55,18 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private String line = "";	
 	private BufferedReader reader;
 	private MessageReceivedListener messageReceivedListener;
-	private User user,usertest;
+	private User user;
 	private LoginPanel loginPanel;
 	private JPanel statsPanel;
-	private String username = "pippo";
+	private String username;
 
 
 	public OnlineController(GameModel model,String address,int port,LoginPanel loginPanel) {
 		super();
 		this.loginPanel = loginPanel;
 		this.model = model;
-		
-	
+
+
 
 		try{
 
@@ -123,26 +123,28 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			if(player.getColor()==ChessColor.WHITE)	{
-				model.setGameStatus(Status.BLACK_WIN);
-				endCall();
-				currentPlayer = model.getCurrentPlayer();
-				currentStatus = model.getGameStatus();
-				view.updateToolBar(currentPlayer,currentStatus);
-				
-			}
-			else {
-				model.setGameStatus(Status.WHITE_WIN);
-				endCall();
-				currentPlayer = model.getCurrentPlayer();
-				currentStatus = model.getGameStatus();
-				view.updateToolBar(currentPlayer,currentStatus);
-			}
-			
+				if(player.getColor()==currentPlayer) {
+					if(player.getColor()==ChessColor.WHITE)	{
+						model.setGameStatus(Status.BLACK_WIN);
+						endCall();
+						currentPlayer = model.getCurrentPlayer();
+						currentStatus = model.getGameStatus();
+						view.updateToolBar(currentPlayer,currentStatus);
+
+					}
+					else {
+						model.setGameStatus(Status.WHITE_WIN);
+						endCall();
+						currentPlayer = model.getCurrentPlayer();
+						currentStatus = model.getGameStatus();
+						view.updateToolBar(currentPlayer,currentStatus);
+					}
+
+				}
 			}
 		});
 
-	
+
 
 		tasti = viewBoard.getTasti();
 
@@ -169,7 +171,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 							Toolkit.getDefaultToolkit().beep();
 							colorThis = model.getPositions(genericPosition);
 
-							
+
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].color();
 							}
@@ -227,16 +229,16 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	public void vittoria() {
 		if(currentStatus == Status.CHECK_MATE || currentStatus == Status.BLACK_WIN || currentStatus == Status.WHITE_WIN) { //black_win e white_win per tempo
 			if(currentPlayer==player.getColor()) {
-				out.println("sconfitta"+"-"+username);
-				System.out.println("stampa qui "+username);
+				out.println("sconfitta"+"-"+user.getUsername());
+				System.out.println("stampa qui "+user.getUsername());
 			}else {
-				
-				
-				out.println("vittoria"+"-"+username);
-				
+
+
+				out.println("vittoria"+"-"+user.getUsername());
+
 			}
 		}else if(currentStatus == Status.STALEMATE) {
-			out.println("pareggio"+"-"+username);
+			out.println("pareggio"+"-"+user.getUsername());
 		}
 	}
 
@@ -344,27 +346,27 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	public ChessColor getPlayerColor () {
 		return player.getColor();
 	}
-	
+
 	public void onMessageReceived(String message) {
 		System.out.println("Messaggio ricevuto: " + message);
 		String[] message2 = message.split("-",-1);
 		if(message2[0].equals("???")) {
 			System.out.println("dentro");
-			
+
 		}		
 		else if(message2[0].equals("White")) {
 			player.setColor(ChessColor.WHITE);
 			System.out.println("Sei il bianco, attendi avversario ...");
 			view = new GamePanel (ChessColor.WHITE,1);
-		
-//			view = new JPanel();
+
+			//			view = new JPanel();
 			// 
 		}
 		else if(message2[0].equals("Inizia")) {
-//			opponent.setUsername(message2[1]);
-//			player.setColor(ChessColor.WHITE);
+			//			opponent.setUsername(message2[1]);
+			//			player.setColor(ChessColor.WHITE);
 			// notify thread
-			
+
 		}
 		else if(message2[0].equals("forfait")) {
 			if(player.getColor()==ChessColor.WHITE)	{
@@ -373,7 +375,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
 				out.println("vittoria"+"-"+username);
-				
+
 			}
 			else {
 				model.setGameStatus(Status.BLACK_WIN);
@@ -386,9 +388,9 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
 			view = new GamePanel (ChessColor.BLACK,1);
-		
-//		opponent.setUsername(message2[1]);
-//		System.out.println(opponent.getUsername());
+
+			//		opponent.setUsername(message2[1]);
+			//		System.out.println(opponent.getUsername());
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
 		}		
 		else if(message2[0].length()==4){
@@ -400,38 +402,54 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			currentStatus = model.getGameStatus();
 			vittoria();
 			view.updateToolBar(currentPlayer,currentStatus);
-			
+
 			inizializeView (model);
 		}
 		else  if(message2[0].equals("username_password")){
 			System.out.println(message);
-			
+
 			out.println(user.getUsername()+"-"+user.getPsw());
 		}
 		else if(message2[0].equals("login denied") || message2[0].equals("account already exist")){
 			loginPanel.changeColor();
 		}		
 		else if(message2[0].equals("login accepted") || message2[0].equals("registration completed")) {
-			
+
+			user.setWin(Integer.parseInt(message2[1])); 
+			user.setDraw(Integer.parseInt(message2[2])); 
+			user.setLose(Integer.parseInt(message2[3])); 
+
+
+
+			//			out.println("stats pls");
+
+			statsPanel = loginPanel.createStats();
+			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
+
+
+		}
+		else if(message2[0].equals("stats")) {
+
 			user.setWin(Integer.parseInt(message2[1])); 
 			user.setDraw(Integer.parseInt(message2[2])); 
 			user.setLose(Integer.parseInt(message2[3])); 
 			
-				
-			
-//			out.println("stats pls");
-
-			statsPanel = loginPanel.createStats();
 			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
-			
+
 
 		}
-		
+
 	}
-	
+
+	public JPanel getStatsPanel() {
+		return statsPanel;
+	}
+	public void setStatsPanel(JPanel statsPanel) {
+		this.statsPanel = statsPanel;
+	}
 	public void setUsername(String username) {
 		this.username=username;
-		
+
 	}
 	public void loginCall() {
 		out.println("login");
@@ -444,7 +462,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	}
 	public void endCall() {
 		out.println("Done"+"-"+username);
-		
+
 	}
 
 	public User getUser() {

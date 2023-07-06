@@ -22,6 +22,7 @@ public class LoginPanel extends JPanel {
 	private JLabel passwordLabel;
 	private OnlineController oc;
 	private String n;
+	private User user;
 
 
 	public LoginPanel(JPanel menu, JPanel centerPanel) {
@@ -98,7 +99,7 @@ public class LoginPanel extends JPanel {
 	}
 	public JPanel createStats() {
 		statsPanel = new StatsPanel(menu,oc,centerPanel);
-		((StatsPanel) statsPanel).setN(n);
+		((StatsPanel) statsPanel).setUser(user);
 		centerPanel.add(statsPanel);
 		close();
 		return statsPanel;
@@ -107,7 +108,8 @@ public class LoginPanel extends JPanel {
 	private void exist (String id , String psw) {
 		this.n =id;
 		oc = new OnlineController (null , "127.0.0.1", 1234 ,this );
-		oc.setUser(new User (id , psw));
+		user = new User (id , psw);
+		oc.setUser(user);
 
 		
 		oc.setUsername(id);

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unipv.ingsfw.chess.ChessColor;
+import it.unipv.ingsfw.chess.dbobject.User;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.controller.MessageReceivedListener;
 import it.unipv.ingsfw.controller.OnlineController;
@@ -25,15 +26,18 @@ public class StatsPanel extends JPanel  {
 	private GamePanel gamePanel;
 	private OnlineController oc;
 	private JPanel centerPanel;
-	private String n;
+	private User user;
+	
+	
 
-	public String getN() {
-		return n;
+	public User getUser() {
+		return user;
 	}
 
-	public void setN(String n) {
-		this.n = n;
+	public void setUser(User user) {
+		this.user = user;
 	}
+
 
 	public StatsPanel (JPanel menu,OnlineController oc1,JPanel centerPanel) {
 
@@ -83,7 +87,9 @@ public class StatsPanel extends JPanel  {
 					                oc.onMessageReceived(message);
 						            }
 						        });
-								oc.setUsername(n);
+								oc.setUser(user);
+								oc.setStatsPanel(getStatsPanel());
+								
 				oc.playCall();
 				try {
 					Thread.sleep(1000);
@@ -121,6 +127,9 @@ public class StatsPanel extends JPanel  {
 	private void close () {
 		this.setVisible(false);
 	}
+	public StatsPanel getStatsPanel() {
+		return this;
+	}
 	public void setStats(String n,String w,String d,String l) {
 		name.setText(n);
 		
@@ -128,16 +137,6 @@ public class StatsPanel extends JPanel  {
 		dn.setText(d);
 		ln.setText(l);
 	}
-
-	//	public void setGamePanel(GamePanel p , JPanel x) {
-	//
-	//
-	//		p.setmenu(x);
-	//		this.add(p,BorderLayout.CENTER);
-	//		//		this.setVisible(false);
-	//
-	//
-	//	}
 
 	public void setGamePanel(GamePanel gamep ) {
 
