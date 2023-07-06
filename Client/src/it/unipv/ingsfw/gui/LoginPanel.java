@@ -21,6 +21,7 @@ public class LoginPanel extends JPanel {
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
 	private OnlineController oc;
+	private String n;
 
 
 	public LoginPanel(JPanel menu, JPanel centerPanel) {
@@ -97,16 +98,21 @@ public class LoginPanel extends JPanel {
 	}
 	public JPanel createStats() {
 		statsPanel = new StatsPanel(menu,oc,centerPanel);
-		
+		((StatsPanel) statsPanel).setN(n);
 		centerPanel.add(statsPanel);
 		close();
 		return statsPanel;
 	}
 
 	private void exist (String id , String psw) {
+		this.n =id;
 		oc = new OnlineController (null , "127.0.0.1", 1234 ,this );
 		oc.setUser(new User (id , psw));
 
+		
+		oc.setUsername(id);
+		System.out.println(id);
+		System.out.println(oc.getUsername()+" 1");
 		oc.setMessageReceivedListener(new MessageReceivedListener() {
 			@Override
 			public void onMessageReceived(String message) {

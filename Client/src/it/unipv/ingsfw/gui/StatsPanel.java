@@ -25,12 +25,21 @@ public class StatsPanel extends JPanel  {
 	private GamePanel gamePanel;
 	private OnlineController oc;
 	private JPanel centerPanel;
+	private String n;
 
-	public StatsPanel (JPanel menu,OnlineController oc,JPanel centerPanel) {
+	public String getN() {
+		return n;
+	}
 
-		this.oc =oc;
+	public void setN(String n) {
+		this.n = n;
+	}
+
+	public StatsPanel (JPanel menu,OnlineController oc1,JPanel centerPanel) {
+
+		this.oc =oc1;
 		this.centerPanel = centerPanel;
-		
+
 
 		setLayout(new GridLayout(5, 2, 10, 10));
 		wn = new JLabel("leggi da database");
@@ -55,38 +64,40 @@ public class StatsPanel extends JPanel  {
 
 			}
 		});
-		
+
 		play.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (gamePanel != null) {
 					remove(gamePanel);
 				}
-				
-			    //setGamePanel(ChessColor.WHITE,menu);
-				OnlineController sandro2 = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
-				sandro2.setMessageReceivedListener(new MessageReceivedListener() {
-		            @Override
-		            public void onMessageReceived(String message) {
-		               
-		                sandro2.onMessageReceived(message);
-		            }
-		        });
-				sandro2.playCall();
+
+				//setGamePanel(ChessColor.WHITE,menu);
+								oc = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
+
+								oc.setMessageReceivedListener(new MessageReceivedListener() {
+						            @Override
+						            public void onMessageReceived(String message) {
+						               
+					                oc.onMessageReceived(message);
+						            }
+						        });
+								oc.setUsername(n);
+				oc.playCall();
 				try {
 					Thread.sleep(1000);
-					
+
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				gamePanel = sandro2.getGamePanel();
+				gamePanel = oc.getGamePanel();
 				setGamePanel(gamePanel);
-				
-				sandro2.run();
-					
-				
+
+				oc.run();
+
+
 			}
 		});
 
@@ -112,24 +123,25 @@ public class StatsPanel extends JPanel  {
 	}
 	public void setStats(String n,String w,String d,String l) {
 		name.setText(n);
+		
 		wn.setText(w);
 		dn.setText(d);
 		ln.setText(l);
 	}
 
-//	public void setGamePanel(GamePanel p , JPanel x) {
-//
-//
-//		p.setmenu(x);
-//		this.add(p,BorderLayout.CENTER);
-//		//		this.setVisible(false);
-//
-//
-//	}
-	
+	//	public void setGamePanel(GamePanel p , JPanel x) {
+	//
+	//
+	//		p.setmenu(x);
+	//		this.add(p,BorderLayout.CENTER);
+	//		//		this.setVisible(false);
+	//
+	//
+	//	}
+
 	public void setGamePanel(GamePanel gamep ) {
 
-		
+
 		gamep.setmenu(this);
 		centerPanel.add(gamep,BorderLayout.CENTER);
 		this.setVisible(false);

@@ -116,6 +116,66 @@ public class UserDAO implements IUserDAO{
 		DBConnection.closeConnection(conn); 
 		return result;
 	}
+	public void addWin(String username) {
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+		
+		try {
+
+			String query = "UPDATE UTENTI SET WIN=WIN+1  WHERE USERNAME=?";
+			st1 = conn.prepareStatement(query);
+
+			
+			//st1.setInt(1, u.getWin());
+			st1.setString(1, username);
+			
+
+			st1.executeUpdate();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void addLose(String username) {
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+		
+		try {
+
+			String query = "UPDATE UTENTI SET LOSE=LOSE+1  WHERE USERNAME=?";
+			st1 = conn.prepareStatement(query);
+
+			
+//			st1.setInt(1, u.getLose());
+			st1.setString(1, username);
+			
+
+			st1.executeUpdate();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void addDraw(String username) {
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+		
+		try {
+
+			String query = "UPDATE UTENTI SET DRAW=DRAW+1  WHERE USERNAME=?";
+			st1 = conn.prepareStatement(query);
+
+			
+//			st1.setInt(1, u.getDraw());
+			st1.setString(1, username);
+			
+
+			st1.executeUpdate();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public boolean insertUser(User u) {
 		conn = DBConnection.startConnection(conn, schema);

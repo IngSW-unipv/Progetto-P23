@@ -25,7 +25,7 @@ import it.unipv.ingsfw.exception.WrongPasswordException;
 
 // Server class
 class Server implements MessageReceivedListener{
-	private ArrayList<Socket> onlineUsers;
+	private Map<Socket,User> onlineUsers;
 	private MessageReceivedListener messageReceivedListener;
 	private ServerSocket server;
 	private Socket client,client1,client2;
@@ -38,10 +38,6 @@ class Server implements MessageReceivedListener{
 	public OutputStream getOutputStr() {
 		return outputStr;
 	}
-
-
-
-
 
 	public void setOutputStream(OutputStream outputStream) {
 		this.outputStr = outputStream;
@@ -66,7 +62,7 @@ class Server implements MessageReceivedListener{
 			this.waiting=false;
 			childThreads = new HashMap<>();
 			queueMap = new HashMap<>();
-
+			onlineUsers =new HashMap<>();
 
 		}
 		catch (IOException e) {
@@ -126,7 +122,7 @@ class Server implements MessageReceivedListener{
 					} catch (IOException e) {
 
 						e.printStackTrace();
-						
+
 					}
 				});
 				messageListenerThread.start();
@@ -198,15 +194,6 @@ class Server implements MessageReceivedListener{
 
 	public void setClient(Socket client) {
 		this.client = client;
-	}
-
-	public ArrayList<Socket> getOnlineUsers() {
-		return onlineUsers;
-	}
-
-
-	public void setOnlineUsers(ArrayList<Socket> onlineUsers) {
-		this.onlineUsers = onlineUsers;
 	}
 
 
@@ -301,6 +288,9 @@ class Server implements MessageReceivedListener{
 						//esito positivo
 						user = getStats(uspsw[0]);
 
+						//setUser(user);
+//						onlineUsers.put(client, user);
+						
 						oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 
 					}
@@ -403,6 +393,29 @@ class Server implements MessageReceivedListener{
 		}
 	}
 
+	public void endCheck(String line,PrintWriter out2 ,Socket client) {
+		String[] line1 = line.split("-",-1);
+		if(line1[0].equals("Done")) {
+			new UserDAO().addLose(line1[1]);
+
+			out2.println("forfait"); 
+
+		}
+		else if(line1[0].equals("vittoria")){
+			new UserDAO().addWin(line1[1]);
+			
+		}
+		else if(line1[0].equals("sconfitta")){
+			new UserDAO().addLose(line1[1]);
+		}
+		else if(line1[0].equals("pareggio")){
+			new UserDAO().addDraw(line1[1]);
+		}
+		else {
+			out2.println(line1[0]);
+		}
+	}
+
 	private void gameThread(Socket client1, Socket client2) {
 		BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
@@ -421,29 +434,32 @@ class Server implements MessageReceivedListener{
 
 						line1 = messageQueue.take();
 
-						System.out.println(line1);         
-						
+						System.out.println(line1); 
 
-						if(line1.equals("Done")) {
-							out2.println("forfait"); 
-							break;
-						}
-						else {
-							out2.println(line1);
-						}
+						endCheck(line1, out2,client1);
+
+						//						if(line1.equals("Done")) {
+						//
+						//							out2.println("forfait"); 
+						//							break;
+						//						}
+						//						else {
+						//							out2.println(line1);
+						//						}
 
 
 						line2 = messageQueue.take();
 						System.out.println(line2);
-						
 
-						if(line2.equals("Done")) {
-							out1.println("forfait");
-							break;
-						}
-						else {
-							out1.println(line2);
-						}
+						endCheck(line2, out1,client2);
+
+						//						if(line2.equals("Done")) {
+						//							out1.println("forfait");
+						//							break;
+						//						}
+						//						else {
+						//							out1.println(line2);
+						//						}
 
 					}
 				} catch (InterruptedException e) {

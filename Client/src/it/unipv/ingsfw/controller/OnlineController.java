@@ -55,9 +55,10 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private String line = "";	
 	private BufferedReader reader;
 	private MessageReceivedListener messageReceivedListener;
-	private User user,opponent;
+	private User user,usertest;
 	private LoginPanel loginPanel;
 	private JPanel statsPanel;
+	private String username = "pippo";
 
 
 	public OnlineController(GameModel model,String address,int port,LoginPanel loginPanel) {
@@ -104,10 +105,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	}
 	public void run() {
 
-		viewBoard = view.getGameBoard();
-		
-		
-		
+		viewBoard = view.getGameBoard();		
 		tasti = viewBoard.getTasti();
 		toolBar = view.getGameToolBar();
 		inizializeView (model);
@@ -201,7 +199,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 							firstClick = true;
 							currentPlayer = model.getCurrentPlayer();
 							currentStatus = model.getGameStatus();
-							view.updateToolBar(currentPlayer,currentStatus); // if checkmate qui close connection (qui o dialog)
+							view.updateToolBar(currentPlayer,currentStatus);// if checkmate qui close connection (qui o dialog)
+							vittoria();
 							inizializeView (model);
 
 						}
@@ -224,6 +223,21 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		}
 
 
+	}
+	public void vittoria() {
+		if(currentStatus == Status.CHECK_MATE || currentStatus == Status.BLACK_WIN || currentStatus == Status.WHITE_WIN) { //black_win e white_win per tempo
+			if(currentPlayer==player.getColor()) {
+				out.println("sconfitta"+"-"+username);
+				System.out.println("stampa qui "+username);
+			}else {
+				
+				
+				out.println("vittoria"+"-"+username);
+				
+			}
+		}else if(currentStatus == Status.STALEMATE) {
+			out.println("pareggio"+"-"+username);
+		}
 	}
 
 
@@ -358,6 +372,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 				currentPlayer = model.getCurrentPlayer();
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
+				out.println("vittoria"+"-"+username);
 				
 			}
 			else {
@@ -365,13 +380,15 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 				currentPlayer = model.getCurrentPlayer();
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
+				out.println("vittoria"+"-"+username);
 			}
 		}
 		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
 			view = new GamePanel (ChessColor.BLACK,1);
 		
-//			opponent.setUsername(message2[1]);
+//		opponent.setUsername(message2[1]);
+//		System.out.println(opponent.getUsername());
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
 		}		
 		else if(message2[0].length()==4){
@@ -381,7 +398,9 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			viewBoard.swapIcon(m2.getInitialPosition() ,m2.getFinalPosition());
 			currentPlayer = model.getCurrentPlayer();
 			currentStatus = model.getGameStatus();
+			vittoria();
 			view.updateToolBar(currentPlayer,currentStatus);
+			
 			inizializeView (model);
 		}
 		else  if(message2[0].equals("username_password")){
@@ -410,6 +429,10 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		
 	}
 	
+	public void setUsername(String username) {
+		this.username=username;
+		
+	}
 	public void loginCall() {
 		out.println("login");
 	}
@@ -420,7 +443,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		out.println("gioca");
 	}
 	public void endCall() {
-		out.println("Done");
+		out.println("Done"+"-"+username);
+		
 	}
 
 	public User getUser() {
@@ -434,6 +458,10 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		line = m.toString();
 		out.println(line);
 		System.out.println("Messaggio inviato: "+line);
+	}
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return username;
 	}
 
 
