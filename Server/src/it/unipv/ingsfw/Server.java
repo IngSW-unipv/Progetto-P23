@@ -126,6 +126,7 @@ class Server implements MessageReceivedListener{
 					} catch (IOException e) {
 
 						e.printStackTrace();
+						
 					}
 				});
 				messageListenerThread.start();
@@ -299,7 +300,7 @@ class Server implements MessageReceivedListener{
 						checkLogin(uspsw[0], uspsw[1]);
 						//esito positivo
 						user = getStats(uspsw[0]);
-						
+
 						oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 
 					}
@@ -325,7 +326,7 @@ class Server implements MessageReceivedListener{
 
 	private User getStats(String username) {
 		User u = new UserDAO().setStats(username);
-		
+
 		return u;		
 	}
 
@@ -421,16 +422,28 @@ class Server implements MessageReceivedListener{
 						line1 = messageQueue.take();
 
 						System.out.println(line1);         
-						out2.println(line1);
+						
 
-						//if(line1.equals("Done")) break;
+						if(line1.equals("Done")) {
+							out2.println("forfait"); 
+							break;
+						}
+						else {
+							out2.println(line1);
+						}
 
 
 						line2 = messageQueue.take();
 						System.out.println(line2);
-						out1.println(line2);
+						
 
-						//if(line2.equals("Done")) break;
+						if(line2.equals("Done")) {
+							out1.println("forfait");
+							break;
+						}
+						else {
+							out1.println(line2);
+						}
 
 					}
 				} catch (InterruptedException e) {

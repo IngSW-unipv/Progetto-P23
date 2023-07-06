@@ -96,31 +96,6 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			messageListenerThread.start();
 
 
-			//			line = in.readLine();
-			//			if(line.equals("???")) {
-			//				out.println("gioca");
-			//			}
-
-
-			//						line = in.readLine();
-			//						
-			//			
-			//						System.out.println(line);
-			//						if(line.equals("White")) {
-			//							player.setColor(ChessColor.WHITE);
-			//							System.out.println("Sei il bianco, attendi avversario ...");
-			//							view = new GamePanel (ChessColor.WHITE);
-			//							
-			//			
-			//			
-			//						}
-			//						else {
-			//							player.setColor(ChessColor.BLACK);
-			//							view = new GamePanel (ChessColor.BLACK);
-			//							System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
-			//			
-			//						}
-
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -152,6 +127,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			public void actionPerformed(ActionEvent e) {
 			if(player.getColor()==ChessColor.WHITE)	{
 				model.setGameStatus(Status.BLACK_WIN);
+				endCall();
 				currentPlayer = model.getCurrentPlayer();
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
@@ -159,6 +135,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			}
 			else {
 				model.setGameStatus(Status.WHITE_WIN);
+				endCall();
 				currentPlayer = model.getCurrentPlayer();
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
@@ -375,6 +352,21 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			// notify thread
 			
 		}
+		else if(message2[0].equals("forfait")) {
+			if(player.getColor()==ChessColor.WHITE)	{
+				model.setGameStatus(Status.WHITE_WIN);
+				currentPlayer = model.getCurrentPlayer();
+				currentStatus = model.getGameStatus();
+				view.updateToolBar(currentPlayer,currentStatus);
+				
+			}
+			else {
+				model.setGameStatus(Status.BLACK_WIN);
+				currentPlayer = model.getCurrentPlayer();
+				currentStatus = model.getGameStatus();
+				view.updateToolBar(currentPlayer,currentStatus);
+			}
+		}
 		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
 			view = new GamePanel (ChessColor.BLACK,1);
@@ -415,6 +407,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			
 
 		}
+		
 	}
 	
 	public void loginCall() {
@@ -425,6 +418,9 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	}
 	public void playCall() {
 		out.println("gioca");
+	}
+	public void endCall() {
+		out.println("Done");
 	}
 
 	public User getUser() {
