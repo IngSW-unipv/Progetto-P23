@@ -79,7 +79,7 @@ public class Frame  extends JFrame  {
 		gamePanel = new GamePanel (c);
 		gamePanel.setmenu(x);
 		
-		this.add(gamePanel,BorderLayout.CENTER);
+		centerPanel.add(gamePanel,BorderLayout.CENTER);
 		menu.setVisible(false);
 
 
