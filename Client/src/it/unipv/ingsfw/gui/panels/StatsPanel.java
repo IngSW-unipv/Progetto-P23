@@ -24,6 +24,7 @@ public class StatsPanel extends JPanel  {
 	private GamePanel gamePanel;
 	private OnlineController oc;
 	private JPanel centerPanel;
+	private WaitingPanel wait;
 	private User user;
 
 
@@ -48,6 +49,7 @@ public class StatsPanel extends JPanel  {
 		dn = new JLabel("leggi da database");
 		ln = new JLabel("leggi da database");
 		name = new JLabel("leggi da database");
+		wait = new WaitingPanel();
 		JLabel username = new JLabel ("Username:");
 		JLabel wins = new JLabel ("Wins:");
 		JLabel draws = new JLabel ("Draws:");
@@ -89,17 +91,17 @@ public class StatsPanel extends JPanel  {
 				oc.setStatsPanel(getStatsPanel());
 
 				oc.playCall();
-				try {
-					Thread.sleep(1000);
-
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				gamePanel = oc.getGamePanel();
-				setGamePanel(gamePanel);
-
-				oc.run();
+//				try {
+//					Thread.sleep(1000);
+//
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+				
+//			gamePanel = oc.getGamePanel();
+//			setGamePanel(gamePanel);
+//			oc.run();
 
 
 			}
@@ -142,8 +144,27 @@ public class StatsPanel extends JPanel  {
 		gamep.setmenu(this);
 		centerPanel.add(gamep,BorderLayout.CENTER);
 		this.setVisible(false);
+		if (wait != null) {
+			wait.setVisible(false);
+		}
 
 
+	}
+	
+	public void setWaiting() {
+
+
+		wait.setmenu(this);
+		centerPanel.add(wait,BorderLayout.CENTER);
+		this.setVisible(false);
+
+
+	}
+	
+	public void setGame () {
+		gamePanel = oc.getGamePanel();
+		setGamePanel(gamePanel);
+		oc.run();
 	}
 
 

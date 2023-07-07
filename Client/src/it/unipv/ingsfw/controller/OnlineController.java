@@ -53,7 +53,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private MessageReceivedListener messageReceivedListener;
 	private User user;
 	private LoginPanel loginPanel;
-	private JPanel statsPanel;
+	private StatsPanel statsPanel;
 
 
 	public OnlineController(GameModel model,String address,int port,LoginPanel loginPanel) {
@@ -340,12 +340,15 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		else if(message2[0].equals("White")) {
 			player.setColor(ChessColor.WHITE);
 			System.out.println("Sei il bianco, attendi avversario ...");
+			statsPanel.setWaiting();
 			view = new GamePanel (ChessColor.WHITE,1);
 
 			
 		}
 		else if(message2[0].equals("Inizia")) {
-			//			opponent.setUsername(message2[1]);
+			//	opponent.setUsername(message2[1]);
+			statsPanel.setGame();
+			
 
 		}
 		else if(message2[0].equals("forfait")) {
@@ -368,6 +371,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
 			view = new GamePanel (ChessColor.BLACK,1);
+			statsPanel.setGame();
 
 			//		opponent.setUsername(message2[1]);
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
@@ -402,7 +406,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 		
 
-			statsPanel = loginPanel.createStats();
+			statsPanel = (StatsPanel) loginPanel.createStats();
 			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
 
 
@@ -452,7 +456,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		return statsPanel;
 	}
 	public void setStatsPanel(JPanel statsPanel) {
-		this.statsPanel = statsPanel;
+		this.statsPanel = (StatsPanel) statsPanel;
 	}
 	
 	public User getUser() {
