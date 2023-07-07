@@ -30,6 +30,7 @@ public class GamePanel extends JPanel{
 
 		add(gameBoard,BorderLayout.CENTER);
 		add(gameToolBar,BorderLayout.PAGE_START);
+		repaint();
 		
 		
 		 back = new JButton("Chiudi");
@@ -68,7 +69,11 @@ public class GamePanel extends JPanel{
 					
 				}
 			});
+         
+         repaint();
 	}
+	
+	
 
 	
 	

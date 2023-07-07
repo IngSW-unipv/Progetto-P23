@@ -34,9 +34,9 @@ public class LoginPanel extends JPanel {
 		usernameField = new JTextField(20);
 		passwordLabel = new JLabel("Password:");
 		passwordField = new JPasswordField(20);
-		JButton loginButton = new JButton("Log in");
-		JButton singUpButton = new JButton("Sign up");
-		JButton back = new JButton("Back");
+		JButton loginButton = new JButton("Accedi");
+		JButton singUpButton = new JButton("Registrati");
+		JButton back = new JButton("Indietro");
 
 		//azione tasto login
 		loginButton.addActionListener(new ActionListener() {

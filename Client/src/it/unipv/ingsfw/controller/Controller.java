@@ -33,6 +33,7 @@ public class Controller {
 	private Boolean firstClick;
 	private Square startPosition;
 	private List <Square> colorThis;
+
 	
 	
 

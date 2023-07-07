@@ -3,7 +3,7 @@ package it.unipv.ingsfw.chess.game;
 import it.unipv.ingsfw.chess.ChessColor;
 
 public enum Status {
-	CHECK("check"), WHITE_WIN("white win"), BLACK_WIN("black win"), STALEMATE("stalemate"), CHECK_MATE("check mate"), PLAY("play");
+	CHECK("check"), WHITE_WIN("Bianco Vince"), BLACK_WIN("Nero Vince"), STALEMATE("Stallo"), CHECK_MATE("Scacco Matto"), PLAY("Gioca");
 	//FORFEIT
 	
 	private String value;

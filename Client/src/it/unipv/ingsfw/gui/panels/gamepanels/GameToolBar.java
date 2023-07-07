@@ -24,8 +24,8 @@ public class GameToolBar extends JPanel  {
 	public GameToolBar () {
 		super ();
 
-		button1 = new JButton ("new game");
-		button2 = new JButton ("back");
+		button1 = new JButton ("Nuova Partita");
+		button2 = new JButton ("Indietro");
 		
 		label = new JLabel ();
 		status = new JLabel ();
@@ -46,7 +46,7 @@ public class GameToolBar extends JPanel  {
 		super ();
 		
 		
-		button1 = new JButton ("surrend");
+		button1 = new JButton ("Resa");
 		
 		
 		label = new JLabel ();
@@ -82,9 +82,9 @@ public class GameToolBar extends JPanel  {
 
 	public void update (ChessColor c) {
 		if(c == ChessColor.WHITE) {
-			label.setText("white turn");
+			label.setText("Bianco");
 		}else {
-			label.setText("black turn");
+			label.setText("Nero");
 		}
 
 	}

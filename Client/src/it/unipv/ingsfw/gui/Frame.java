@@ -36,6 +36,8 @@ public class Frame  extends JFrame  {
 		menu.add(local);
 		menu.add(online);
 		
+		centerPanel.add(menu);
+		
 		local.addActionListener(new ActionListener() {
 			
 			@Override
@@ -47,7 +49,7 @@ public class Frame  extends JFrame  {
 				}
 			
 				setGamePanel(ChessColor.WHITE,menu);
-				Controller sandro = new Controller (new GameModel (), gamePanel, menu);	
+				Controller sandro = new Controller (new GameModel (), gamePanel,  menu);	
 			}
 		});	
 		
@@ -63,9 +65,6 @@ public class Frame  extends JFrame  {
 		});
 	
 
-		
-		
-		centerPanel.add(menu);
 		setSize (800,800);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -89,7 +88,7 @@ public class Frame  extends JFrame  {
 	//il padre
 	
 	public static void main(String[] args) {
-		Frame sandro1 = new Frame ("partita");
+		Frame sandro1 = new Frame ("PepeChess");
 		
 	}
 	

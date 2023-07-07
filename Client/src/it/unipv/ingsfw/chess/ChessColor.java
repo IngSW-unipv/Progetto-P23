@@ -1,7 +1,7 @@
 package it.unipv.ingsfw.chess;
 
 public enum ChessColor {
-	BLACK("B") ,WHITE("W");
+	BLACK("Nero") ,WHITE("Bianco");
 	
 	private String value;
 	

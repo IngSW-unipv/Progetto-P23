@@ -21,7 +21,7 @@ public class Dialog extends JDialog {
         setLocationRelativeTo(null);
 
         // Crea una label per visualizzare il testo nel JDialog
-        JLabel label = new JLabel(c.oppositeColor(c).toString() + " wins.");
+        JLabel label = new JLabel(c.oppositeColor(c).toString() + " Vince.");
         label.setHorizontalAlignment(SwingConstants.CENTER);
         getContentPane().add(label);
         

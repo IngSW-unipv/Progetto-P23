@@ -51,13 +51,13 @@ public class StatsPanel extends JPanel  {
 		name = new JLabel("leggi da database");
 		wait = new WaitingPanel();
 		JLabel username = new JLabel ("Username:");
-		JLabel wins = new JLabel ("Wins:");
-		JLabel draws = new JLabel ("Draws:");
-		JLabel loses = new JLabel ("Loses:");
+		JLabel wins = new JLabel ("Vittorie:");
+		JLabel draws = new JLabel ("Pareggi:");
+		JLabel loses = new JLabel ("Sconfitte:");
 
 
-		logout = new JButton ("logout");
-		play = new JButton ("play");
+		logout = new JButton ("Esci");
+		play = new JButton ("Gioca");
 
 		logout.addActionListener(new ActionListener() {
 
@@ -91,17 +91,6 @@ public class StatsPanel extends JPanel  {
 				oc.setStatsPanel(getStatsPanel());
 
 				oc.playCall();
-//				try {
-//					Thread.sleep(1000);
-//
-//				} catch (InterruptedException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-				
-//			gamePanel = oc.getGamePanel();
-//			setGamePanel(gamePanel);
-//			oc.run();
 
 
 			}
