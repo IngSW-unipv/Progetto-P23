@@ -14,12 +14,13 @@ import it.unipv.ingsfw.chess.game.Move;
 import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.chess.game.Status;
 import it.unipv.ingsfw.chess.pieces.Piece;
-import it.unipv.ingsfw.gui.GameBoard;
-import it.unipv.ingsfw.gui.GamePanel;
-import it.unipv.ingsfw.gui.GameToolBar;
 import it.unipv.ingsfw.gui.buttons.GameButton;
+import it.unipv.ingsfw.gui.panels.gamepanels.GameBoard;
+import it.unipv.ingsfw.gui.panels.gamepanels.GamePanel;
+import it.unipv.ingsfw.gui.panels.gamepanels.GameToolBar;
 
 public class Controller {
+	
 
 	private GameModel model;
 	private GamePanel view;
@@ -39,10 +40,9 @@ public class Controller {
 
 
 	public Controller(GameModel model, GamePanel view, JPanel menu)  {
-		super();
+		
 		this.model = model;
 		this.view = view;
-
 		viewBoard = view.getGameBoard();
 		toolBar = view.getGameToolBar();
 		tasti = viewBoard.getTasti();
@@ -54,7 +54,7 @@ public class Controller {
 		view.updateToolBar(currentPlayer, currentStatus);
 
 
-
+		// azione tasto per riavviare la partita
 
 		toolBar.getButton1().addActionListener(new ActionListener() {
 
@@ -69,6 +69,8 @@ public class Controller {
 			}
 		});
 		
+		// azione tasto abbandono 
+		
 		toolBar.getButton2().addActionListener(new ActionListener() {
 
 			@Override
@@ -79,9 +81,10 @@ public class Controller {
 			}
 		});
 
+		// azioni tasti della scacchiera 
 
 		tasti = viewBoard.getTasti();
-		
+
 		for (int y = 0 ; y <8;  y++) {
 			for (int x = 0 ; x < 8 ;x++) {		
 				tasti[x][y].addActionListener(new ActionListener() {
@@ -91,25 +94,21 @@ public class Controller {
 					public void actionPerformed(ActionEvent e) {
 
 						GameButton pressed = (GameButton)e.getSource();
-	
 						Square genericPosition = pressed.getChessPosition();
 						
+						// primo click valido
 						
 						if (model.isOccupied(genericPosition) && 
-							(model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPieceColor() == currentPlayer) &&
+							(model.getPieceColor(genericPosition.getX(),genericPosition.getY()) == currentPlayer) &&
 							(firstClick)) {
-							//model.initTurn();
-							//toolBar.updateStatus(model.getGameStatus());
 							
+							// modifica view
 							Toolkit.getDefaultToolkit().beep();
 							colorThis = model.getPositions(genericPosition);
-							
-							
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].color();
 							}
-					//		tasti[genericPosition.getX()][genericPosition.getY()]
-							
+				
 							startPosition = genericPosition;
 							firstClick = false;
 
@@ -118,15 +117,22 @@ public class Controller {
 
 						}
 
+						//secondo click valido
 						else if (!firstClick && model.isValidMove(new Move (startPosition,genericPosition))) {
 							Toolkit.getDefaultToolkit().beep();
+							
+							//move 
 							viewBoard.swapIcon(startPosition,genericPosition );
 							model.makeMove(new Move (startPosition,genericPosition));
+							
+							//modifica view
 							tasti[startPosition.getX()][startPosition.getY()].reColor();
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].reColor();
 							}
+							
 							firstClick = true;
+							//modifica toolbar
 							currentPlayer = model.getCurrentPlayer();
 							currentStatus = model.getGameStatus();
 							view.updateToolBar(currentPlayer,currentStatus);
@@ -134,6 +140,7 @@ public class Controller {
 
 						}
 						
+						// secondo click non valido
 						else if (!firstClick) {
 							
 							for (Square s : colorThis) {
@@ -157,7 +164,7 @@ public class Controller {
 
 
 
-
+// inizializza la scacchiera posizionando i pezzi nelle giuste case.
 	public void inizializeView (GameModel model) {
 		
 		

@@ -1,19 +1,17 @@
-package it.unipv.ingsfw.gui;
+package it.unipv.ingsfw.gui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.dbobject.User;
 import it.unipv.ingsfw.chess.game.GameModel;
-import it.unipv.ingsfw.controller.MessageReceivedListener;
 import it.unipv.ingsfw.controller.OnlineController;
+import it.unipv.ingsfw.controller.interfaces.MessageReceivedListener;
+import it.unipv.ingsfw.gui.panels.gamepanels.GamePanel;
 
 public class StatsPanel extends JPanel  {
 
@@ -27,8 +25,8 @@ public class StatsPanel extends JPanel  {
 	private OnlineController oc;
 	private JPanel centerPanel;
 	private User user;
-	
-	
+
+
 
 	public User getUser() {
 		return user;
@@ -77,19 +75,19 @@ public class StatsPanel extends JPanel  {
 					remove(gamePanel);
 				}
 
-				//setGamePanel(ChessColor.WHITE,menu);
-								oc = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
 
-								oc.setMessageReceivedListener(new MessageReceivedListener() {
-						            @Override
-						            public void onMessageReceived(String message) {
-						               
-					                oc.onMessageReceived(message);
-						            }
-						        });
-								oc.setUser(user);
-								oc.setStatsPanel(getStatsPanel());
-								
+				oc = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
+
+				oc.setMessageReceivedListener(new MessageReceivedListener() {
+					@Override
+					public void onMessageReceived(String message) {
+
+						oc.onMessageReceived(message);
+					}
+				});
+				oc.setUser(user);
+				oc.setStatsPanel(getStatsPanel());
+
 				oc.playCall();
 				try {
 					Thread.sleep(1000);
@@ -132,7 +130,7 @@ public class StatsPanel extends JPanel  {
 	}
 	public void setStats(String n,String w,String d,String l) {
 		name.setText(n);
-		
+
 		wn.setText(w);
 		dn.setText(d);
 		ln.setText(l);

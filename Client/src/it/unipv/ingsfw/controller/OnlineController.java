@@ -8,11 +8,8 @@ import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -27,13 +24,13 @@ import it.unipv.ingsfw.chess.game.Move;
 import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.chess.game.Status;
 import it.unipv.ingsfw.chess.pieces.Piece;
-import it.unipv.ingsfw.gui.Frame;
-import it.unipv.ingsfw.gui.GameBoard;
-import it.unipv.ingsfw.gui.GamePanel;
-import it.unipv.ingsfw.gui.GameToolBar;
-import it.unipv.ingsfw.gui.LoginPanel;
-import it.unipv.ingsfw.gui.StatsPanel;
+import it.unipv.ingsfw.controller.interfaces.MessageReceivedListener;
 import it.unipv.ingsfw.gui.buttons.GameButton;
+import it.unipv.ingsfw.gui.panels.LoginPanel;
+import it.unipv.ingsfw.gui.panels.StatsPanel;
+import it.unipv.ingsfw.gui.panels.gamepanels.GameBoard;
+import it.unipv.ingsfw.gui.panels.gamepanels.GamePanel;
+import it.unipv.ingsfw.gui.panels.gamepanels.GameToolBar;
 
 
 public class OnlineController implements MessageReceivedListener ,Runnable{
@@ -50,7 +47,6 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private List <Square> colorThis;
 	private Player player = new Player(ChessColor.BLACK);
 	private Socket socket = null;
-	private DataInputStream in = null;
 	private PrintWriter out = null;	
 	private String line = "";	
 	private BufferedReader reader;
@@ -58,7 +54,6 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	private User user;
 	private LoginPanel loginPanel;
 	private JPanel statsPanel;
-	private String username;
 
 
 	public OnlineController(GameModel model,String address,int port,LoginPanel loginPanel) {
@@ -71,15 +66,11 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		try{
 
 			socket = new Socket(address, port);
-
-			// reading from server
-			in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-			// writing to server
 			out = new PrintWriter(socket.getOutputStream(), true);
 
+			// thread ricezione messaggi 
 			Thread messageListenerThread = new Thread(() -> {
 				try {
 					while (true) {
@@ -103,6 +94,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	
 	public void run() {
 
 		viewBoard = view.getGameBoard();		
@@ -119,6 +112,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 
 
+		// azione tasto resa
 		toolBar.getButton1().addActionListener(new ActionListener() {
 
 			@Override
@@ -144,7 +138,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			}
 		});
 
-
+		// azioni tasti scacchiera
 
 		tasti = viewBoard.getTasti();
 
@@ -156,18 +150,15 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 
-						//	model.initTurn();
+						
 						GameButton pressed = (GameButton)e.getSource();
-
 						Square genericPosition = pressed.getChessPosition();
 
 
 						if (model.isOccupied(genericPosition) && 
 								(model.getBoard().getSquare(genericPosition.getX(),genericPosition.getY()).getPieceColor() == getPlayerColor()) &&
 								(firstClick)) {
-							//model.initTurn();
-							//toolBar.updateStatus(model.getGameStatus());
-
+						
 							Toolkit.getDefaultToolkit().beep();
 							colorThis = model.getPositions(genericPosition);
 
@@ -175,7 +166,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].color();
 							}
-							//		tasti[genericPosition.getX()][genericPosition.getY()]
+							
 
 							startPosition = genericPosition;
 							firstClick = false;
@@ -190,18 +181,19 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 							viewBoard.swapIcon(startPosition,genericPosition );
 							Move m = new Move (startPosition,genericPosition);
 							model.makeMove(m);
+							
+							// invia mossa al server 
 							sendMove(m);
-
-
-
+							
 							tasti[startPosition.getX()][startPosition.getY()].reColor();
 							for (Square s : colorThis) {
 								tasti[s.getX()][s.getY()].reColor();
 							}
+							
 							firstClick = true;
 							currentPlayer = model.getCurrentPlayer();
 							currentStatus = model.getGameStatus();
-							view.updateToolBar(currentPlayer,currentStatus);// if checkmate qui close connection (qui o dialog)
+							view.updateToolBar(currentPlayer,currentStatus);
 							vittoria();
 							inizializeView (model);
 
@@ -226,8 +218,10 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 
 	}
+	
+	
 	public void vittoria() {
-		if(currentStatus == Status.CHECK_MATE || currentStatus == Status.BLACK_WIN || currentStatus == Status.WHITE_WIN) { //black_win e white_win per tempo
+		if(currentStatus == Status.CHECK_MATE || currentStatus == Status.BLACK_WIN || currentStatus == Status.WHITE_WIN) {
 			if(currentPlayer==player.getColor()) {
 				out.println("sconfitta"+"-"+user.getUsername());
 				System.out.println("stampa qui "+user.getUsername());
@@ -243,7 +237,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	}
 
 
-
+	// inizializza la scacchiera posizionando i pezzi nelle giuste case.
 	public void inizializeView (GameModel model) {
 
 
@@ -326,26 +320,15 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	}
 
 
-	public GamePanel getGamePanel () {
-		return view;
-	}
-
-
-
-
-
-	public void setMessageReceivedListener(MessageReceivedListener listener) {
-		this.messageReceivedListener = listener;
-	}
+	// gestione messaggi ricevuti 
+	
 	private void fireMessageReceivedEvent(String message) {
 		if (messageReceivedListener != null) {
 			messageReceivedListener.onMessageReceived(message);
 		}
 
 	}
-	public ChessColor getPlayerColor () {
-		return player.getColor();
-	}
+ 
 
 	public void onMessageReceived(String message) {
 		System.out.println("Messaggio ricevuto: " + message);
@@ -359,13 +342,10 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			System.out.println("Sei il bianco, attendi avversario ...");
 			view = new GamePanel (ChessColor.WHITE,1);
 
-			//			view = new JPanel();
-			// 
+			
 		}
 		else if(message2[0].equals("Inizia")) {
 			//			opponent.setUsername(message2[1]);
-			//			player.setColor(ChessColor.WHITE);
-			// notify thread
 
 		}
 		else if(message2[0].equals("forfait")) {
@@ -374,7 +354,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 				currentPlayer = model.getCurrentPlayer();
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
-				out.println("vittoria"+"-"+username);
+				out.println("vittoria"+"-"+user.getUsername());
 
 			}
 			else {
@@ -382,7 +362,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 				currentPlayer = model.getCurrentPlayer();
 				currentStatus = model.getGameStatus();
 				view.updateToolBar(currentPlayer,currentStatus);
-				out.println("vittoria"+"-"+username);
+				out.println("vittoria"+"-"+user.getUsername());
 			}
 		}
 		else if(message2[0].equals("Black")) {
@@ -390,7 +370,6 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			view = new GamePanel (ChessColor.BLACK,1);
 
 			//		opponent.setUsername(message2[1]);
-			//		System.out.println(opponent.getUsername());
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
 		}		
 		else if(message2[0].length()==4){
@@ -421,7 +400,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 
 
-			//			out.println("stats pls");
+		
 
 			statsPanel = loginPanel.createStats();
 			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
@@ -441,16 +420,8 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 	}
 
-	public JPanel getStatsPanel() {
-		return statsPanel;
-	}
-	public void setStatsPanel(JPanel statsPanel) {
-		this.statsPanel = statsPanel;
-	}
-	public void setUsername(String username) {
-		this.username=username;
 
-	}
+
 	public void loginCall() {
 		out.println("login");
 	}
@@ -461,27 +432,43 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		out.println("gioca");
 	}
 	public void endCall() {
-		out.println("Done"+"-"+username);
+		out.println("Done"+"-"+user.getUsername());
 
 	}
 
+	public void sendMove(Move m) {
+		line = m.toString();
+		out.println(line);
+		System.out.println("Messaggio inviato: "+line);
+	}
+	
+	// getters e setters 
+	
+	public void setMessageReceivedListener(MessageReceivedListener listener) {
+		this.messageReceivedListener = listener;
+	}
+	
+	public JPanel getStatsPanel() {
+		return statsPanel;
+	}
+	public void setStatsPanel(JPanel statsPanel) {
+		this.statsPanel = statsPanel;
+	}
+	
 	public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public void sendMove(Move m) {
-
-		line = m.toString();
-		out.println(line);
-		System.out.println("Messaggio inviato: "+line);
-	}
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return username;
+	
+	public ChessColor getPlayerColor () {
+		return player.getColor();
 	}
 
+	public GamePanel getGamePanel () {
+		return view;
+	}
 
 
 }

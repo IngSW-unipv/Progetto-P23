@@ -35,7 +35,7 @@ public class UserDAO implements IUserDAO{
 
 			while(rs1.next()) {
 
-				User user = new User (rs1.getString(1));//, rs1.getString(2));
+				User user = new User (rs1.getString(1));
 				userList.add(user);
 
 			}
@@ -47,7 +47,7 @@ public class UserDAO implements IUserDAO{
 		return userList;
 
 	}
-	
+
 	public ArrayList<User> selectStats(User U){
 
 		ArrayList<User> result = new ArrayList<>();
@@ -61,74 +61,70 @@ public class UserDAO implements IUserDAO{
 			rs1 = st1.executeQuery(query);
 
 			while(rs1.next()) {
-				User user = new User (rs1.getString(1), rs1.getString(2));// add other stats also in class User
-				result.add(user);
+				User user = new User (rs1.getString(1), rs1.getString(2));
 			}
 		} catch (Exception e){e.printStackTrace();}
 
 		DBConnection.closeConnection(conn);
 		return result;
 	}
-	
+
 	public User validUser(String username) {
 		User result = null;
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
 		ResultSet rs1;
-		
+
 		try
 		{
 			String query = "SELECT * FROM UTENTI WHERE USERNAME=? ";
 			st1 = conn.prepareStatement(query);
 			st1.setString(1,username);
 			rs1 = st1.executeQuery();
-			
+
 			while(rs1.next()) {
 				result = new User(rs1.getString(1), rs1.getString(2));
 			}
-			
+
 		} catch (Exception e) {e.printStackTrace();}
-		
+
 		DBConnection.closeConnection(conn); 
 		return result;
-		
+
 	}
 	public User setStats(String username) {
 		User result = null;
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
 		ResultSet rs1;
-		
+
 		try
 		{
 			String query = "SELECT * FROM UTENTI WHERE USERNAME=? ";
 			st1 = conn.prepareStatement(query);
 			st1.setString(1,username);
 			rs1 = st1.executeQuery();
-			
+
 			while(rs1.next()) {
-				
-				result = new User(rs1.getString(1), rs1.getString(2),rs1.getInt(3),rs1.getInt(4),rs1.getInt(5));
+
+				result = new User(rs1.getString(1), rs1.getString(2),rs1.getInt(3),rs1.getInt(5),rs1.getInt(4));
 			}
-			
+
 		} catch (Exception e) {e.printStackTrace();}
-		
+
 		DBConnection.closeConnection(conn); 
 		return result;
 	}
 	public void addWin(String username) {
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
-		
+
 		try {
 
 			String query = "UPDATE UTENTI SET WIN=WIN+1  WHERE USERNAME=?";
 			st1 = conn.prepareStatement(query);
-
 			
-			//st1.setInt(1, u.getWin());
 			st1.setString(1, username);
-			
 
 			st1.executeUpdate();
 
@@ -139,17 +135,14 @@ public class UserDAO implements IUserDAO{
 	public void addLose(String username) {
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
-		
+
 		try {
 
 			String query = "UPDATE UTENTI SET LOSE=LOSE+1  WHERE USERNAME=?";
 			st1 = conn.prepareStatement(query);
-
 			
-//			st1.setInt(1, u.getLose());
 			st1.setString(1, username);
 			
-
 			st1.executeUpdate();
 
 		} catch(Exception e) {
@@ -159,24 +152,21 @@ public class UserDAO implements IUserDAO{
 	public void addDraw(String username) {
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
-		
+
 		try {
 
 			String query = "UPDATE UTENTI SET DRAW=DRAW+1  WHERE USERNAME=?";
 			st1 = conn.prepareStatement(query);
-
 			
-//			st1.setInt(1, u.getDraw());
 			st1.setString(1, username);
 			
-
 			st1.executeUpdate();
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean insertUser(User u) {
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;

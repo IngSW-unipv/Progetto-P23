@@ -42,7 +42,7 @@ public class Game {
 	public void setD(Date d) {
 		this.d = d;
 	}
-	
-	
-	
+
+
+
 }

@@ -16,7 +16,6 @@ public class User {
 		
 	}
 
-	
 
 	public int getWin() {
 		return win;

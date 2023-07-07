@@ -5,11 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import it.unipv.ingsfw.chess.ChessColor;
-import it.unipv.ingsfw.chess.game.Board;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.controller.Controller;
-import it.unipv.ingsfw.controller.MessageReceivedListener;
-import it.unipv.ingsfw.controller.OnlineController;
+import it.unipv.ingsfw.gui.panels.LoginPanel;
+import it.unipv.ingsfw.gui.panels.gamepanels.GamePanel;
 
 public class Frame  extends JFrame  {
 
@@ -21,8 +20,7 @@ public class Frame  extends JFrame  {
 	private JPanel menu;
 	private JButton local;
 	private JButton online;
-	private JButton onlineRapid;
-	
+
 	
 	
 	public Frame (String xxx) {
@@ -35,10 +33,8 @@ public class Frame  extends JFrame  {
 		menu = new JPanel ();
 		local = new JButton("LOCALE");
 		online = new JButton("ONLINE");
-		//onlineRapid = new JButton ("veloce");
 		menu.add(local);
 		menu.add(online);
-		//menu.add(onlineRapid);
 		
 		local.addActionListener(new ActionListener() {
 			
@@ -90,7 +86,7 @@ public class Frame  extends JFrame  {
 
 	}
 	
-
+	//il padre
 	
 	public static void main(String[] args) {
 		Frame sandro1 = new Frame ("partita");

@@ -595,6 +595,10 @@ public class GameModel {
 		}
 		return false;
 	}
+	
+	public ChessColor getPieceColor (int x , int y) {
+		return board.getSquare(x,y).getPieceColor();
+	}
 
 	
 

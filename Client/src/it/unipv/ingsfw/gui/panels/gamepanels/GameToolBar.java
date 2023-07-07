@@ -1,4 +1,4 @@
-package it.unipv.ingsfw.gui;
+package it.unipv.ingsfw.gui.panels.gamepanels;
 
 import java.awt.Color;
 import java.awt.FlowLayout;

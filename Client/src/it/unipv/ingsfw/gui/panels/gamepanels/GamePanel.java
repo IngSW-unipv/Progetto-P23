@@ -1,20 +1,15 @@
-package it.unipv.ingsfw.gui;
+package it.unipv.ingsfw.gui.panels.gamepanels;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.SwingConstants;
-
 import it.unipv.ingsfw.chess.ChessColor;
 import it.unipv.ingsfw.chess.game.Status;
+import it.unipv.ingsfw.gui.Dialog;
 
 public class GamePanel extends JPanel{
 
@@ -102,27 +97,13 @@ public class GamePanel extends JPanel{
 
 		}
 		
-
-		
-		
-		
 	}
 	
 	public void setmenu (JPanel menu) {
 		mainMenu = menu ;
 	}
 	
-	public void waitSecondPlayer () {
-		gameBoard.setVisible(false);
-		gameToolBar.setVisible(false);
-		
-	}
-	
-	public void secondPlayerIn () {
-		gameBoard.setVisible(true);
-		gameToolBar.setVisible(true);
-	}
-	
+
 	public void close () {
 		this.setVisible(false);
 	}

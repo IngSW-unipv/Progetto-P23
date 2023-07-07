@@ -1,4 +1,4 @@
-package it.unipv.ingsfw.controller;
+package it.unipv.ingsfw.controller.interfaces;
 
 
 
