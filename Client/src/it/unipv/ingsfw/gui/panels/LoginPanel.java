@@ -44,18 +44,28 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
 				char[] password = passwordField.getPassword();
-				exist(username, new String(password));
-
+				if (username.length() > 30 || password.length > 30) {
+					changeColor();
+				}
+				else {
+					exist(username, new String(password));
+				}
 			}
 		});
 
-		//azione tasto signup
+		//azione tasto registrazione
 		singUpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
 				char[] password = passwordField.getPassword();
-				registration(username, new String(password));
+				if (username.length() > 30 || password.length > 30) {
+					changeColor();
+				}
+				else {
+					registration(username, new String(password));
+				}
+
 
 			}
 		});
