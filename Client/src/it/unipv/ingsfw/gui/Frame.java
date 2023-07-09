@@ -74,10 +74,10 @@ public class Frame  extends JFrame  {
 		
 	}
 	
-	public void setGamePanel(ChessColor c, JPanel x) {
+	public void setGamePanel(ChessColor c, JPanel menu) {
 
 		gamePanel = new GamePanel (c);
-		gamePanel.setmenu(x);
+		gamePanel.setmenu(menu);
 		
 		centerPanel.add(gamePanel,BorderLayout.CENTER);
 		menu.setVisible(false);

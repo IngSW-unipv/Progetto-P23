@@ -12,66 +12,49 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import it.unipv.ingsfw.chess.ChessColor;
+import it.unipv.ingsfw.chess.game.Status;
 
 public class Dialog extends JDialog {
 
-	public Dialog (ChessColor c , JButton back , JPanel gameBoard , JPanel gameToolBar ,JPanel mainMenu) {
+	public Dialog (ChessColor c , JButton back ,JPanel gamePanel,JPanel mainMenu,Status s) {
 		super();
-        setSize(300, 300);
-        setLocationRelativeTo(null);
+		setSize(300, 300);
+		setLocationRelativeTo(null);
 
-        // Crea una label per visualizzare il testo nel JDialog
-        JLabel label = new JLabel(c.oppositeColor(c).toString() + " Vince.");
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        getContentPane().add(label);
-        
-        
-        //crea il bottone 
-        
-        getContentPane().add(back, BorderLayout.SOUTH);
+		// Crea una label per visualizzare il testo nel JDialog
+		if (s != Status.STALEMATE) {
+			JLabel label = new JLabel(c.oppositeColor(c).toString() + " Vince.");
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			getContentPane().add(label);
+		}
+		else {
+			JLabel label = new JLabel("Pareggio");
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			getContentPane().add(label);
+		}
 
-        // Mostra il JDialog
-        setVisible(true);
-        
-        // modifica del bottone di chiusura 
-        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
+
+
+		//crea il bottone 
+
+		getContentPane().add(back, BorderLayout.SOUTH);
+
+		// Mostra il JDialog
+		setVisible(true);
+
+		// modifica del bottone di chiusura 
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
 				mainMenu.setVisible(true);
-				gameBoard.setVisible(false);
-				gameToolBar.setVisible(false);
+				gamePanel.setVisible(false);
 				dispose();
-            }
-        });
-        
-        
+			}
+		});
+
+
 
 	}
-	
-	public Dialog(String text, JButton back ) {
-		super();
-        setSize(300, 300);
-        setLocationRelativeTo(null);
 
-        // Crea una label per visualizzare il testo nel JDialog
-        JLabel label = new JLabel(text);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        getContentPane().add(label);
-        
-        
-        //crea il bottone 
-        
-        getContentPane().add(back, BorderLayout.SOUTH);
-        //back
-        
-        // modifica del bottone di chiusura 
-        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-				dispose();
-            }
-        });
-	}
 }

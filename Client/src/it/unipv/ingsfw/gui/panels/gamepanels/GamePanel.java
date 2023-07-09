@@ -30,7 +30,7 @@ public class GamePanel extends JPanel{
 
 		add(gameBoard,BorderLayout.CENTER);
 		add(gameToolBar,BorderLayout.PAGE_START);
-		repaint();
+		
 		
 		
 		 back = new JButton("Chiudi");
@@ -70,7 +70,7 @@ public class GamePanel extends JPanel{
 				}
 			});
          
-         repaint();
+        
 	}
 	
 	
@@ -92,13 +92,13 @@ public class GamePanel extends JPanel{
 
 
 
-	public void updateToolBar (ChessColor c, Status s) {
+	public void updateToolBar (ChessColor c, Status status) {
 		gameToolBar.update(c);
-		gameToolBar.updateStatus(s);
+		gameToolBar.updateStatus(status);
 
-		if (s == Status.CHECK_MATE || s == Status.BLACK_WIN || s == Status.WHITE_WIN) {
+		if (status == Status.CHECK_MATE || status == Status.BLACK_WIN || status == Status.WHITE_WIN || status == Status.STALEMATE) {
 
-			dialog = new Dialog (c,back,gameBoard,gameToolBar,mainMenu);
+			dialog = new Dialog (c,back,this,mainMenu,status);
 
 		}
 		
