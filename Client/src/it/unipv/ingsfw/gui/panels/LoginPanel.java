@@ -2,7 +2,7 @@ package it.unipv.ingsfw.gui.panels;
 
 import javax.swing.*;
 
-import it.unipv.ingsfw.chess.dbobject.User;
+import it.unipv.ingsfw.controller.dbobject.User;
 import it.unipv.ingsfw.controller.OnlineController;
 import it.unipv.ingsfw.controller.interfaces.MessageReceivedListener;
 

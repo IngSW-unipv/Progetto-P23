@@ -1,5 +1,5 @@
 
-package it.unipv.ingsfw.chess.dbobject;
+package it.unipv.ingsfw.controller.dbobject;
 
 public class User {
 

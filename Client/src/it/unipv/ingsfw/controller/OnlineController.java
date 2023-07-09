@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import it.unipv.ingsfw.chess.ChessColor;
-import it.unipv.ingsfw.chess.dbobject.User;
+import it.unipv.ingsfw.controller.dbobject.User;
 import it.unipv.ingsfw.chess.game.GameModel;
 import it.unipv.ingsfw.chess.game.Move;
 import it.unipv.ingsfw.chess.game.Square;
