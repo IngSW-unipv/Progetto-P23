@@ -153,7 +153,7 @@ public class Server implements MessageReceivedListener{
 							throw new AccountNotFoundException(oss);
 						}
 						else {
-							onlineUsers.put(client, uspsw[0]);
+							onlineUsers.put(client, user.getUsername());
 							oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 						}
 					}
