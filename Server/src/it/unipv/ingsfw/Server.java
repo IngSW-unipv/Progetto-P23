@@ -64,6 +64,10 @@ public class Server implements MessageReceivedListener{
 		System.out.println(message);
 
 		switch (message) {
+		case "close" :
+			onlineUsers.remove(client);
+			break;
+		
 		case "login":
 
 			loginThread();

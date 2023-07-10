@@ -450,6 +450,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	
 	public void closeConnection() {
 		try {
+			out.println("close");
             if (socket != null)
                 socket.close();
         } catch (IOException e) {
