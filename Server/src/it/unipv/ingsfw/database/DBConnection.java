@@ -22,7 +22,7 @@ public class DBConnection {
 		Properties p = new Properties();
 		
 		try {
-			p.load(new FileInputStream("config/database.properties"));
+			p.load(new FileInputStream("properties/database.properties"));
 			dbURL = p.getProperty(PROPERTYDBURL);
 			dbDRIVER = p.getProperty(PROPERTYDRIVER);
 			dbusn = p.getProperty(PROPERTYNAME);
