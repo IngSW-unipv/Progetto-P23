@@ -63,9 +63,5 @@ public class MenuController {
 		});
 		
 	}
-	
-	public static void main(String[] args) {
-		MenuController ciao = new MenuController();
-	}
 
 }
