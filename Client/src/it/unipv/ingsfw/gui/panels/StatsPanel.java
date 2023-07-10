@@ -22,7 +22,6 @@ public class StatsPanel extends JPanel  {
 	private JButton logout;
 	private JButton play;
 	private GamePanel gamePanel;
-	private OnlineController oc;
 	private JPanel centerPanel;
 	private WaitingPanel wait;
 	private User user;
@@ -40,7 +39,6 @@ public class StatsPanel extends JPanel  {
 
 	public StatsPanel (JPanel menu,OnlineController oc1,JPanel centerPanel) {
 
-		this.oc =oc1;
 		this.centerPanel = centerPanel;
 
 
@@ -59,45 +57,6 @@ public class StatsPanel extends JPanel  {
 		logout = new JButton ("Esci");
 		play = new JButton ("Gioca");
 
-		logout.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				close();
-				oc.closeConnection();
-				menu.setVisible(true);
-
-			}
-		});
-
-		play.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (gamePanel != null) {
-					remove(gamePanel);
-				}
-
-
-				oc = new OnlineController(new GameModel(), "127.0.0.1", 1234,null);
-
-				oc.setMessageReceivedListener(new MessageReceivedListener() {
-					@Override
-					public void onMessageReceived(String message) {
-
-						oc.onMessageReceived(message);
-					}
-				});
-				oc.setUser(user);
-				oc.setStatsPanel(getStatsPanel());
-
-				oc.playCall();
-
-
-			}
-		});
-
-
 		add(username);
 		add(name);
 		add(wins);
@@ -108,13 +67,10 @@ public class StatsPanel extends JPanel  {
 		add(ln);
 		add(logout);
 		add(play);
-
-
-
-
 	}
+	
 
-	private void close () {
+	public void close () {
 		this.setVisible(false);
 	}
 	public StatsPanel getStatsPanel() {
@@ -129,8 +85,6 @@ public class StatsPanel extends JPanel  {
 	}
 
 	public void setGamePanel(GamePanel gamep ) {
-
-
 		gamep.setmenu(this);
 		centerPanel.add(gamep,BorderLayout.CENTER);
 		this.setVisible(false);
@@ -142,8 +96,6 @@ public class StatsPanel extends JPanel  {
 	}
 	
 	public void setWaiting() {
-
-
 		wait.setmenu(this);
 		centerPanel.add(wait,BorderLayout.CENTER);
 		this.setVisible(false);
@@ -151,10 +103,18 @@ public class StatsPanel extends JPanel  {
 
 	}
 	
-	public void setGame () {
-		gamePanel = oc.getGamePanel();
-		setGamePanel(gamePanel);
-		oc.run();
+
+
+	public JButton getLogout() {
+		return logout;
+	}
+
+	public JButton getPlay() {
+		return play;
+	}
+
+	public GamePanel getGamePanel() {
+		return gamePanel;
 	}
 
 

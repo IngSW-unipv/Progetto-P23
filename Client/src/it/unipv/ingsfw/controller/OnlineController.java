@@ -346,7 +346,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		}
 		else if(message2[0].equals("Inizia")) {
 			//	opponent.setUsername(message2[1]);
-			statsPanel.setGame();
+			setGame();
 			
 
 		}
@@ -370,7 +370,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		else if(message2[0].equals("Black")) {
 			player.setColor(ChessColor.BLACK);
 			view = new GamePanel (ChessColor.BLACK,1);
-			statsPanel.setGame();
+			setGame();
 
 			//		opponent.setUsername(message2[1]);
 			System.out.println("Sei il nero, attendi la prima mossa dell'avversario.");
@@ -404,9 +404,9 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 
 		
-
-			statsPanel = (StatsPanel) loginPanel.createStats();
-			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
+			StatsController statsController = new StatsController(loginPanel, this, user);
+			statsPanel = statsController.getStatsPanel();
+			statsPanel.setStats(user.getUsername(),message2[1], message2[2], message2[3]);
 
 
 		}
@@ -416,13 +416,12 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 			user.setDraw(Integer.parseInt(message2[2])); 
 			user.setLose(Integer.parseInt(message2[3])); 
 			
-			((StatsPanel) statsPanel).setStats(user.getUsername(),message2[1], message2[2], message2[3]);
+			statsPanel.setStats(user.getUsername(),message2[1], message2[2], message2[3]);
 
 
 		}
 
 	}
-
 
 
 	public void loginCall() {
@@ -443,6 +442,21 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		line = m.toString();
 		out.println(line);
 		System.out.println("Messaggio inviato: "+line);
+	}
+	
+	public void setGame () {
+		view = getGamePanel();
+		statsPanel.setGamePanel(view);
+		run();
+	}
+	
+	public void closeConnection() {
+		try {
+            if (socket != null)
+                socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	// getters e setters 
@@ -473,14 +487,6 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 		return view;
 	}
 	
-	public void closeConnection() {
-		try {
-            if (socket != null)
-                socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
 
 
 }

@@ -19,8 +19,9 @@ public class LoginPanel extends JPanel {
 	private JPanel statsPanel;
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
-	private OnlineController oc;
-	private User user;
+	private JButton loginButton;
+	private JButton signUpButton;
+	private JButton back;
 
 
 	public LoginPanel(JPanel menu, JPanel centerPanel) {
@@ -34,111 +35,68 @@ public class LoginPanel extends JPanel {
 		usernameField = new JTextField(20);
 		passwordLabel = new JLabel("Password:");
 		passwordField = new JPasswordField(20);
-		JButton loginButton = new JButton("Accedi");
-		JButton singUpButton = new JButton("Registrati");
-		JButton back = new JButton("Indietro");
+		loginButton = new JButton("Accedi");
+		signUpButton = new JButton("Registrati");
+		back = new JButton("Indietro");
 
-		//azione tasto login
-		loginButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String username = usernameField.getText();
-				char[] password = passwordField.getPassword();
-				if (username.length() > 30 || password.length > 30) {
-					changeColor();
-				}
-				else {
-					exist(username, new String(password));
-				}
-			}
-		});
-
-		//azione tasto registrazione
-		singUpButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String username = usernameField.getText();
-				char[] password = passwordField.getPassword();
-				if (username.length() > 30 || password.length > 30) {
-					changeColor();
-				}
-				else {
-					registration(username, new String(password));
-				}
-
-
-			}
-		});
-
-		//azione tasto back
-		back.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				close();
-				menu.setVisible(true);
-
-			}
-		});
-
+		
 		add(usernameLabel);
 		add(usernameField);
 		add(passwordLabel);
 		add(passwordField);
 		add(loginButton);
-		add(singUpButton);
+		add(signUpButton);
 		add(back);
 
 	}
 
-	private void close () {
+	public void close() {
 		this.setVisible(false);
 	}
 
-	public JPanel createStats() {
-		statsPanel = new StatsPanel(menu,oc,centerPanel);
-		((StatsPanel) statsPanel).setUser(user);
-		centerPanel.add(statsPanel);
-		close();
-		return statsPanel;
-	}
-
-	private void exist (String id , String psw) {
-		oc = new OnlineController (null , "127.0.0.1", 1234 ,this );
-		user = new User (id , psw);
-		oc.setUser(user);
-
-
-		oc.setMessageReceivedListener(new MessageReceivedListener() {
-			@Override
-			public void onMessageReceived(String message) {
-				// Gestisci l'evento di ricezione del messaggio
-				oc.onMessageReceived(message);
-			}
-		});	
-		oc.loginCall();
-	}
-
-	private void registration(String id , String psw) {
-		oc = new OnlineController (null , "127.0.0.1", 1234,this );
-		oc.setUser(new User (id , psw));
-
-		oc.setMessageReceivedListener(new MessageReceivedListener() {
-			@Override
-			public void onMessageReceived(String message) {
-				// Gestisci l'evento di ricezione del messaggio
-				oc.onMessageReceived(message);
-			}
-		});	
-		oc.signupCall();
-	}
 
 	public void changeColor () {
 		usernameLabel.setForeground(Color.red);
 		passwordLabel.setForeground(Color.red);
 
 	}
+	
 
+	public JPanel getMenu() {
+		return menu;
+	}
 
+	public JPanel getCenterPanel() {
+		return centerPanel;
+	}
+	
+	public JButton getSignUpButton() {
+		return signUpButton;
+	}
+
+	public JPanel getStatsPanel() {
+		return statsPanel;
+	}
+
+	public JButton getLoginButton() {
+		return loginButton;
+	}
+
+	public JButton getBack() {
+		return back;
+	}
+
+	public JTextField getUsernameField() {
+		return usernameField;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	
+	
+
+	
 }
 
