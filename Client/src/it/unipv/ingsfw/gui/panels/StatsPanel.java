@@ -2,15 +2,13 @@ package it.unipv.ingsfw.gui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import it.unipv.ingsfw.controller.dbobject.User;
-import it.unipv.ingsfw.chess.game.GameModel;
+
 import it.unipv.ingsfw.controller.OnlineController;
-import it.unipv.ingsfw.controller.interfaces.MessageReceivedListener;
+import it.unipv.ingsfw.dbobject.User;
 import it.unipv.ingsfw.gui.panels.gamepanels.GamePanel;
 
 public class StatsPanel extends JPanel  {

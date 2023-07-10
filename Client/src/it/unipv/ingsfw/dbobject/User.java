@@ -1,5 +1,4 @@
-
-package it.unipv.ingsfw.controller.dbobject;
+package it.unipv.ingsfw.dbobject;
 
 public class User {
 

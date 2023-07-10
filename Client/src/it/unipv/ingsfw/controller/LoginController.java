@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import it.unipv.ingsfw.controller.dbobject.User;
 import it.unipv.ingsfw.controller.interfaces.MessageReceivedListener;
+import it.unipv.ingsfw.dbobject.User;
 import it.unipv.ingsfw.gui.panels.LoginPanel;
 
 public class LoginController {

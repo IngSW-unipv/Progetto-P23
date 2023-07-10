@@ -1,14 +1,13 @@
 package it.unipv.ingsfw.gui.panels;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.GridLayout;
 
-import it.unipv.ingsfw.controller.dbobject.User;
-import it.unipv.ingsfw.controller.OnlineController;
-import it.unipv.ingsfw.controller.interfaces.MessageReceivedListener;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class LoginPanel extends JPanel {
 
