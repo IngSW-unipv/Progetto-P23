@@ -33,15 +33,6 @@ public abstract class Piece {
 	 public List<Rules> getDirections() {
 		return directions;
 	}
-	 
-	public void removeDirection(Direction direction) {
-		for(Rules r: this.directions) {
-			if(r.getDirection() == direction) {
-				this.directions.remove(r);
-				break;
-			}
-		}
-	}
 
 	public boolean isFirstMove() {
 		return firstMove;

@@ -119,6 +119,8 @@ public class GameModel {
 			}
 		}else if(this.currentPlayerMoves.isEmpty()){
 			this.gameStatus=Status.STALEMATE;
+		}else {
+			this.gameStatus=Status.PLAY;
 		}
 	}
 	
