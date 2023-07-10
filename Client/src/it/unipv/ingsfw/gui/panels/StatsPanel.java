@@ -64,6 +64,7 @@ public class StatsPanel extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				close();
+				oc.closeConnection();
 				menu.setVisible(true);
 
 			}

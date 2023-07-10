@@ -107,14 +107,7 @@ public class Square{
 		return Integer.toString(x) + Integer.toString(y);
 	}	
 
-	public static void main(String[] args) {
-		Square s = new Square(new Pawn(ChessColor.WHITE,PieceType.Pawn),1,2);
-		Square s1 = new Square(2,2);
-		Piece p = s.getPiece();
-		s.releasePiece();
-		s1.setPiece(p);
-		System.out.println(p.getType());
-	}
+
 }
 
 	

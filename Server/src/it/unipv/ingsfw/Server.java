@@ -212,7 +212,6 @@ class Server implements MessageReceivedListener{
 
 	private void gameThread(Socket client1, Socket client2) {
 		BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
-
 		Thread gameThread = new Thread(() -> {
 			try {
 				System.out.println("gameThread");
@@ -221,8 +220,10 @@ class Server implements MessageReceivedListener{
 				PrintWriter out1 = new PrintWriter(client1.getOutputStream(), true);
 				PrintWriter out2 = new PrintWriter(client2.getOutputStream(), true);
 				String line1 = "",line2 = "";
+				boolean gameW = true;
+				boolean gameB = true;
 				try {
-					while (!line1.equals("Done") && !line2.equals("Done")){
+					while (gameW || gameB){
 
 
 
@@ -230,14 +231,14 @@ class Server implements MessageReceivedListener{
 
 						System.out.println(line1); 
 
-						endCheck(line1, out2,out1,client1);
+						gameW = endCheck(line1, out2,out1,client1);
 
 
 
 						line2 = messageQueue.take();
 						System.out.println(line2);
 
-						endCheck(line2, out1,out2,client2);
+						gameB = endCheck(line2, out1,out2,client2);
 
 
 					}
@@ -400,7 +401,7 @@ class Server implements MessageReceivedListener{
 
 
 
-	public void endCheck(String line,PrintWriter out2,PrintWriter out1 ,Socket client) {
+	public boolean endCheck(String line,PrintWriter out2,PrintWriter out1 ,Socket client) {
 		String[] line1 = line.split("-",-1);
 		if(line1[0].equals("Done")) {
 			new UserDAO().addLose(line1[1]);
@@ -408,26 +409,31 @@ class Server implements MessageReceivedListener{
 			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
 
 			out2.println("forfait"); 
+			return false;
 
 		}
 		else if(line1[0].equals("vittoria")){
 			new UserDAO().addWin(line1[1]);
 			user = getStats(line1[1]);
 			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
+			return false;
 
 		}
 		else if(line1[0].equals("sconfitta")){
 			new UserDAO().addLose(line1[1]);
 			user = getStats(line1[1]);
 			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
+			return false;
 		}
 		else if(line1[0].equals("pareggio")){
 			new UserDAO().addDraw(line1[1]);
 			user = getStats(line1[1]);
 			out1.println("stats-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
+			return false;
 		}
 		else {
 			out2.println(line1[0]);
+			return true;
 		}
 	}
 

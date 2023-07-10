@@ -220,16 +220,15 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 	}
 	
 	
+	
+	
 	public void vittoria() {
 		if(currentStatus == Status.CHECK_MATE || currentStatus == Status.BLACK_WIN || currentStatus == Status.WHITE_WIN) {
 			if(currentPlayer==player.getColor()) {
 				out.println("sconfitta"+"-"+user.getUsername());
 				System.out.println("stampa qui "+user.getUsername());
 			}else {
-
-
 				out.println("vittoria"+"-"+user.getUsername());
-
 			}
 		}else if(currentStatus == Status.STALEMATE) {
 			out.println("pareggio"+"-"+user.getUsername());
@@ -472,6 +471,15 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 	public GamePanel getGamePanel () {
 		return view;
+	}
+	
+	public void closeConnection() {
+		try {
+            if (socket != null)
+                socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 
