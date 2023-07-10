@@ -11,7 +11,7 @@ import it.unipv.ingsfw.chess.game.Square;
 import it.unipv.ingsfw.chess.game.Status;
 
 
-public class MoveTest {
+public class CheckmateTest {
 
 	@Test
 	public void checkmate() {

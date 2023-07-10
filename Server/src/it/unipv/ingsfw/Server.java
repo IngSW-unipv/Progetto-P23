@@ -15,7 +15,9 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import it.unipv.ingsfw.classi.Game;
 import it.unipv.ingsfw.classi.User;
+import it.unipv.ingsfw.database.GameDAO;
 import it.unipv.ingsfw.database.UserDAO;
 import it.unipv.ingsfw.exception.AccountNotFoundException;
 import it.unipv.ingsfw.exception.ExistingAccountException;
@@ -24,7 +26,7 @@ import it.unipv.ingsfw.exception.WrongPasswordException;
 
 // Server class
 public class Server implements MessageReceivedListener{
-	private Map<Socket,User> onlineUsers;
+	private Map<Socket,String> onlineUsers;
 	private MessageReceivedListener messageReceivedListener;
 	private ServerSocket server;
 	private Socket client,client1,client2;
@@ -35,7 +37,8 @@ public class Server implements MessageReceivedListener{
 	private Map<Thread,BlockingQueue<String>> queueMap;
 	private PrintStream os,os2;
 	private BufferedReader reader;
-	private User user;
+	private User user = new User("pippo");
+	private int nPartita;
 
 
 	public Server() {
@@ -64,6 +67,7 @@ public class Server implements MessageReceivedListener{
 		case "login":
 
 			loginThread();
+			
 
 			break;
 
@@ -90,10 +94,15 @@ public class Server implements MessageReceivedListener{
 
 				//mando info ai client
 				os.println(line2);
+
+
 				// inizio della partita
 				os2.println("Inizia");
 				this.client2=this.client;
 				waiting=false;
+				Game g = new Game(nPartita, onlineUsers.get(client1), onlineUsers.get(client2));
+				new GameDAO().insertGame(g);
+				nPartita++;
 				gameThread(client1,client2);
 
 			}
@@ -111,7 +120,7 @@ public class Server implements MessageReceivedListener{
 		}
 	}
 
-	public void loginThread() {
+	public synchronized void loginThread() {
 		BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
 		Thread loginThread = new Thread(() -> {
@@ -130,7 +139,9 @@ public class Server implements MessageReceivedListener{
 					}
 					else {
 						String[] uspsw = message.split("-",-1);
-						User user = new User(uspsw[0],uspsw[1]);
+						//User user = new User(uspsw[0],uspsw[1]);
+						user.setUsername(uspsw[0]);
+						user.setPsw(uspsw[1]);
 
 						System.out.println("Username: "+user.getUsername());
 						//metodo userDAO per check password
@@ -138,11 +149,13 @@ public class Server implements MessageReceivedListener{
 						//esito positivo
 						user = getStats(uspsw[0]);
 
-						
-						//onlineUsers.put(client, user);
-
-						oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
-
+						if(onlineUsers.containsValue(user.getUsername())) {
+							throw new AccountNotFoundException(oss);
+						}
+						else {
+							onlineUsers.put(client, uspsw[0]);
+							oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
+						}
 					}
 				}
 			} catch (InterruptedException e) {
@@ -216,7 +229,7 @@ public class Server implements MessageReceivedListener{
 			try {
 				System.out.println("gameThread");
 
-				
+
 				PrintWriter out1 = new PrintWriter(client1.getOutputStream(), true);
 				PrintWriter out2 = new PrintWriter(client2.getOutputStream(), true);
 				String line1 = "",line2 = "";
@@ -243,7 +256,7 @@ public class Server implements MessageReceivedListener{
 
 					}
 				} catch (InterruptedException e) {
-					
+
 					e.printStackTrace();
 				}
 
@@ -270,7 +283,7 @@ public class Server implements MessageReceivedListener{
 
 	}
 
-	
+
 	private void fireMessageReceivedEvent(String message) {
 		if (messageReceivedListener != null) {
 			messageReceivedListener.onMessageReceived(message);
@@ -437,7 +450,7 @@ public class Server implements MessageReceivedListener{
 		}
 	}
 
-	
+
 
 	public boolean insertUser(String username, String password){
 		return (new UserDAO().insertUser(new User(username,password)));		
@@ -462,7 +475,7 @@ public class Server implements MessageReceivedListener{
 
 			}
 		});
-		
+
 		try {
 			while (true) {
 

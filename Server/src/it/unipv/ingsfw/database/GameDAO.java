@@ -35,7 +35,7 @@ public class GameDAO {
 
 			while(rs1.next()) {
 
-				Game game = new Game (rs1.getString(1), rs1.getString(2),rs1.getString(3));
+				Game game = new Game (rs1.getInt(1), rs1.getString(2),rs1.getString(3));
 				gameList.add(game);
 
 			}
@@ -57,7 +57,7 @@ public class GameDAO {
 			String query = "INSERT INTO PARTITE VALUES(?,?,?)";
 			st1 = conn.prepareStatement(query);
 
-			st1.setString(1, g.getGameCode());
+			st1.setInt(1, g.getGameCode());
 			st1.setString(2, g.getWhitePlayer());
 			st1.setString(3, g.getBlackPlayer());
 
