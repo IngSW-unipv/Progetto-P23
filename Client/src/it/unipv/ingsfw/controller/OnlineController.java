@@ -321,7 +321,7 @@ public class OnlineController implements MessageReceivedListener ,Runnable{
 
 	// gestione messaggi ricevuti 
 	
-	private void fireMessageReceivedEvent(String message) {
+	public void fireMessageReceivedEvent(String message) {
 		if (messageReceivedListener != null) {
 			messageReceivedListener.onMessageReceived(message);
 		}

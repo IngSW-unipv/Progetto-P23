@@ -23,7 +23,7 @@ import it.unipv.ingsfw.exception.WrongPasswordException;
 
 
 // Server class
-class Server implements MessageReceivedListener{
+public class Server implements MessageReceivedListener{
 	private Map<Socket,User> onlineUsers;
 	private MessageReceivedListener messageReceivedListener;
 	private ServerSocket server;
@@ -138,7 +138,7 @@ class Server implements MessageReceivedListener{
 						//esito positivo
 						user = getStats(uspsw[0]);
 
-
+						
 						//onlineUsers.put(client, user);
 
 						oss.println("login accepted-"+user.getWin()+"-"+user.getDraw()+"-"+user.getLose());
@@ -380,7 +380,7 @@ class Server implements MessageReceivedListener{
 	}
 
 
-	private User getStats(String username) {
+	public User getStats(String username) {
 		User u = new UserDAO().setStats(username);
 
 		return u;		
